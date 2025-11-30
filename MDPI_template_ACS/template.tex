@@ -1,0 +1,754 @@
+%  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\documentclass[preprints,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+% For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal. Changing "submit" to "accept" before posting will remove line numbers.
+
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% accountaudit, acoustics, actuators, addictions, adhesives, admsci, adolescents, aerobiology, aerospace, agriculture, agriengineering, agrochemicals, agronomy, ai, air, algorithms, allergies, alloys, amh, analytica, analytics, anatomia, anesthres, animals, antibiotics, antibodies, antioxidants, applbiosci, appliedchem, appliedmath, appliedphys, applmech, applmicrobiol, applnano, applsci, aquacj, architecture, arm, arthropoda, arts, asc, asi, astronomy, atmosphere, atoms, audiolres, automation, axioms, bacteria, batteries, bdcc, behavsci, beverages, biochem, bioengineering, biologics, biology, biomass, biomechanics, biomed, biomedicines, biomedinformatics, biomimetics, biomolecules, biophysica, biosensors, biosphere, biotech, birds, blockchains, bloods, blsf, brainsci, breath, buildings, businesses, cancers, carbon, cardiogenetics, catalysts, cells, ceramics, challenges, chemengineering, chemistry, chemosensors, chemproc, children, chips, cimb, civileng, cleantechnol, climate, clinbioenerg, clinpract, clockssleep, cmd, cmtr, coasts, coatings, colloids, colorants, commodities, complications, compounds, computation, computers, condensedmatter, conservation, constrmater, cosmetics, covid, crops, cryo, cryptography, crystals, csmf, ctn, curroncol, cyber, dairy, data, ddc, dentistry, dermato, dermatopathology, designs, devices, diabetology, diagnostics, dietetics, digital, disabilities, diseases, diversity, dna, drones, dynamics, earth, ebj, ecm, ecologies, econometrics, economies, education, eesp, ejihpe, electricity, electrochem, electronicmat, electronics, encyclopedia, endocrines, energies, eng, engproc, ent, entomology, entropy, environments, epidemiologia, epigenomes, esa, est, famsci, fermentation, fibers, fintech, fire, fishes, fluids, foods, forecasting, forensicsci, forests, fossstud, foundations, fractalfract, fuels, future, futureinternet, futureparasites, futurepharmacol, futurephys, futuretransp, galaxies, games, gases, gastroent, gastrointestdisord, gastronomy, gels, genealogy, genes, geographies, geohazards, geomatics, geometry, geosciences, geotechnics, geriatrics, glacies, grasses, greenhealth, gucdd, hardware, hazardousmatters, healthcare, hearts, hemato, hematolrep, heritage, higheredu, highthroughput, histories, horticulturae, hospitals, humanities, humans, hydrobiology, hydrogen, hydrology, hygiene, idr, iic, ijerph, ijfs, ijgi, ijmd, ijms, ijns, ijpb, ijt, ijtm, ijtpp, ime, immuno, informatics, information, infrastructures, inorganics, insects, instruments, inventions, iot, j, jal, jcdd, jcm, jcp, jcs, jcto, jdad, jdb, jeta, jfb, jfmk, jimaging, jintelligence, jlpea, jmahp, jmmp, jmms, jmp, jmse, jne, jnt, jof, joitmc, joma, jop, jor, journalmedia, jox, jpbi, jpm, jrfm, jsan, jtaer, jvd, jzbg, kidney, kidneydial, kinasesphosphatases, knowledge, labmed, laboratories, land, languages, laws, life, lights, limnolrev, lipidology, liquids, literature, livers, logics, logistics, lubricants, lymphatics, machines, macromol, magnetism, magnetochemistry, make, marinedrugs, materials, materproc, mathematics, mca, measurements, medicina, medicines, medsci, membranes, merits, metabolites, metals, meteorology, methane, metrics, metrology, micro, microarrays, microbiolres, microelectronics, micromachines, microorganisms, microplastics, microwave, minerals, mining, mmphys, modelling, molbank, molecules, mps, msf, mti, multimedia, muscles, nanoenergyadv, nanomanufacturing, nanomaterials, ncrna, ndt, network, neuroglia, neurolint, neurosci, nitrogen, notspecified, nursrep, nutraceuticals, nutrients, obesities, oceans, ohbm, onco, oncopathology, optics, oral, organics, organoids, osteology, oxygen, parasites, parasitologia, particles, pathogens, pathophysiology, pediatrrep, pets, pharmaceuticals, pharmaceutics, pharmacoepidemiology, pharmacy, philosophies, photochem, photonics, phycology, physchem, physics, physiologia, plants, plasma, platforms, pollutants, polymers, polysaccharides, populations, poultry, powders, preprints, proceedings, processes, prosthesis, proteomes, psf, psych, psychiatryint, psychoactives, psycholint, publications, purification, quantumrep, quaternary, qubs, radiation, reactions, realestate, receptors, recycling, regeneration, religions, remotesensing, reports, reprodmed, resources, rheumato, risks, robotics, rsee, ruminants, safety, sci, scipharm, sclerosis, seeds, sensors, separations, sexes, signals, sinusitis, siuj, skins, smartcities, sna, societies, socsci, software, soilsystems, solar, solids, spectroscj, sports, standards, stats, std, stresses, surfaces, surgeries, suschem, sustainability, symmetry, synbio, systems, tae, targets, taxonomy, technologies, telecom, test, textiles, thalassrep, therapeutics, thermo, timespace, tomography, tourismhosp, toxics, toxins, transplantology, transportation, traumacare, traumas, tropicalmed, universe, urbansci, uro, vaccines, vehicles, venereology, vetsci, vibration, virtualworlds, viruses, vision, waste, water, wem, wevj, wild, wind, women, world, youth, zoonoticdis
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by: 
+% abstract, addendum, article, benchmark, book, bookreview, briefcommunication, briefreport, casereport, changes, clinicopathologicalchallenge, comment, commentary, communication, conceptpaper, conferenceproceedings, correction, conferencereport, creative, datadescriptor, discussion, entry, expressionofconcern, extendedabstract, editorial, essay, erratum, fieldguide, hypothesis, interestingimages, letter, meetingreport, monograph, newbookreceived, obituary, opinion, proceedingpaper, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, supfile, systematicreview, technicalnote, viewpoint, guidelines, registeredreport, tutorial,  giantsinurology, urologyaroundtheworld
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. Remove "pdftex" for (1) compiling with LaTeX & dvi2pdf (if eps figures are used) or for (2) compiling with XeLaTeX.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2025}
+\copyrightyear{2025}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ } 
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+%\IsAssociation{yes} % For association journals
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Joint UAV Trajectory Planning and LEO Satellite  Selection for Data Offloading in Space-Air-Ground  Integrated Networks}
+
+% MDPI internal command: Title for citation in the left column
+\TitleCitation{Joint UAV Trajectory Planning and LEO Satellite  Selection for Data Offloading in Space-Air-Ground  Integrated Networks}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0003-3080-1514} % Add \orcidA{} behind the author's name
+%\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Tie Liu $^{1}$\orcidA{}, Firstname Lastname $^{2}$ and Firstname Lastname $^{2,}$*}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Tie Liu, Firstname Lastname and Firstname Lastname}
+
+% Author citation:  
+\AuthorCitation{L, Tie.; Lastname, F.; Lastname, F.}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Affiliation 1; e-mail@e-mail.com\\
+$^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
+
+% Contact information of the corresponding author
+\corres{Correspondence: e-mail@e-mail.com; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)}
+
+% Current address and/or shared authorship
+%\firstnote{Current address: Affiliation.}  
+% Current address should not be the same as any items in the Affiliation section.
+
+%\secondnote{These authors contributed equally to this work.}
+% The commands \thirdnote{} till \eighthnote{} are available for further notes.
+
+%\simplesumm{} % Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\) 
+\abstract{With the development of low earth orbit (LEO) satellites and unmanned aerial vehicles (UAVs), the space-airground integrated network (SAGIN) becomes a major trend in the next-generation networks.However, due to the instability of heterogeneous communication and time-varying characteristics of SAGIN, it is challenging to meet the remote Internet of Things (IoT) demands for data collection and offloading.In this paper, we investigate a two-phase hierarchical data uplink model in SAGIN. Specifically, UAVs optimize trajectories to enable efficient data collection from IoT devices, and then they transmit the data to LEO satellites with computing capabilities for further processing.The problem is formulated to minimize the total energy consumption for UAVs and the packet loss rate transmitted to LEO satellites.Ultimately, simulation results demonstrate the effectiveness of the proposed algorithm, which reduces energy consumption by approximately 10\% compared to the baseline algorithm and lowers the packet loss rate by an average of 3 to 5 times.}
+
+% Keywords
+\keyword{SAGIN, UAV, LEO satellite, data offloading.} 
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences
+%\featuredapplication{Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data
+%\dataset{DOI number or link to the deposited data set if the data set is published separately. If the data set shall be published as a supplement to this paper, this field will be filled by the journal editors. In this case, please submit the data set as a supplement.}
+%\datasetlicense{License under which the data set is made available (CC0, CC-BY, CC-BY-SA, CC-BY-NC, etc.)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal BioTech, Fishes, Neuroimaging and Toxins
+%\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+%\encyclopediadef{For entry manuscripts only: please provide a brief overview of the entry title instead of an abstract.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Different journals have different requirements. Please check the specific journal guidelines in the "Instructions for Authors" on the journal's official website.
+%\addhighlights{yes}
+%\renewcommand{\addhighlights}{%
+%
+%\noindent The goal is to increase the discoverability and readability of the article via search engines and other scholars. Highlights should not be a copy of the abstract, but a simple text allowing the reader to quickly and simplified find out what the article is about and what can be cited from it. Each of these parts should be devoted up to 2~bullet points.\vspace{3pt}\\
+%\textbf{What are the main findings?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}\vspace{3pt}
+%\textbf{What is the implication of the main finding?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\endnote{This is an endnote.} % To use endnotes, please un-comment \printendnotes below (before References). Only journal Laws uses \footnote.
+
+% The order of the section titles is different for some journals. Please refer to the "Instructions for Authors” on the journal homepage.
+
+\section{Introduction}
+
+The Internet of Things (IoT) devices are widely applied in the daily life, such as environmental monitoring and traffic management. However, due to the limited ground base stations in remote or post-disaster areas, it is difficult to satisfy the demands for data collection and offloading supported by the terrestrial networks. The space-air-ground integrated network (SAGIN) is perceived as an effective solution to tackle the above difficulties \cite{jia2020leo}.In SAGIN, low earth orbit (LEO) satellites can provide the IoT devices with extensive connectivities \cite{xiao2024space} \cite{duan2022distributed}.Additionally, the in-orbit computing allows LEO satellites to directly process tasks, which avoids the long propagation delays and eases the congestion on bandwidthlimited downlink channels\cite{wei2024energy} \cite{pan2022latency}.Moreover, unmanned aerial vehicles (UAVs), as ideal candidates for aerial relays, can be deployed flexibly to ensure efficient data collection \cite{jia2025distributionally}.On one hand, the UAVs trajectories can be optimized to minimize the multi-hop transmission and propagation distance \cite{mao2020joint}.Besides, UAVs facilitate the line-of-sight (LoS) communications with ground devices for a wide view, improving the channel quality and enhancing the transmission throughput  \cite{zhao2021multi} \cite{mozaffari2019tutorial}.Nevertheless, the limitation of communication resources restricts the number of IoT devices served by UAVs and leads to a poor spectrum efficiency \cite{tao2015survey}.In response to this issue, the non-orthogonal multiple access (NOMA) technology, which emerges as a promising paradigm, allows multiple IoT devices to share a single resource block.
+
+Some works have begun to explore problems on resource allocations in SAGIN.The authors in \cite{fang2022noma} propose an iterative power allocation algorithm to maximize the sum rate in a NOMA-based hybrid satellite-UAV-terrestrial network.In \cite{jia2025service}, the authors consider the complexity of SAGIN and sovle the service function chain scheduling problem by incorporating deep reinforcement learning.The authors in \cite{huang2024joint} study the total energy consumption minimization for task processing in an SAGIN-supported mobile edge computing system.In \cite{jia2024dynamic}, the authors introduce a data collection scheme to balance the throughput and fairness among the IoT nodes in SAGIN. Although the above works are conducted in SAGIN, the satellite selection issues are not considered, which can significantly enhance the performance of the system.
+
+Given the instability and time-varying nature of heterogeneous communications within the SAGIN system, we propose a hierarchical framework integrating ground-based IoT devices, unmanned aerial vehicles (UAVs) serving as aerial relays, and computationally capable low-Earth orbit satellites. The problem is modelled as minimising total UAV energy consumption whilst ensuring service quality guarantees. To address this, the process is divided into two phases. In Phase One, we design algorithms for IoT pairing, power allocation, and UAV trajectory planning. In the second phase, we introduce a demand-aware flexible switching mechanism for low-Earth orbit satellites.
+
+The remainder of this paper is organized as follows. In Section II, we design the system model and provide the problem formulation. In Section III, the algorithms are proposed. Section IV evaluates the performance of the proposed algorithms via numerical analyses. Finally, the conclusions are drawn in Section V.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials and Methods}
+
+As shown in Fig. 1, we consider an SAGIN which consists of $\mathbf{U}$ UAVs denoted by $\mathcal{U} = \{1, 2, \dots, U\}$, and $\mathbf{S}$ LEO satellites indicated by  $\mathcal{S} = \{1, 2, \dots, S\}$. In addition, $\mathbf{K}$ IoT devices scattered randomly on the ground are represented as $\mathcal{K} = \{1, 2, \dots, K\}$.Due to the limited computational capabilities of IoT terminals, the data they collect must be uploaded to low-Earth orbit satellites for further processing. However, constrained by their own energy and transmission power limitations, IoT devices struggle to communicate directly with these satellites. To address this, we introduce drones as aerial base stations to assist in data aggregation and forwarding within target areas. Based on this architecture, the data upload process can be divided into two stages. In the first stage, the UAV follows a pre-planned flight path to sequentially reach multiple hovering positions, collecting data generated by IoT devices within the area before returning to the starting point upon completion. In the second stage, after returning to the starting point, the UAV hovers at the origin and selects an appropriate LEO satellite to perform computational offloading tasks.
+
+\subsection{Data Collection from IoT to UAV}
+
+During the data upload phase for IoT devices and drones, we introduce Non-Orthogonal Multiple Access (NOMA) technology to enhance the system's spectrum efficiency and transmission effectiveness. Specifically, we assume that within a defined spatial range, any two IoT devices can form a cooperative pair, transmitting their uplink data simultaneously to the UAV via the NOMA mechanism. For devices that cannot meet pairing conditions or fail to pair successfully, Orthogonal Frequency Division Multiple Access (OFDMA) is employed for independent data transmission.
+
+A three-dimensional Cartesian coordinate system is employed to characterize the spatial locations of UAVs and IoT devices. The IoT devices are assumed to be randomly distributed on the ground plane, and the horizontal coordinate of the $k$-th device denoted as $\mathbf{q}_k = (x_k, y_k, 0)$. Each UAV operates at a fixed altitude $h_u$. Accordingly, the position of the $u$-th UAV at the $n$-th hover point is expressed as $\mathbf{q}_u(n) = (x_u(n), y_u(n), h_u)$. Due to the elevated UAV altitude and the unobstructed propagation environment, the wireless links between IoT devices and UAVs are dominated by line-of-sight (LoS) propagation. Under this condition, the channel gain between IoT device $k$ and its associated UAV is modeled as
+\begin{quote}
+\begin{equation}
+G_k = \frac{\beta_0}{h_u^2 + (x_u(n) - x_k)^2 + (y_u(n) - y_k)^2},
+\end{equation}
+\end{quote}
+where $\beta_0$ represents the channel gain at the reference distance $r_0$ = 1m.
+
+Let $\mathcal{P}$ denote the set of all feasible transmission pairs, where each pair $p \in \mathcal{P}$ consists of either (i) two IoT devices forming a NOMA cluster or (ii) a single device operating in OFDMA mode. A binary decision variable $\delta_{p} \in \{0,1\}$ is introduced to indicate whether pair $p$ is activated. To ensure that each IoT device is assigned to at most one pair, the following constraint is imposed
+\begin{quote}
+\begin{equation}
+\sum_{p \in P: k \in p} \delta_p \leq 1, \quad \forall k \in \mathcal{K}.
+\end{equation}
+\end{quote}
+
+For an activated NOMA pair containing two devices $p = \{k, m\}$, the device with the stronger channel gain performs successive interference cancellation (SIC) and decodes the weaker device’s signal prior to decoding its own signal. The corresponding interference structure is determined by the activated pair $p$.
+
+Given the pairing configuration, the received signal-to-interference-plus-noise ratio (SINR) of IoT device $k$ can be expressed as
+\begin{quote}
+\begin{equation}
+\mathrm{SINR}_k = \frac{p_k G_k}{\sum_{\substack{p \in P \\ k,m \in p \\ m \neq k}} \delta_p p_m G_m + \sigma_{iu}^2},
+\end{equation}
+\end{quote}
+where $p_k$ s the transmit power of device $k$, and $\sigma^2 _{iu}$ denotes the receiver noise power. Based on the obtained SINR, the achievable uplink data rate of device $k$ is
+\begin{quote}
+\begin{equation}
+d_k = B_{iu} \log_2 \left(1 + \mathrm{SINR}_k\right),
+\end{equation}
+\end{quote}
+where $B_{iu}$ represents the bandwidth allocated to UAV–IoT communications. Given the task data size $D_k$, the corresponding uplink transmission delay is
+\begin{quote}
+\begin{equation}
+T_k^{{tr}} = \frac{D_k}{d_k},
+\end{equation}
+\end{quote}
+
+A predetermined visiting order is assumed for each UAV to sequentially approach all NOMA groups and independent IoT devices after its trajectory has been determined. The trajectory of UAV $u$ is represented by the ordered set $\{\mathbf{q}_u(0), \mathbf{q}_u(1), \dots, \mathbf{q}_u(N_u)\}$, where $N_u$ denotes the number of hovering waypoints assigned to UAV $u$. Accordingly, the total flight path length of UAV $u$ over the entire mission is defined as
+\begin{equation}
+L_u = \sum_{n=0}^{N_u-1} \lVert \mathbf{q}_u(n+1) - \mathbf{q}_u(n) \rVert.
+\end{equation}
+
+Given a constant flight speed $v_f$, the required flight time for UAV $u$ is expressed as
+\begin{equation}
+T^{fly}_u = \frac{L_u}{v_f}.
+\end{equation}
+
+During the data collection phase, each UAV hovers at designated waypoints to receive data from IoT devices. The hovering duration of UAV $u$ is determined by the transmission times of all devices within the active pairs. Based on the pair-based NOMA definition, the hovering time is expressed as
+\begin{equation}
+T_u^{hov} = \sum_{p \in P} \delta_p \max_{k \in p} \frac{D_k}{d_k}.
+\end{equation}
+
+For NOMA pairs containing two devices, the maximum operator ensures that UAV $u$ hovers sufficiently long to receive the data from both devices in parallel, whereas for single-device OFDMA pairs, the expression reduces to the corresponding device’s transmission time.
+
+The energy consumption of UAV $u$ in this phase comprises both hovering energy and flight-related energy. Accordingly, the total energy consumption of the UAV–IoT subsystem is
+\begin{equation}
+E_{total} = \sum_{u=1}^{U} (P_h T_u^{hov} + P_f T_u^{fly}),
+\end{equation}
+where $P_h$ and $P_f$ represent the hovering power and flight power of the UAVs, respectively, and $T^{fly}_u$ is the flight time of UAV $u$ as defined previously.
+
+\subsection{Data Offloading from UAV to LEO}
+
+After the UAV completes data collection from all IoT devices, it acquires the position information of all visible LEO satellites and selects the satellite that can satisfy the transmission demand. To represent the computation offloading decision, a binary association variable $\beta_{s,u,t} \in \{0, 1\}$ is introduced, where $\beta_{s,u,t} = 1$ indicates that UAV $u$ offloads its computation to satellite $s$ at time $t$. The channel gain between UAV $u$ and LEO satellite $s$ is modeled based on the free-space path loss as
+\begin{equation}
+G_{s,u,t}[dB] = 92.44 + 20\log_{10}(r_{s,u,t}) +20\log_{10}(f_s),
+\end{equation}
+where $f_s$ denotes the operating frequency of satellite $s$ in GHz, and $r_{s,u,t}$ is the straight-line distance between UAV $u$ and satellite $s$ at $t$. The distance $r_{s,u,t}$ is calculated according to the geometry of the Earth–UAV–satellite system
+\begin{equation}
+r_{s,u,t} = \sqrt{(r_e + h_s)^2 + (r_e + h_u)^2 - 2(r_e + h_s)(r_e + h_u) \cos \theta_{s,u,t}},
+\end{equation}
+where $r_e$ is the Earth radius, and $h_u$ and $h_s$ are the altitudes of the UAV and LEO satellite, respectively. The satellite elevation angle $\theta_{s,u,t}$ with respect to UAV $u$ according to \cite{seyedi2012trace} is computed as
+\begin{equation}
+\theta_{s,u,t} = \arctan \left( \frac{h_s - h_u}{d_{\mathrm{ground},s,u,t}} \right), \quad d_{\mathrm{ground},s,u,t} = r_e \phi_{s,u,t},
+\end{equation}
+where $d_{\mathrm{ground},s,u,t}$ is the horizontal distance on the Earth surface between UAV $u$ and the sub-satellite point of satellite $s$, and $\phi_{s,u,t}$ denotes the corresponding central angle on the Earth’s surface. The central angle $\phi_{s,u,t}$ varies over time according to the satellite and Earth motion
+\begin{equation}
+\phi_{s,u,t} = (\omega_E \cos i - \omega_S)(t - t_0) + \phi_{s,u,t_0},
+\end{equation}
+where $\omega_E$,  $\omega_S$ are the angular velocities of the Earth rotation and satellite orbit, $i$ is the orbital inclination of the satellite, $t_0$ is the time when the satellite becomes visible to the UAV, and $\phi_{s,u,t_0}$ is the initial central angle at $t_0$.
+
+The received power at LEO satellite $s$ from UAV $u$ at time $t$ is expressed as
+\begin{equation}
+P_{s,u,t}^{re} = P_{tr} G_{tr} G_{re} G_{s,u,t}^{lin},
+\end{equation}
+where $P_{tr}$ denotes the transmit power of the UAV, $G_{tr}$ and $G_{re}$ are the transmit and receive antenna gains of the UAV and LEO satellite, respectively, and $G_{s,u,t}^{lin}$ is the linear-scale channel gain between UAV $u$ and satellite $s$, derived from the distance-dependent free-space path loss as described in subsection 2.1.
+
+Based on the received power, the achievable uplink data rate from UAV $u$ to LEO satellite $s$ at time $t$ is calculated according to the Shannon capacity formula
+\begin{equation}
+d_{s,u,t} = B_{su} \log_2 \left(1 + \frac{P_{s,u,t}^{re}}{\sigma_{su}^2}\right),
+\end{equation}
+where $B_{su}$ denotes the available bandwidth of the UAV–LEO link, and $\sigma_{su}^2$ is the noise power at the satellite receiver. Let $x_{s,u,t} \in \{0,1\}$ represent the satellite association decision, where $x_{s,u,t} = 1$ indicates that UAV $u$ connects to satellite $s$ at time $t$.To characterize unnecessary switching, the handover indicator is defined as
+\begin{equation}
+ h_{u,t} = \frac{1}{2} \sum_{s=1}^{S} |x_{s,u,t} - x_{s,u,t-1}|.
+\end{equation}
+
+\subsection{Problem Formulation}
+
+To minimize the total energy consumption of the first-stage IoT–UAV data collection process, the optimization is performed over the pair-based association variables $\boldsymbol{\delta} = \{\delta_p \mid p \in P\}$, the transmit power allocation of IoT devices $\mathbf{p} = \{p_k \mid k \in K\}$, and the UAV hovering positions and visiting order $\mathbf{q} = \{\mathbf{q}_u(n) \mid u \in U\}$. By jointly optimizing $\boldsymbol{\delta}$, $\mathbf{p}$, and $\mathbf{q}$, , the total UAV energy consumption consisting of hovering and flight energy is minimized. The optimization problem is detailed as
+\begin{subequations}
+\begin{align}
+\mathcal{P}_1: \min_{\delta, \mathbf{p}, \mathbf{q}} \quad & 
+\sum_{u=1}^{U} \left( P_h \sum_{p \in P_u} \delta_p \max_{k \in p} \frac{D_k}{d_k} + P_f \frac{L_u}{v_f} \right) \\
+\text{s.t.} \quad & p_{\min} \leq p_k \leq p_{\max}, \quad \forall k, \label{eq:p1_power} \\
+& \sum_{p: k \in p} \delta_p \leq 1, \quad \forall k, \label{eq:p1_assignment} \\
+& \rho p_{i(p)} G_{i(p)} \leq p_{j(p)} G_{j(p)}, \quad \forall p \in P_{\text{NOMA}}, \label{eq:p1_noma} \\
+& \mathbf{q}_u(N_u) = \mathbf{q}_u(0), \quad \forall u, \label{eq:p1_trajectory} \\
+& \delta_p \in \{0, 1\}, \quad \forall p \in P. \label{eq:p1_binary}
+\end{align}
+\end{subequations}
+
+Constraint \ref{eq:p1_power} restricts the transmit power of each IoT device within its allowable operating range. Constraint  \ref{eq:p1_assignment} ensures that each device can participate in at most one transmission group, thereby preventing conflicting pair assignments. Constraint \ref{eq:p1_noma} enforces the power-domain separation required for successful NOMA decoding in every selected NOMA pair, where $\rho \in (0,1)$ denotes the minimum ratio ensuring the correct decoding order. Constraint \ref{eq:p1_trajectory} guarantees that each UAV completes a closed trajectory, returning to its initial hovering point after visiting all designated positions. Constraint \ref{eq:p1_binary} defines the binary nature of the group-selection variables.
+
+Due to the coupling among the discrete pairing decisions $\delta_p$, the continuous transmit-power variables $\{p_k\}$, and the UAV trajectory variables $\mathbf{q}_u(n)$, the overall optimization problem P1 forms a mixed-integer nonlinear programming model, which is NP-hard and computationally intractable to solve optimally.
+
+After completing the IoT data-collection stage, the UAV proceeds to offload its aggregated task data to LEO satellites. The primary objective of the second-stage satellite association problem is to minimize unnecessary handover frequency while meeting operational offloading requirements, thereby enhancing QoS assurance and indirectly reducing both transmission energy consumption and handover energy consumption for unmanned aerial vehicles.
+
+Demand-Aware  Handover does not seek to solve an optimal global objective function, but rather proposes a strategy algorithm that satisfies the following constraints
+\begin{subequations}
+\begin{align}
+\mathcal{P}_2: \min \quad & 
+\sum_{u=1}^{U} \sum_{t=1}^{T} h_{u,t} \\
+\text{s.t.} \quad & \sum_{s=1}^{S} \sum_{t=1}^{T} x_{s,u,t} d_{s,u,t} \Delta t \geq D_u, \quad \label{eq:p2_total}\\
+&\sum_{s=1}^{S} x_{s,u,t} \leq 1, \quad \forall t \in \mathcal{T}, \label{eq:p2_visible} \\
+& \theta_{s,u,t} \geq \theta_{\min}, \quad \label{eq:p2_elevation} \\
+& \sum_{s=1}^{S} \sum_{t'=t}^{T} x_{s,u,t'} d_{s,u,t'} \Delta t \geq D_u^{rem}(t). \label{eq:p2_remaining} 
+\end{align}
+\end{subequations}
+
+Constraint \ref{eq:p2_total} represents the total amount of data successfully offloaded during the mission must satisfy $D_u$ is the task data size to be transmitted. Constraint \ref{eq:p2_visible} represents communication continuity requires that the UAV is associated with at most one visible satellite at any time. Constraint \ref{eq:p2_elevation} represents only satellites satisfying the minimum elevation constraint are eligible for association. Constraint \ref{eq:p2_remaining} ensures that switching is triggered only when the current satellite can no longer satisfy the remaining demand under predicted link evolution where $D_u^{rem}(t)$ denotes the remaining data to be uploaded at time $t$.
+
+\section{ALGORITHM DESIGN}
+Since the proposed SAGIN model incorporates two phases, and the LEO satellite selection can be determined after the UAVs trajectories are planned, $\mathcal{P}_0$ can be decoupled into two stages for effective solutions.In detail, Algorithm 1 is performed to obtain the IoT pairing, power allocation, and flight trajectories of UAVs in the data collection from IoT to UAVs. In the data offloading from the UAV to LEO, the LEO satellite with the best link throughput is selected to reduce the energy consumption through Algorithm 2.
+
+\subsection{UAV Data Collection and Energy Optimization}
+In order to effectively solve problem $\mathcal{P}_0$, we firstly consider the total energy consumption $E^{total}_{iu}$ in the IoT-UAV phase.Specially, the nearest two IoT device nodes are paired to quickly obtain the NOMA groups. Then, the optimization problem of IoT power and UAV hovering points is a non-convex problem. As shown in Algorithm 1, we decompose the problem, in which the hovering positions of UAVs and the transmission power are solved alternately for each pair of nodes (lines 3-10).In detail, with the fixed transmission power of one device, the transmission power of the other device is updated via the Newton method in turn until reaching the convergence. The hovering position of the UAV is updated by the Nelder-Mead method until the result converges. Moreover, UAVs directly hover above the unpaired IoT devices which adopt the OFDMA technology, and the unpaired IoT devices transmit data with the maximum power $p_{max}$ to maximize the throughput.
+
+Based on the given hovering points, the UAV trajectory planning problem is essentially transformed into a multiple traveling salesman problem.To solve the problem effectively, we employ the 2-opt local search for trajectory optimization \cite{d2020learning}.In detail, after generating initial solutions for UAV trajectories, the objective function values are calculated regarding the flight distance.Then, the top three best solutions are obtained and denoted as $\alpha$, $\beta$ and $\gamma$ wolves, respectively. By updating the positions of the three wolves based on the fitness values until the convergence is achieved, the best UAVs trajectories solution can be obtained.
+
+To obtain better NOMA groups, an operation of exchanging device nodes and updating the matching pairs is introduced, as shown in Algorithm 2 (lines 12-19). To be specific, all the unpaired nodes are tried to traverse with each other to check if there are any paired nodes that can be recombined, and these nodes are repaired. The potential NOMA groups in the new set of unpaired nodes are preferred to be paired with high priorities.Then, the energy consumption is updated after the repairing operations, and the IoT pairing relationships are selected with the lowest energy cost. Similarly, for two NOMA groups that are close to each other, the paired nodes can be exchanged to update the pairing relationship. By performing the exchanging operations between NOMA pairs and isolated OFDMA nodes, more NOMA pairs and less energy consumption are enabled for further optimization.
+\begin{algorithm}[ht]
+\caption{UAV Data Collection and Energy Optimization}
+\label{alg:uav_energy_optimization}
+
+\textbf{Input:} All IoT devices' positions $\mathbf{q}_k$ and corresponding packets $D_k$, and UAV initial position $\mathbf{q}_u(0)$.
+
+\textbf{Output:} Energy consumption $E_{\text{total}}^{\text{itu}}$.
+
+\begin{algorithmic}[1]
+\State Initialize distance matrix and maximum iterations $J$
+\State Form NOMA pairs from two nearest devices under distance constraints
+\State Obtain lists of paired and unpaired nodes
+
+\For{each paired nodes $(k, m)$}
+    \State Initialize transmission powers $p_k$, $p_m$
+    \State Initialize hover position $(x_u, y_u, h_u)$
+    \State Set iteration counter $j \gets 0$
+    \While{$j \leq J$}
+        \State Update $p_k^{(j)}$, $p_m^{(j)}$ using Newton's method
+        \State Update $(x_u^{(j)}, y_u^{(j)}, h_u)$ using Nelder-Mead method
+        \State $j \gets j + 1$
+    \EndWhile
+\EndFor
+
+\State Optimize UAV trajectories using Gray Wolf Optimization
+\State Compute energy consumption $E_{\text{total}}^{\text{itu}}$ using Eq.~(9)
+
+\For{each node combination (unpaired and paired)}
+    \State Exchange nodes between paired and unpaired groups
+    \State Update UAV trajectories and device transmission powers
+    \State Calculate new energy consumption $E_{\text{new}}^{\text{total}}$ using Eq.~(9)
+    \If{$E_{\text{new}}^{\text{total}} < E_{\text{total}}^{\text{itu}}$}
+        \State $E_{\text{total}}^{\text{itu}} \gets E_{\text{new}}^{\text{total}}$
+    \EndIf
+\EndFor
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{LEO Satellite Selection Optimization}
+
+After the UAVs finish collecting data from IoT devices, they will offload the data to LEO satellites. In the UAV-LEO phase, we mainly focus on minimizing the energy consumption $E_{\text{total}}^{\text{itu}}$ .According to Eqs. (16) and (20), since the better throughput enables the less transmission delay, the UAV selects the LEO satellite with the best link throughput to reduce energy consumption. The detailed mechanism for LEO satellite selection based on the throughput in real time is designed in Algorithm 2. Through the joint simulation with STK, the accessibility from UAVs to LEO satellites can be obtained, and the position information of LEO satellites are known to the UAVs. Hence, the elevation angle $\theta_{s,u,t}$ between UAVs and LEO satellites can be calculated based on Eq. (12). If $\theta_{s,u,t}$ < $\theta_{min}$, the satellite is discarded due to the disgusting interference. After obtaining all the acceptable LEO satellites which satisfy the requirements, the UAV selects the LEO satellite with maximum link throughput.
+\begin{algorithm}[ht]
+\caption{LEO Satellite Selection Optimization}
+\label{alg:satellite_selection}
+
+\textbf{Input:} UAV positions $\mathbf{q}_u(t)$ and access time windows $T_{\text{access}}$
+
+\textbf{Output:} Optimal LEO satellite $s^*$
+
+\begin{algorithmic}[1]
+\State Initialize STK scenario with orbital parameters and simulation time
+\State Set elevation angle threshold $\theta_{\min}$ and communication parameters
+\State Compute real-time accessibility of LEO satellites to UAVs
+\State Retrieve position vectors $\mathbf{r}_s(t)$ for all visible LEO satellites
+\State For each satellite $s$, compute elevation angle:
+    \State \quad $\theta_{s,u,t} = \arctan\left( \dfrac{\cdots}{\cdots} \right)$ \Comment{Based on Eq.~(12)}
+\State Construct candidate set: $\mathcal{S}_{\text{candidate}} = \{s \mid \theta_{s,u,t} \geq \theta_{\min}\}$
+\State For each $s \in \mathcal{S}_{\text{candidate}}$, calculate throughput:
+    \State \quad $R_{s,u,t} = B \log_2\left(1 + \text{SINR}_{s,u,t}\right)$
+\State Select optimal satellite: $s^* = \arg\max_{s \in \mathcal{S}_{\text{candidate}}} R_{s,u,t}$
+\State \Return $s^*$
+
+\end{algorithmic}
+\end{algorithm}
+
+\begin{table}[htbp]
+\centering
+\caption{SIMULATION PARAMETERS}
+\label{tab:simulation_parameters}
+\begin{tabularx}{\textwidth}{CCCC}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Parameter} & \textbf{Value} \\
+\midrule
+$P_{\text{max}}$ & 5 W & $P_{\text{min}}$ & 0.1 W \\
+$P_h$ & 80 W & $P_f$ & 240 W \\
+$P_s$ & 200 W & $P_{tr}$ & 10 W \\
+$B_{iu}$ & 1 MHz & $B_{su}$ & 10 MHz \\
+$f_s$ & 20 GHz & $\beta_0$ & $9.89 \times 10^{-5}$ \\
+$G_{tr}$ & 10 dBi & $G_{re}$ & 30 dBi \\
+$r_e$ & 6378 km & $h_u$ & 200 m \\
+$\theta_{\text{min}}$ & 15° & $\rho$ & 0.8 \\
+$\omega_E$ & 7.29 rad/s & $c^{sa}$ & 25 Mbit/s \\
+$\sigma_{iu}^2$ & $10^{-18}$ W & $\sigma_{su}^2$ & $4 \times 10^{-14}$ W \\
+\bottomrule
+\end{tabularx}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SIMULATION RESULTS}
+
+In this section, we conduct simulations to evaluate the performance of the proposed algorithms. IoT devices are randomly distributed within a square area with a side length of 500 meters. Three UAVs, located in $15^\circ\mathrm{N},\ 118^\circ\mathrm{E}$, start moving from the center of the area at a certain moment. 200 LEO satellites are randomly selected from Starlink. The main simulation parameters are listed in Table. I.
+
+\begin{figure}[H]
+%\isPreprints{\centering}{} % Only used for preprints
+\includegraphics[width=4.0 cm]{Definitions/logo-mdpi}
+\caption{This is a figure. Schemes follow the same formatting.\label{fig1}}
+\end{figure}   
+\unskip
+
+
+% Example of a figure that spans the whole page width and with subfigures. The same concept works for tables, too.
+\begin{figure}[H]
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\subfloat[\centering]{\includegraphics[width=7.0cm]{Definitions/logo-mdpi}}
+%\hfill
+\subfloat[\centering]{\includegraphics[width=7.0cm]{Definitions/logo-mdpi}}\\
+\subfloat[\centering]{\includegraphics[width=7.0cm]{Definitions/logo-mdpi}}
+%\hfill
+\subfloat[\centering]{\includegraphics[width=7.0cm]{Definitions/logo-mdpi}}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\caption{This is a wide figure. Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. (\textbf{c}) Description of what is contained in the third panel. (\textbf{d}) Description of what is contained in the fourth panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.\label{fig2}}
+\end{figure} 
+
+
+
+%\begin{listing}[H]
+%\caption{Title of the listing}
+%\rule{\columnwidth}{1pt}
+%\raggedright Text of the listing. In font size footnotesize, small, or normalsize. Preferred format: left aligned and single spaced. Preferred border format: top border line and bottom border line.
+%\rule{\columnwidth}{1pt}
+%\end{listing}
+
+
+
+%% If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph.
+
+
+%\isPreprints{}{% This command is only used for ``preprints''.
+
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+
+%% Example of a page in landscape format (with table and table footnote).
+%\startlandscape
+%\begin{table}[H] %% Table in wide page
+%%\isPreprints{\centering}{} % This command is only used for ``preprints''.
+%\caption{This is a very wide table.\label{tab3}}
+%	\begin{tabularx}{\textwidth}{CCCC}
+%		\toprule
+%		\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}	& \textbf{Title 4}\\
+%		\midrule
+%		Entry 1		& Data			& Data			& This cell has some longer content that runs over two lines.\\
+%		Entry 2		& Data			& Data			& Data\textsuperscript{1}\\
+%		\bottomrule
+%	\end{tabularx}
+%%\isPreprints{}{% This command is only used for ``preprints''.
+%	\begin{adjustwidth}{+\extralength}{0cm}
+%%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%		\noindent\footnotesize{\textsuperscript{1} This is a table footnote.}
+%%\isPreprints{}{% This command is only used for ``preprints''.
+%	\end{adjustwidth}
+%%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\end{table}
+%\finishlandscape
+
+
+%% Example of a theorem:
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+Authors should discuss the results and how they can be interpreted from the perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+In this paper, we address the data collection and offloading problem by integrating UAVs trajectories planning and LEO satellite selection in SAGIN. The problem is formulated to minimize the energy consumption with the constraints on multi-dimension variables. Specifically, in the data collection  phase from IoT to UAV, the algorithm is designed to optimize the IoT pairing, power optimization, UAV trajectory planning. In the data offloading phase from UAV to LEO, a real-time LEO satellite selection mechanism joint with STK is proposed. Finally, simulation results verified the effectiveness of the proposed approach, with about 10\% less energy consumption compared with the benchmark algorithm.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Patents}
+
+This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
+
+% Only for journal Methods and Protocols:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
+
+% Only used for preprtints:
+% \supplementary{The following supporting information can be downloaded at the website of this paper posted on \href{https://www.preprints.org/}{Preprints.org}.}
+
+% Only for journal Hardware:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.\vspace{6pt}\\
+%\begin{tabularx}{\textwidth}{lll}
+%\toprule
+%\textbf{Name} & \textbf{Type} & \textbf{Description} \\
+%\midrule
+%S1 & Python script (.py) & Script of python source code used in XX \\
+%S2 & Text (.txt) & Script of modelling code used to make Figure X \\
+%S3 & Text (.txt) & Raw data from experiment X \\
+%S4 & Video (.mp4) & Video demonstrating the hardware in use \\
+%... & ... & ... \\
+%\bottomrule
+%\end{tabularx}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work~reported.}
+
+\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+
+\institutionalreview{In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.}
+
+\informedconsent{Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
+
+Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.}
+
+\dataavailability{We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.} 
+
+% Only for journal Drones
+%\durcstatement{Current research is limited to the [please insert a specific academic field, e.g., XXX], which is beneficial [share benefits and/or primary use] and does not pose a threat to public health or national security. Authors acknowledge the dual-use potential of the research involving xxx and confirm that all necessary precautions have been taken to prevent potential misuse. As an ethical responsibility, authors strictly adhere to relevant national and international laws about DURC. Authors advocate for responsible deployment, ethical considerations, regulatory compliance, and transparent reporting to mitigate misuse risks and foster beneficial outcomes.}
+
+% Only for journal Nursing Reports
+%\publicinvolvement{Please describe how the public (patients, consumers, carers) were involved in the research. Consider reporting against the GRIPP2 (Guidance for Reporting Involvement of Patients and the Public) checklist. If the public were not involved in any aspect of the research add: ``No public involvement in any aspect of this research''.}
+%
+%% Only for journal Nursing Reports
+%\guidelinesstandards{Please add a statement indicating which reporting guideline was used when drafting the report. For example, ``This manuscript was drafted against the XXX (the full name of reporting guidelines and citation) for XXX (type of research) research''. A complete list of reporting guidelines can be accessed via the equator network: \url{https://www.equator-network.org/}.}
+%
+%% Only for journal Nursing Reports
+%\useofartificialintelligence{Please describe in detail any and all uses of artificial intelligence (AI) or AI-assisted tools used in the preparation of the manuscript. This may include, but is not limited to, language translation, language editing and grammar, or generating text. Alternatively, please state that “AI or AI-assisted tools were not used in drafting any aspect of this manuscript”.}
+
+\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments). Where GenAI has been used for purposes such as generating text, data, or graphics, or for study design, data collection, analysis, or interpretation of data, please add “During the preparation of this manuscript/study, the author(s) used [tool name, version information] for the purposes of [description of use]. The authors have reviewed and edited the output and take full responsibility for the content of this publication.”}
+
+\conflictsofinterest{Declare conflicts of interest or state ``The authors declare no conflicts of interest.'' Authors must identify and declare any personal circumstances or interest that may be perceived as inappropriately influencing the representation or interpretation of reported research results. Any role of the funders in the design of the study; in the collection, analyses or interpretation of data; in the writing of the manuscript; or in the decision to publish the results must be declared in this section. If there is no role, please state ``The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results''.} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+%% Only for journal Encyclopedia
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+
+\abbreviations{Abbreviations}{
+The following abbreviations are used in this manuscript:
+\\
+
+\noindent 
+\begin{tabular}{@{}ll}
+MDPI & Multidisciplinary Digital Publishing Institute\\
+DOAJ & Directory of open access journals\\
+TLA & Three letter acronym\\
+LD & Linear dichroism
+\end{tabular}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
+\appendix
+\section[\appendixname~\thesection]{}
+\subsection[\appendixname~\thesubsection]{}
+The appendix is an optional section that can contain details and data supplemental to the main text---for example, explanations of experimental details that would disrupt the flow of the main text but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data are shown in the main text can be added here if brief, or as Supplementary Data. Mathematical proofs of results not central to the paper can be added as an appendix.
+
+\begin{table}[H] 
+\caption{This is a table caption.\label{tab5}}
+%\newcolumntype{C}{>{\centering\arraybackslash}X}
+\begin{tabularx}{\textwidth}{CCC}
+\toprule
+\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
+\midrule
+Entry 1		& Data			& Data\\
+Entry 2		& Data			& Data\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section[\appendixname~\thesection]{}
+All appendix sections must be cited in the main text. In the appendices, Figures, Tables, etc. should be labeled, starting with ``A''---e.g., Figure A1, Figure A2, etc.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+\reftitle{References}
+
+% Please provide the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/).
+% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
+
+%=====================================
+% References, variant A: external bibliography
+%=====================================
+% \bibliography{your_external_BibTeX_file}
+
+%=====================================
+% References, variant B: internal bibliography
+%=====================================
+
+% ACS format
+\begin{thebibliography}{999}
+% Reference 1
+\bibitem{jia2020leo}
+Jia, Z.; Sheng, M.; Li, J.; Niyato, D.; Han, Z.
+LEO-satellite-assisted UAV: Joint trajectory and data collection for Internet of Remote Things in 6G aerial access networks.
+{\em IEEE Internet Things J.} {\bf 2020}, {\em 8}, 9814--9826.
+
+% Reference 2
+\bibitem{xiao2024space}
+Xiao, Y.; Ye, Z.; Wu, M.; Li, H.; Xiao, M.; Alouini, M.-S.; Al-Hourani, A.; Cioni, S.
+Space-air-ground integrated wireless networks for 6G: Basics, key technologies and future trends.
+{\em IEEE J. Sel. Areas Commun.} {\bf 2024}.
+
+% Reference 3
+\bibitem{duan2022distributed}
+Duan, S.; Wang, D.; Ren, J.; Lyu, F.; Zhang, Y.; Wu, H.; Shen, X.
+Distributed artificial intelligence empowered by end-edge-cloud computing: A survey.
+{\em IEEE Commun. Surv. Tutor.} {\bf 2022}, {\em 25}, 591--624.
+
+% Reference 4
+\bibitem{wei2024energy}
+Wei, Q.; Chen, Y.; Jia, Z.; Bai, W.; Pei, T.; Wu, Q.
+Energy-efficient caching and user selection for resource-limited SAGINs in emergency communications.
+{\em IEEE Trans. Commun.} {\bf 2024}.
+
+% Reference 5
+\bibitem{pan2022latency}
+Pan, G.; Ye, J.; An, J.; Alouini, M.-S.
+Latency versus reliability in LEO mega-constellations: Terrestrial, aerial, or space relay?
+{\em IEEE Trans. Mob. Comput.} {\bf 2022}, {\em 22}, 5330--5345.
+
+% Reference 6
+\bibitem{jia2025distributionally}
+Jia, Z.; Cui, C.; Dong, C.; Wu, Q.; Ling, Z.; Niyato, D.; Han, Z.
+Distributionally robust optimization for aerial multi-access edge computing via cooperation of UAVs and HAPs.
+{\em IEEE Trans. Mob. Comput.} {\bf 2025}.
+
+% Reference 7
+\bibitem{mao2020joint}
+Mao, S.; He, S.; Wu, J.
+Joint UAV position optimization and resource scheduling in space-air-ground integrated networks with mixed cloud-edge computing.
+{\em IEEE Syst. J.} {\bf 2020}, {\em 15}, 3992--4002.
+
+% Reference 8
+\bibitem{zhao2021multi}
+Zhao, C.; Liu, J.; Sheng, M.; Teng, W.; Zheng, Y.; Li, J.
+Multi-UAV trajectory planning for energy-efficient content coverage: A decentralized learning-based approach.
+{\em IEEE J. Sel. Areas Commun.} {\bf 2021}, {\em 39}, 3193--3207.
+% Reference 9
+\bibitem{mozaffari2019tutorial}
+Mozaffari, M.; Saad, W.; Bennis, M.; Nam, Y.-H.; Debbah, M.
+A tutorial on UAVs for wireless networks: Applications, challenges, and open problems.
+{\em IEEE Commun. Surv. Tutor.} {\bf 2019}, {\em 21}, 2334--2360.
+% Reference 10
+\bibitem{tao2015survey}
+Tao, Y.; Liu, L.; Liu, S.; Zhang, Z.
+A survey: Several technologies of non-orthogonal transmission for 5G.
+{\em China Commun.} {\bf 2015}, {\em 12}, 1--15.
+% Reference 11
+\bibitem{fang2022noma}
+Fang, X.; Feng, W.; Wang, Y.; Chen, Y.; Ge, N.; Ding, Z.; Zhu, H.
+NOMA-based hybrid satellite-UAV-terrestrial networks for 6G maritime coverage.
+{\em IEEE Trans. Wireless Commun.} {\bf 2022}, {\em 22}, 138--152.
+% Reference 12
+\bibitem{jia2025service}
+Jia, Z.; Cao, Y.; He, L.; Wu, Q.; Zhu, Q.; Niyato, D.; Han, Z.
+Service function chain dynamic scheduling in space-air-ground integrated networks.
+{\em IEEE Trans. Veh. Technol.} {\bf 2025}.
+% Reference 13
+\bibitem{huang2024joint}
+Huang, C.; Chen, G.; Xiao, P.; Xiao, Y.; Han, Z.; Chambers, J. A.
+Joint offloading and resource allocation for hybrid cloud and edge computing in SAGINs: A decision assisted hybrid action space deep reinforcement learning approach.
+{\em IEEE J. Sel. Areas Commun.} {\bf 2024}, {\em 42}, 1029--1043.
+% Reference 14
+\bibitem{jia2024dynamic}
+Jia, H.; Wang, Y.; Wu, W.
+Dynamic resource allocation for remote IoT data collection in SAGIN.
+{\em IEEE Internet Things J.} {\bf 2024}, {\em 11}, 20575--20589.
+% Reference 15
+\bibitem{seyedi2012trace}
+Seyedi, Y.; Rahimi, F.
+A trace-time framework for prediction of elevation angle over land mobile LEO satellites networks.
+{\em Wirel. Pers. Commun.} {\bf 2012}, {\em 62}, 793--804.
+% Reference 16
+\bibitem{d2020learning}
+d O Costa, P. R.; Rhuggenaath, J.; Zhang, Y.; Akcay, A.
+Learning 2-opt heuristics for the traveling salesman problem via deep reinforcement learning.
+{\em Asian Conf. Mach. Learn.} {\bf 2020}, 465--480.
+
+\end{thebibliography}
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+% For the MDPI journals use author-date citation, please follow the formatting guidelines on http://www.mdpi.com/authors/references
+% To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
+% To cite two works by the same author with specific pages: \citeauthor{ref-journal-3a} (\citeyear{ref-journal-3a}, p. 328; \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\end{document}
+
