@@ -7,7 +7,10 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{amssymb}
+\usepackage{comment}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit}
 %\documentclass[preprints,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
 % For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal. Changing "submit" to "accept" before posting will remove line numbers.
 
@@ -323,50 +326,106 @@ Demand-Aware  Handover does not seek to solve an optimal global objective functi
 Constraint \ref{eq:p2_total} represents the total amount of data successfully offloaded during the mission must satisfy $D_u$ is the task data size to be transmitted. Constraint \ref{eq:p2_visible} represents communication continuity requires that the UAV is associated with at most one visible satellite at any time. Constraint \ref{eq:p2_elevation} represents only satellites satisfying the minimum elevation constraint are eligible for association. Constraint \ref{eq:p2_remaining} ensures that switching is triggered only when the current satellite can no longer satisfy the remaining demand under predicted link evolution where $D_u^{rem}(t)$ denotes the remaining data to be uploaded at time $t$.
 
 \section{ALGORITHM DESIGN}
-Since the proposed SAGIN model incorporates two phases, and the LEO satellite selection can be determined after the UAVs trajectories are planned, $\mathcal{P}_0$ can be decoupled into two stages for effective solutions.In detail, Algorithm 1 is performed to obtain the IoT pairing, power allocation, and flight trajectories of UAVs in the data collection from IoT to UAVs. In the data offloading from the UAV to LEO, the LEO satellite with the best link throughput is selected to reduce the energy consumption through Algorithm 2.
+
+The model is divided into two stages to achieve an effective solution. Specifically: during the data transmission phase from IoT devices to drones, Algorithm 1 completes IoT pairing, power allocation, and drone flight path planning; during the data transmission phase from drones to low-orbit satellites, Algorithm 2 selects link-demand-aware low-orbit satellites to ensure QoS.
 
 \subsection{UAV Data Collection and Energy Optimization}
-In order to effectively solve problem $\mathcal{P}_0$, we firstly consider the total energy consumption $E^{total}_{iu}$ in the IoT-UAV phase.Specially, the nearest two IoT device nodes are paired to quickly obtain the NOMA groups. Then, the optimization problem of IoT power and UAV hovering points is a non-convex problem. As shown in Algorithm 1, we decompose the problem, in which the hovering positions of UAVs and the transmission power are solved alternately for each pair of nodes (lines 3-10).In detail, with the fixed transmission power of one device, the transmission power of the other device is updated via the Newton method in turn until reaching the convergence. The hovering position of the UAV is updated by the Nelder-Mead method until the result converges. Moreover, UAVs directly hover above the unpaired IoT devices which adopt the OFDMA technology, and the unpaired IoT devices transmit data with the maximum power $p_{max}$ to maximize the throughput.
 
-Based on the given hovering points, the UAV trajectory planning problem is essentially transformed into a multiple traveling salesman problem.To solve the problem effectively, we employ the 2-opt local search for trajectory optimization \cite{d2020learning}.In detail, after generating initial solutions for UAV trajectories, the objective function values are calculated regarding the flight distance.Then, the top three best solutions are obtained and denoted as $\alpha$, $\beta$ and $\gamma$ wolves, respectively. By updating the positions of the three wolves based on the fitness values until the convergence is achieved, the best UAVs trajectories solution can be obtained.
+To effectively solve problem $\mathcal{P}_1$, the total energy consumption in the IoT-UAV phase is considered. Since the IoT transmission energy is negligible compared to UAV hovering and flight energy, the optimization focuses on minimizing the UAV energy consumption, which consists of hovering energy and flight energy. The problem involves coupled discrete pairing decisions $\delta = \{\delta_p | p \in \mathcal{P}\}$, continuous transmit power variables $\mathbf{p} = \{p_k | k \in \mathcal{K}\}$, and UAV hovering positions $\mathbf{q} = \{\mathbf{q}_u(n) | u \in \mathcal{U}\}$. This mixed-integer nonlinear programming problem is challenging to solve directly. Therefore, an algorithm framework based on alternating optimization and local search is proposed, as illustrated in Fig.~\ref{fig:algorithm_flowchart} and detailed in Algorithm~1.
 
-To obtain better NOMA groups, an operation of exchanging device nodes and updating the matching pairs is introduced, as shown in Algorithm 2 (lines 12-19). To be specific, all the unpaired nodes are tried to traverse with each other to check if there are any paired nodes that can be recombined, and these nodes are repaired. The potential NOMA groups in the new set of unpaired nodes are preferred to be paired with high priorities.Then, the energy consumption is updated after the repairing operations, and the IoT pairing relationships are selected with the lowest energy cost. Similarly, for two NOMA groups that are close to each other, the paired nodes can be exchanged to update the pairing relationship. By performing the exchanging operations between NOMA pairs and isolated OFDMA nodes, more NOMA pairs and less energy consumption are enabled for further optimization.
-\begin{algorithm}[ht]
+The initial NOMA pairs are constructed based on distance constraints. Specifically, the distance matrix among all IoT devices is computed, and NOMA pairs are formed by grouping the two nearest devices that satisfy the pairing constraint into the pair set $\mathcal{P}$. This process repeats until no new valid pairs can be formed, and the remaining devices operate as independent OFDMA nodes.
+
+For each activated pair $p \in \mathcal{P}$ with $\delta_p = 1$, an alternating optimization strategy is adopted to jointly optimize power allocation and hovering positions. Given fixed UAV hovering position $(x_u, y_u, h_u)$, the transmit powers of paired devices are iteratively updated using Newton's method. For a NOMA pair $p = \{k, m\}$, $p_m$ is alternately updated while fixing $p_k$ and vice versa until convergence. For independent OFDMA nodes, $p_k = p_{\max}$ is directly set to maximize throughput.
+
+Given fixed power allocation, the UAV hovering position $(x_u, y_u)$ (with altitude $h_u$ kept fixed) is optimized using the Adam optimizer. Unlike gradient-free methods, Adam leverages adaptive learning rates and momentum to achieve faster convergence and finer position adjustments. The position update rule is given by:
+\begin{align}
+\mathbf{m}_t &= \beta_1 \mathbf{m}_{t-1} + (1-\beta_1)\nabla_{\mathbf{q}} E_{\text{total}}, \\
+\mathbf{v}_t &= \beta_2 \mathbf{v}_{t-1} + (1-\beta_2)(\nabla_{\mathbf{q}} E_{\text{total}})^2, \\
+\mathbf{q}_u^{(t+1)} &= \mathbf{q}_u^{(t)} - \alpha \frac{\hat{\mathbf{m}}_t}{\sqrt{\hat{\mathbf{v}}_t} + \epsilon},
+\end{align}
+where $\mathbf{m}_t$ and $\mathbf{v}_t$ are the first and second moment estimates, $\alpha$ is the learning rate, and $\beta_1, \beta_2$ are decay rates. The alternating optimization process iterates until reaching the maximum iteration count $J$ or until the objective function change falls below a threshold.
+
+After obtaining all hovering positions, the UAV visiting order must be planned to minimize flight distance. This problem is essentially a variant of the multiple traveling salesman problem (mTSP). The 2-opt local search algorithm is employed for trajectory optimization. The 2-opt algorithm iteratively removes two edges from the trajectory and reconnects them to eliminate path crossings, thereby progressively improving solution quality until reaching a local optimum. Compared to metaheuristic methods, 2-opt provides faster convergence and more stable performance for trajectory optimization.
+
+To further reduce energy consumption, a pair recombination mechanism is introduced. All unpaired nodes are traversed to check if there exist opportunities to recombine with existing paired nodes. If an unpaired node is closer to one member of an existing pair, the original pair is broken and a new NOMA pair is formed. For two spatially close NOMA pairs, their members are exchanged to reduce UAV flight distance or hovering time.
+
+After each recombination or exchange operation, the UAV trajectory and total energy consumption are recalculated. The new configuration is accepted if it yields lower energy consumption; otherwise, the original configuration is retained. Through multiple rounds of exchange operations, the algorithm can escape local optima and obtain better NOMA pairing schemes. The complete algorithm flow is presented in Algorithm~1 with the corresponding flowchart shown in Fig.~\ref{fig:algorithm_flowchart}.
+
+\begin{figure*}[!t]
+\centering
+\begin{tikzpicture}[
+    node distance=1.2cm and 2.5cm,
+    startstop/.style={ellipse, draw, fill=red!20, text centered, minimum height=0.7cm, minimum width=2cm, font=\footnotesize},
+    process/.style={rectangle, draw, fill=blue!15, text centered, text width=2.5cm, minimum height=0.8cm, font=\footnotesize},
+    decision/.style={diamond, draw, fill=green!15, text centered, minimum height=1cm, minimum width=1cm, aspect=1.5, font=\footnotesize, inner sep=2pt},
+    arrow/.style={thick,->,>=stealth}
+]
+
+% 第一列（从上到下）
+\node (start) [startstop] {Start};
+\node (init) [process, below=of start] {Initialize\\Parameters};
+\node (pairing) [process, below=of init] {NOMA\\Pairing};
+
+% 第二列（从下到上）
+\node (optimization) [process, right=of pairing] {Power \&\\Position Opt.};
+\node (trajectory) [process, above=of optimization] {Trajectory\\Planning};
+
+% 第三列（从上到下）
+\node (exchange) [process, right=of trajectory] {Pair\\Recombination};
+\node (check) [decision, below=of exchange] {Improved?};
+\node (stop) [startstop, below=of check] {Output};
+
+% 主流程箭头
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (pairing);
+\draw [arrow] (pairing) -- node[midway, below, font=\tiny] {} (optimization);
+\draw [arrow] (optimization) -- (trajectory);
+\draw [arrow] (trajectory) -- node[midway, below, font=\tiny] {} (exchange);
+\draw [arrow] (exchange) -- (check);
+\draw [arrow] (check) -- node[near start, right, font=\tiny] {No} (stop);
+
+% 反馈循环：从check向左转弯再向上到exchange
+\draw [arrow] (check) -- ++(-1.5,0) |- node[near start, left, font=\tiny] {Yes} (exchange);
+
+% 可选：添加小注释框（使用虚线边框，放在节点下方）
+\node[below=0.1cm of optimization, font=\scriptsize, text=gray] {Eq. (19)-(21)};
+\node[below=0.1cm of trajectory, font=\scriptsize, text=gray] {2-opt};
+
+\end{tikzpicture}
+\caption{Flowchart of the proposed algorithm for UAV data collection and energy optimization.}
+\label{fig:algorithm_flowchart}
+\end{figure*}
+
+\begin{algorithm}
 \caption{UAV Data Collection and Energy Optimization}
-\label{alg:uav_energy_optimization}
-
-\textbf{Input:} All IoT devices' positions $\mathbf{q}_k$ and corresponding packets $D_k$, and UAV initial position $\mathbf{q}_u(0)$.
-
-\textbf{Output:} Energy consumption $E_{\text{total}}^{\text{itu}}$.
-
+\label{alg:p1_optimization}
 \begin{algorithmic}[1]
+\State \textbf{Input:} All IoT devices' positions $\mathbf{q}_k$ and corresponding packets $D_k$, UAV initial position $\mathbf{q}_u(0)$
+\State \textbf{Output:} Energy consumption $E_{\text{total}}$
 \State Initialize distance matrix and maximum iterations $J$
 \State Form NOMA pairs from two nearest devices under distance constraints
 \State Obtain lists of paired and unpaired nodes
-
 \For{each paired nodes $(k, m)$}
-    \State Initialize transmission powers $p_k$, $p_m$
+    \State Initialize transmission powers $p_k, p_m$
     \State Initialize hover position $(x_u, y_u, h_u)$
-    \State Set iteration counter $j \gets 0$
+    \State Set iteration counter $j \leftarrow 0$
     \While{$j \leq J$}
-        \State Update $p_k^{(j)}$, $p_m^{(j)}$ using Newton's method
-        \State Update $(x_u^{(j)}, y_u^{(j)}, h_u)$ using Nelder-Mead method
-        \State $j \gets j + 1$
+        \State Update $p_k^{(j)}, p_m^{(j)}$ using Newton's method
+        \State Update $(x_u^{(j)}, y_u^{(j)}, h_u)$ using Adam optimizer
+        \State $j \leftarrow j + 1$
     \EndWhile
 \EndFor
-
-\State Optimize UAV trajectories using Gray Wolf Optimization
-\State Compute energy consumption $E_{\text{total}}^{\text{itu}}$ using Eq.~(9)
-
+\State Optimize UAV trajectories using 2-opt local search
+\State Compute energy consumption $E_{\text{total}}$ using Eq.~(9)
 \For{each node combination (unpaired and paired)}
     \State Exchange nodes between paired and unpaired groups
     \State Update UAV trajectories and device transmission powers
-    \State Calculate new energy consumption $E_{\text{new}}^{\text{total}}$ using Eq.~(9)
-    \If{$E_{\text{new}}^{\text{total}} < E_{\text{total}}^{\text{itu}}$}
-        \State $E_{\text{total}}^{\text{itu}} \gets E_{\text{new}}^{\text{total}}$
+    \State Calculate new energy consumption $E_{\text{new}}$ using Eq.~(9)
+    \If{$E_{\text{new}} < E_{\text{total}}$}
+        \State $E_{\text{total}} \leftarrow E_{\text{new}}$
     \EndIf
 \EndFor
-
+\State \Return $E_{\text{total}}$
 \end{algorithmic}
 \end{algorithm}
 
