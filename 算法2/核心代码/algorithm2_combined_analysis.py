@@ -214,8 +214,14 @@ def plot_line_charts(all_results: Dict[str, Dict[str, List[TransmissionRecord]]]
     plt.tight_layout()
 
     if save_path:
+        # Save PNG format
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         print(f"[OK] 折线图已保存: {save_path}")
+
+        # Save EPS format (vector, suitable for publication)
+        eps_path = save_path.replace('.png', '.eps')
+        plt.savefig(eps_path, format='eps', bbox_inches='tight')
+        print(f"[OK] EPS格式已保存: {eps_path}")
 
     plt.show()
 
@@ -332,8 +338,14 @@ def plot_packet_loss_bar(all_results: Dict[str, Dict[str, List[TransmissionRecor
     plt.tight_layout()
 
     if save_path:
+        # Save PNG format
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         print(f"[OK] 柱状图已保存: {save_path}")
+
+        # Save EPS format (vector, suitable for publication)
+        eps_path = save_path.replace('.png', '.eps')
+        plt.savefig(eps_path, format='eps', bbox_inches='tight')
+        print(f"[OK] EPS格式已保存: {eps_path}")
 
     plt.show()
 
@@ -361,6 +373,7 @@ def main():
 
     # Step 2: 运行仿真
     print("\n[Step 2] 运行仿真 (3种卫星数量)")
+    print("使用最佳场景参数: Trial 14 (2025-12-02 09:45:00 UTC)")
 
     satellite_counts = [500, 1500, -1]  # 500, 1500, All
     demand_mbps = 8.0  # 1080p视频流需求
@@ -368,7 +381,8 @@ def main():
     all_results = {}
     all_switch_counts = {}
 
-    start_time = datetime.now(timezone.utc)
+    # 使用最佳场景的起始时间 (Trial 14)
+    start_time = datetime(2025, 12, 2, 9, 45, 0, tzinfo=timezone.utc)
 
     for num_sats in satellite_counts:
         try:

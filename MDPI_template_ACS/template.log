@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  2 DEC 2025 15:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  3 DEC 2025 00:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1450,13 +1450,13 @@ Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
 converted-to.pdf Definitions/logo-mdpi.eps>
 (epstopdf)             \includegraphics on input line 174.
 Package epstopdf Info: Output file is already uptodate.
-<Definitions/logo-mdpi-eps-converted-to.pdf, id=60, 74.2775pt x 49.18375pt>
+<Definitions/logo-mdpi-eps-converted-to.pdf, id=76, 74.2775pt x 49.18375pt>
 File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
 <use Definitions/logo-mdpi-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
 put line 174.
 (pdftex.def)             Requested size: 42.96877pt x 28.45274pt.
-<Definitions/logo-orcid.pdf, id=62, 102.3825pt x 102.3825pt>
+<Definitions/logo-orcid.pdf, id=78, 102.3825pt x 102.3825pt>
 File: Definitions/logo-orcid.pdf Graphic file (type pdf)
 <use Definitions/logo-orcid.pdf>
 Package pdftex.def Info: Definitions/logo-orcid.pdf  used on input line 174.
@@ -1483,6 +1483,44 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/texlive/2025/texmf-dist/fonts/enc/dv
 ips/cm-super/cm-super-t1.enc} <./Definitions/logo-mdpi-eps-converted-to.pdf> <.
 /Definitions/logo-orcid.pdf>]
+Package epstopdf Info: Source file: <Definitions/figure1.eps>
+(epstopdf)                    date: 2025-12-02 23:54:54
+(epstopdf)                    size: 1053200 bytes
+(epstopdf)             Output file: <Definitions/figure1-eps-converted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:57:55
+(epstopdf)                    size: 326052 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/figure1-eps-co
+nverted-to.pdf Definitions/figure1.eps>
+(epstopdf)             \includegraphics on input line 197.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/figure1-eps-converted-to.pdf, id=121, 452.69125pt x 233.87375pt>
+File: Definitions/figure1-eps-converted-to.pdf Graphic file (type pdf)
+<use Definitions/figure1-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/figure1-eps-converted-to.pdf  used on inpu
+t line 197.
+(pdftex.def)             Requested size: 374.63625pt x 193.54773pt.
+Package epstopdf Info: Source file: <Definitions/figure2.eps>
+(epstopdf)                    date: 2025-12-03 00:01:45
+(epstopdf)                    size: 290545 bytes
+(epstopdf)             Output file: <Definitions/figure2-eps-converted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:57:57
+(epstopdf)                    size: 95267 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/figure2-eps-co
+nverted-to.pdf Definitions/figure2.eps>
+(epstopdf)             \includegraphics on input line 207.
+runsystem(repstopdf --outfile=Definitions/figure2-eps-converted-to.pdf Definiti
+ons/figure2.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <Definitions/figure2-eps-converted-to.pdf>
+(epstopdf)                    date: 2025-12-03 00:02:28
+(epstopdf)                    size: 100368 bytes.
+<Definitions/figure2-eps-converted-to.pdf, id=122, 339.2675pt x 388.45125pt>
+File: Definitions/figure2-eps-converted-to.pdf Graphic file (type pdf)
+<use Definitions/figure2-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/figure2-eps-converted-to.pdf  used on inpu
+t line 207.
+(pdftex.def)             Requested size: 374.63625pt x 428.96324pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1498,7 +1536,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[3]
+[3 <./Definitions/figure1-eps-converted-to.pdf> <./Definitions/figure2-eps-conv
+erted-to.pdf>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1523,9 +1562,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [6]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 400.
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1534,22 +1570,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [7]
-Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 563678 bytes
-(epstopdf)             Output file: <Definitions/logo-mdpi-eps-converted-to.pdf
->
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 13388 bytes
-(epstopdf)             Command: <repstopdf --outfile=Definitions/logo-mdpi-eps-
-converted-to.pdf Definitions/logo-mdpi.eps>
-(epstopdf)             \includegraphics on input line 513.
-Package epstopdf Info: Output file is already uptodate.
-File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
-<use Definitions/logo-mdpi-eps-converted-to.pdf>
-Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
-put line 513.
-(pdftex.def)             Requested size: 113.81102pt x 75.36493pt.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 413.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1559,71 +1581,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [8]
-Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 563678 bytes
-(epstopdf)             Output file: <Definitions/logo-mdpi-eps-converted-to.pdf
->
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 13388 bytes
-(epstopdf)             Command: <repstopdf --outfile=Definitions/logo-mdpi-eps-
-converted-to.pdf Definitions/logo-mdpi.eps>
-(epstopdf)             \includegraphics on input line 525.
-Package epstopdf Info: Output file is already uptodate.
-File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
-<use Definitions/logo-mdpi-eps-converted-to.pdf>
-Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
-put line 525.
-(pdftex.def)             Requested size: 199.16928pt x 131.90251pt.
-Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 563678 bytes
-(epstopdf)             Output file: <Definitions/logo-mdpi-eps-converted-to.pdf
->
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 13388 bytes
-(epstopdf)             Command: <repstopdf --outfile=Definitions/logo-mdpi-eps-
-converted-to.pdf Definitions/logo-mdpi.eps>
-(epstopdf)             \includegraphics on input line 527.
-Package epstopdf Info: Output file is already uptodate.
-File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
-<use Definitions/logo-mdpi-eps-converted-to.pdf>
-Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
-put line 527.
-(pdftex.def)             Requested size: 199.16928pt x 131.90251pt.
-Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 563678 bytes
-(epstopdf)             Output file: <Definitions/logo-mdpi-eps-converted-to.pdf
->
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 13388 bytes
-(epstopdf)             Command: <repstopdf --outfile=Definitions/logo-mdpi-eps-
-converted-to.pdf Definitions/logo-mdpi.eps>
-(epstopdf)             \includegraphics on input line 528.
-Package epstopdf Info: Output file is already uptodate.
-File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
-<use Definitions/logo-mdpi-eps-converted-to.pdf>
-Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
-put line 528.
-(pdftex.def)             Requested size: 199.16928pt x 131.90251pt.
-Package epstopdf Info: Source file: <Definitions/logo-mdpi.eps>
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 563678 bytes
-(epstopdf)             Output file: <Definitions/logo-mdpi-eps-converted-to.pdf
->
-(epstopdf)                    date: 2025-12-01 10:11:56
-(epstopdf)                    size: 13388 bytes
-(epstopdf)             Command: <repstopdf --outfile=Definitions/logo-mdpi-eps-
-converted-to.pdf Definitions/logo-mdpi.eps>
-(epstopdf)             \includegraphics on input line 530.
-Package epstopdf Info: Output file is already uptodate.
-File: Definitions/logo-mdpi-eps-converted-to.pdf Graphic file (type pdf)
-<use Definitions/logo-mdpi-eps-converted-to.pdf>
-Package pdftex.def Info: Definitions/logo-mdpi-eps-converted-to.pdf  used on in
-put line 530.
-(pdftex.def)             Requested size: 199.16928pt x 131.90251pt.
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1639,127 +1596,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[10
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.8}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.9}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.10})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.11})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.12})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.13})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.14})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.15})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.16})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.17})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.18})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.19})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.20})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.586 
-      ] Excluding 'comment' comment.
+[10]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1767,24 +1604,317 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[11] 
+[11
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.8}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.9}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.10})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.11})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.12})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.13})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.14})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.15})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.16})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.17})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.18})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.19})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.20})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.535 
+      ]
+Package epstopdf Info: Source file: <Definitions/comparison_4algorithms.eps>
+(epstopdf)                    date: 2025-12-02 23:01:17
+(epstopdf)                    size: 107800 bytes
+(epstopdf)             Output file: <Definitions/comparison_4algorithms-eps-con
+verted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:32:23
+(epstopdf)                    size: 31917 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/comparison_4al
+gorithms-eps-converted-to.pdf Definitions/comparison_4algorithms.eps>
+(epstopdf)             \includegraphics on input line 543.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/comparison_4algorithms-eps-converted-to.pdf, id=444, 1003.75pt x 8
+58.20625pt>
+File: Definitions/comparison_4algorithms-eps-converted-to.pdf Graphic file (typ
+e pdf)
+<use Definitions/comparison_4algorithms-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/comparison_4algorithms-eps-converted-to.pd
+f  used on input line 543.
+(pdftex.def)             Requested size: 374.63625pt x 320.32062pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[12 <./Definitions/comparison_4algorithms-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Definitions/trajectory_comparison_4algorit
+hms.eps>
+(epstopdf)                    date: 2025-12-02 23:02:23
+(epstopdf)                    size: 131331 bytes
+(epstopdf)             Output file: <Definitions/trajectory_comparison_4algorit
+hms-eps-converted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:32:25
+(epstopdf)                    size: 55971 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/trajectory_com
+parison_4algorithms-eps-converted-to.pdf Definitions/trajectory_comparison_4alg
+orithms.eps>
+(epstopdf)             \includegraphics on input line 559.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf, id=512, 97
+9.66pt x 1027.84pt>
+File: Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf Graphi
+c file (type pdf)
+<use Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/trajectory_comparison_4algorithms-eps-conv
+erted-to.pdf  used on input line 559.
+(pdftex.def)             Requested size: 374.63625pt x 393.06126pt.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 560.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 560.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[13]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[14 <./Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Definitions/demand_aware_number_of_satelli
+tes.eps>
+(epstopdf)                    date: 2025-12-02 23:07:44
+(epstopdf)                    size: 71260 bytes
+(epstopdf)             Output file: <Definitions/demand_aware_number_of_satelli
+tes-eps-converted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:32:27
+(epstopdf)                    size: 25653 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/demand_aware_n
+umber_of_satellites-eps-converted-to.pdf Definitions/demand_aware_number_of_sat
+ellites.eps>
+(epstopdf)             \includegraphics on input line 589.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf, id=583, 10
+02.74625pt x 353.32pt>
+File: Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf Graphi
+c file (type pdf)
+<use Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/demand_aware_number_of_satellites-eps-conv
+erted-to.pdf  used on input line 589.
+(pdftex.def)             Requested size: 374.63625pt x 132.00407pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[15]
+Package epstopdf Info: Source file: <Definitions/packet_loss_analysis.eps>
+(epstopdf)                    date: 2025-12-02 23:07:49
+(epstopdf)                    size: 54009 bytes
+(epstopdf)             Output file: <Definitions/packet_loss_analysis-eps-conve
+rted-to.pdf>
+(epstopdf)                    date: 2025-12-02 23:32:29
+(epstopdf)                    size: 23477 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/packet_loss_an
+alysis-eps-converted-to.pdf Definitions/packet_loss_analysis.eps>
+(epstopdf)             \includegraphics on input line 601.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/packet_loss_analysis-eps-converted-to.pdf, id=591, 1002.74625pt x 
+353.32pt>
+File: Definitions/packet_loss_analysis-eps-converted-to.pdf Graphic file (type 
+pdf)
+<use Definitions/packet_loss_analysis-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/packet_loss_analysis-eps-converted-to.pdf 
+ used on input line 601.
+(pdftex.def)             Requested size: 374.63625pt x 132.00407pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[16 <./Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf> <./D
+efinitions/packet_loss_analysis-eps-converted-to.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[17]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[18]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[19]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[20] Excluding 'comment' comment.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[21] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./template.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-14>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: 597AA5F7DF7797EF892C2F9FD35E2F0E;1936.
+(rerunfilecheck)             Checksum: 4C9C3590D2EBB51E8EAAA9A2FC86765B;2825.
  ) 
 Here is how much of TeX's memory you used:
- 36144 strings out of 467538
- 672681 string characters out of 5423725
- 1196966 words of memory out of 5000000
- 63868 multiletter control sequences out of 15000+600000
- 705781 words of font info for 417 fonts, out of 8000000 for 9000
+ 36438 strings out of 467538
+ 682682 string characters out of 5423725
+ 1195963 words of memory out of 5000000
+ 64083 multiletter control sequences out of 15000+600000
+ 713758 words of font info for 472 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 123i,13n,121p,5041b,819s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,13n,121p,5041b,820s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
 live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dis
@@ -1795,10 +1925,10 @@ ri.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/t
 exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts
 /type1/urw/palatino/uplri8a.pfb>
-Output written on template.pdf (11 pages, 209403 bytes).
+Output written on template.pdf (21 pages, 799930 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
- 274 compressed objects within 3 object streams
- 109 named destinations out of 1000 (max. 500000)
- 105591 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 787 PDF objects out of 1000 (max. 8388607)
+ 376 compressed objects within 4 object streams
+ 124 named destinations out of 1000 (max. 500000)
+ 109749 words of extra memory for PDF output out of 128383 (max. 10000000)
 

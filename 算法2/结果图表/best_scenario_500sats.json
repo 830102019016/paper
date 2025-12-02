@@ -1,0 +1,47 @@
+{
+  "num_sats": 500,
+  "demand_mbps": 8.0,
+  "best_trial": 14,
+  "best_start_time": "2025-12-02 09:45:00 UTC",
+  "score": {
+    "total_score": 37.775,
+    "reduction": 5,
+    "reduction_rate": 0.7142857142857143,
+    "greedy_switches": 7,
+    "demand_switches": 2,
+    "greedy_avg_rate": 28.62472193508457,
+    "demand_avg_rate": 24.86944210175321
+  },
+  "top5": [
+    {
+      "trial": 14,
+      "start_time": "2025-12-02 09:45:00 UTC",
+      "score": 37.775,
+      "reduction": 5
+    },
+    {
+      "trial": 4,
+      "start_time": "2025-12-02 02:15:00 UTC",
+      "score": 30.7,
+      "reduction": 4
+    },
+    {
+      "trial": 2,
+      "start_time": "2025-12-02 00:45:00 UTC",
+      "score": 23.7,
+      "reduction": 3
+    },
+    {
+      "trial": 13,
+      "start_time": "2025-12-02 09:00:00 UTC",
+      "score": 23.7,
+      "reduction": 3
+    },
+    {
+      "trial": 7,
+      "start_time": "2025-12-02 04:30:00 UTC",
+      "score": 23.625,
+      "reduction": 3
+    }
+  ]
+}

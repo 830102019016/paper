@@ -355,8 +355,14 @@ def plot_trajectory_comparison(results_list, stats_list, iot_positions, save_pat
     plt.tight_layout(rect=[0, 0.04, 1, 1.0])
 
     if save_path:
+        # 保存PNG格式
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         print(f'\n可视化图已保存到: {save_path}')
+
+        # 保存EPS格式（矢量图，适合论文发表）
+        eps_path = save_path.replace('.png', '.eps')
+        plt.savefig(eps_path, format='eps', bbox_inches='tight', facecolor='white')
+        print(f'EPS格式已保存到: {eps_path}')
 
     plt.show()  # 显示图片窗口
 

@@ -1,0 +1,315 @@
+{
+  "num_sats": 500,
+  "demand_mbps": 8.0,
+  "start_time": "2025-12-02 09:45:00 UTC",
+  "greedy": {
+    "switch_count": 7,
+    "records": [
+      {
+        "time_sec": 0,
+        "data_rate_mbps": 19.14508620989812,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 20,
+        "data_rate_mbps": 18.63679857147904,
+        "satellite_id": 4700
+      },
+      {
+        "time_sec": 40,
+        "data_rate_mbps": 18.817072132746784,
+        "satellite_id": 4700
+      },
+      {
+        "time_sec": 60,
+        "data_rate_mbps": 18.69178441743559,
+        "satellite_id": 4700
+      },
+      {
+        "time_sec": 80,
+        "data_rate_mbps": 20.69251194155342,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 100,
+        "data_rate_mbps": 23.453347559232057,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 120,
+        "data_rate_mbps": 26.57654245932421,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 140,
+        "data_rate_mbps": 30.001218271083403,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 160,
+        "data_rate_mbps": 33.51905333277193,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 180,
+        "data_rate_mbps": 36.65624878748344,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 200,
+        "data_rate_mbps": 38.63881286002702,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 220,
+        "data_rate_mbps": 38.73853721139793,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 240,
+        "data_rate_mbps": 36.91282646678958,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 260,
+        "data_rate_mbps": 33.849623440617606,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 280,
+        "data_rate_mbps": 30.34210741720738,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 300,
+        "data_rate_mbps": 26.89531046771078,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 320,
+        "data_rate_mbps": 23.737984901429645,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 340,
+        "data_rate_mbps": 21.440810875664056,
+        "satellite_id": 3505
+      },
+      {
+        "time_sec": 360,
+        "data_rate_mbps": 22.293741200499113,
+        "satellite_id": 7784
+      },
+      {
+        "time_sec": 380,
+        "data_rate_mbps": 23.201901598362955,
+        "satellite_id": 7784
+      },
+      {
+        "time_sec": 400,
+        "data_rate_mbps": 24.73773063880458,
+        "satellite_id": 6615
+      },
+      {
+        "time_sec": 420,
+        "data_rate_mbps": 26.294737968110873,
+        "satellite_id": 6615
+      },
+      {
+        "time_sec": 440,
+        "data_rate_mbps": 28.452867218697794,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 460,
+        "data_rate_mbps": 31.563508935163842,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 480,
+        "data_rate_mbps": 34.33038177985368,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 500,
+        "data_rate_mbps": 36.16549067493775,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 520,
+        "data_rate_mbps": 36.503773788917705,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 540,
+        "data_rate_mbps": 35.222789449075066,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 560,
+        "data_rate_mbps": 32.75496538702666,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 580,
+        "data_rate_mbps": 30.474092089235132,
+        "satellite_id": 3657
+      }
+    ]
+  },
+  "demand_aware": {
+    "switch_count": 2,
+    "records": [
+      {
+        "time_sec": 0,
+        "data_rate_mbps": 19.14508620989812,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 20,
+        "data_rate_mbps": 18.164248509600064,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 40,
+        "data_rate_mbps": 17.034351375131486,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 60,
+        "data_rate_mbps": 15.833140294251326,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 80,
+        "data_rate_mbps": 14.622003713968647,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 100,
+        "data_rate_mbps": 13.444393764568316,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 120,
+        "data_rate_mbps": 12.327978344449617,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 140,
+        "data_rate_mbps": 11.288162585132495,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 160,
+        "data_rate_mbps": 10.331599386432107,
+        "satellite_id": 2881
+      },
+      {
+        "time_sec": 180,
+        "data_rate_mbps": 36.65624878748344,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 200,
+        "data_rate_mbps": 38.63881286002702,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 220,
+        "data_rate_mbps": 38.73853721139793,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 240,
+        "data_rate_mbps": 36.91282646678958,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 260,
+        "data_rate_mbps": 33.849623440617606,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 280,
+        "data_rate_mbps": 30.34210741720738,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 300,
+        "data_rate_mbps": 26.89531046771078,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 320,
+        "data_rate_mbps": 23.737984901429645,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 340,
+        "data_rate_mbps": 20.94104944489694,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 360,
+        "data_rate_mbps": 18.50264746672842,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 380,
+        "data_rate_mbps": 16.392112632224745,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 400,
+        "data_rate_mbps": 14.570111816587984,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 420,
+        "data_rate_mbps": 12.997273952890506,
+        "satellite_id": 5279
+      },
+      {
+        "time_sec": 440,
+        "data_rate_mbps": 28.452867218697794,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 460,
+        "data_rate_mbps": 31.563508935163842,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 480,
+        "data_rate_mbps": 34.33038177985368,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 500,
+        "data_rate_mbps": 36.16549067493775,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 520,
+        "data_rate_mbps": 36.503773788917705,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 540,
+        "data_rate_mbps": 35.222789449075066,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 560,
+        "data_rate_mbps": 32.75496538702666,
+        "satellite_id": 1674
+      },
+      {
+        "time_sec": 580,
+        "data_rate_mbps": 29.723874769499616,
+        "satellite_id": 1674
+      }
+    ]
+  }
+}
