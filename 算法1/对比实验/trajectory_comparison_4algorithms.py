@@ -14,9 +14,21 @@ import matplotlib
 from matplotlib.patches import Circle, FancyArrowPatch
 from typing import Dict, List
 
-# 设置中文字体
-matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'Arial Unicode MS']
+# 设置专业论文字体（SCI标准）
+matplotlib.rcParams['font.family'] = 'serif'
+matplotlib.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif']
+matplotlib.rcParams['font.size'] = 11
+matplotlib.rcParams['axes.labelsize'] = 12
+matplotlib.rcParams['axes.titlesize'] = 13
+matplotlib.rcParams['legend.fontsize'] = 10
+matplotlib.rcParams['xtick.labelsize'] = 11
+matplotlib.rcParams['ytick.labelsize'] = 11
 matplotlib.rcParams['axes.unicode_minus'] = False
+matplotlib.rcParams['mathtext.fontset'] = 'stix'  # 数学公式使用STIX字体
+matplotlib.rcParams['axes.linewidth'] = 1.2
+matplotlib.rcParams['grid.linewidth'] = 0.8
+matplotlib.rcParams['lines.linewidth'] = 2.0
+matplotlib.rcParams['lines.markersize'] = 8
 
 from algorithm1 import algorithm_1 as algorithm_1_p0, generate_scenario, Config
 from algorithm1_p1_optimized import algorithm_1 as algorithm_1_p1
@@ -182,18 +194,18 @@ for i in range(3):
 print('\n[Step 4] 生成可视化对比图...')
 
 def plot_trajectory_comparison(results_list, stats_list, iot_positions, save_path=None):
-    """绘制四种方法的航迹对比（论文级优化版）"""
+    """绘制四种方法的航迹对比（2×2布局）"""
 
-    # 使用更大的图形尺寸和更专业的配色
-    fig = plt.figure(figsize=(22, 6), dpi=100)
+    # 使用2×2布局的图形尺寸
+    fig = plt.figure(figsize=(16, 14), dpi=100)
 
     # 论文级配色方案
-    methods = ['R-scheme', 'F-scheme', 'P0', 'P1 (Proposed)']
+    methods = ['Rand-NOMA', 'Max-Hover', 'Joint-Opt', 'Adam-2opt']
     method_colors = {
-        'R-scheme': '#9b59b6',      # 紫色
-        'F-scheme': '#95a5a6',      # 灰色
-        'P0': '#3498db',            # 蓝色
-        'P1 (Proposed)': '#e74c3c'  # 红色（突出）
+        'Rand-NOMA': '#9b59b6',      # 紫色
+        'Max-Hover': '#95a5a6',      # 灰色
+        'Joint-Opt': '#3498db',            # 蓝色
+        'Adam-2opt': '#e74c3c'  # 红色（突出）
     }
 
     # UAV轨迹颜色（高对比度配色，易于区分）
@@ -206,9 +218,11 @@ def plot_trajectory_comparison(results_list, stats_list, iot_positions, save_pat
     hover_color = '#2ecc71'         # 绿色
     start_color = '#f39c12'         # 橙色
 
-    # 航迹可视化（4个子图，1行4列）
+    # 航迹可视化（4个子图，2行2列）
     for idx, (result, stats, method) in enumerate(zip(results_list, stats_list, methods)):
-        ax = fig.add_subplot(1, 4, idx + 1)
+        row = idx // 2
+        col = idx % 2
+        ax = fig.add_subplot(2, 2, idx + 1)
 
         # 绘制IoT设备
         paired_devices = set()
@@ -282,33 +296,37 @@ def plot_trajectory_comparison(results_list, stats_list, iot_positions, save_pat
                   s=500, label='Base Station', edgecolors='darkorange',
                   linewidths=2.5, zorder=5, alpha=1.0)
 
-        # 坐标轴标签
-        ax.set_xlabel('X (m)', fontsize=13, fontweight='bold')
-        if idx == 0:
-            ax.set_ylabel('Y (m)', fontsize=13, fontweight='bold')
-
         # 标题 - 显示关键指标
         uav_energy = stats["hover_energy"] + stats["flight_energy"]
         hover_points = stats["num_paired"] + stats["num_unpaired"]
 
         # 根据算法类型使用不同的边框颜色
         title_color = method_colors[method]
+
+        # 添加子图编号
+        subfig_label = ['(a)', '(b)', '(c)', '(d)'][idx]
         title_text = f'{method}\n'
         title_text += f'Distance: {stats["flight_distance"]:.0f}m | '
         title_text += f'Energy: {uav_energy:.0f}J\n'
         title_text += f'Hover Points: {hover_points} | Paired: {stats["num_paired"]}'
 
-        ax.set_title(title_text, fontsize=11, fontweight='bold',
-                    color=title_color, pad=10)
+        ax.set_title(title_text, fontsize=12,
+                    color=title_color, pad=12)
+
+        # 坐标轴标签 - 将子图编号放在X轴下方
+        ax.set_xlabel(f'X (m)\n{subfig_label} {method}', fontsize=13)
+        if col == 0:  # 只在左侧列显示Y轴标签
+            ax.set_ylabel('Y (m)', fontsize=13)
 
         # 网格和边框
         ax.grid(True, alpha=0.25, linestyle='--', linewidth=0.8)
         ax.set_aspect('equal')
         ax.set_xlim(-30, Config.AREA_SIZE + 30)
         ax.set_ylim(-30, Config.AREA_SIZE + 30)
+        ax.tick_params(direction='in', which='both')
 
-        # 为P1算法添加边框高亮
-        if method == 'P1 (Proposed)':
+        # 为Adam-2opt算法添加边框高亮
+        if method == 'Adam-2opt':
             for spine in ax.spines.values():
                 spine.set_edgecolor(title_color)
                 spine.set_linewidth(3)
@@ -317,28 +335,24 @@ def plot_trajectory_comparison(results_list, stats_list, iot_positions, save_pat
                 spine.set_edgecolor('gray')
                 spine.set_linewidth(1)
 
-    # 创建统一的图例（放在图形底部）
+    # 创建统一的图例（放在2×2布局下方）
     handles, labels = fig.axes[0].get_legend_handles_labels()
 
-    # 调整图例顺序和样式
+    # 调整图例顺序和样式 - 符合SCI论文标准
     legend = fig.legend(handles, labels,
-                       loc='center',
-                       bbox_to_anchor=(0.5, -0.05),
+                       loc='lower center',
+                       bbox_to_anchor=(0.5, -0.02),
                        ncol=7,  # 水平排列
                        fontsize=11,
                        frameon=True,
-                       fancybox=True,
-                       shadow=True,
+                       fancybox=False,  # 不使用圆角
+                       shadow=False,    # 不使用阴影
                        framealpha=0.95,
-                       edgecolor='gray',
-                       borderpad=1)
+                       edgecolor='black',  # 黑色边框
+                       borderpad=0.8)
 
-    # 总标题
-    plt.suptitle('Trajectory Comparison of Four Algorithms (K=50 IoT Devices, Seed=27)',
-                fontsize=16, fontweight='bold', y=0.98)
-
-    # 调整布局
-    plt.tight_layout(rect=[0, 0.05, 1, 0.96])
+    # 调整布局（为底部图例留出空间）
+    plt.tight_layout(rect=[0, 0.04, 1, 1.0])
 
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')

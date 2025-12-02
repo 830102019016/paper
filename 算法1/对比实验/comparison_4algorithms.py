@@ -27,9 +27,21 @@ from typing import Dict, List
 import time
 import json
 
-# 设置中文字体支持
-matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'Arial Unicode MS']
+# 设置专业论文字体（SCI标准）
+matplotlib.rcParams['font.family'] = 'serif'
+matplotlib.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif']
+matplotlib.rcParams['font.size'] = 11
+matplotlib.rcParams['axes.labelsize'] = 12
+matplotlib.rcParams['axes.titlesize'] = 13
+matplotlib.rcParams['legend.fontsize'] = 10
+matplotlib.rcParams['xtick.labelsize'] = 11
+matplotlib.rcParams['ytick.labelsize'] = 11
 matplotlib.rcParams['axes.unicode_minus'] = False
+matplotlib.rcParams['mathtext.fontset'] = 'stix'  # 数学公式使用STIX字体
+matplotlib.rcParams['axes.linewidth'] = 1.2
+matplotlib.rcParams['grid.linewidth'] = 0.8
+matplotlib.rcParams['lines.linewidth'] = 2.0
+matplotlib.rcParams['lines.markersize'] = 8
 
 from algorithm1 import generate_scenario, Config
 from algorithm1 import algorithm_1 as p0_algorithm_1
@@ -258,17 +270,17 @@ def run_batch_experiments(verbose: bool = False) -> Dict:
 
 def plot_comparison_results(batch_results: Dict, save_path: str = None):
     """
-    绘制4算法对比实验结果（5子图）
+    绘制4算法对比实验结果（2×2布局，4个子图）
     """
-    fig = plt.figure(figsize=(16, 10))
+    fig = plt.figure(figsize=(14, 12))
 
     num_devices = batch_results['num_devices']
     methods = ['r_scheme', 'f_scheme', 'p0', 'p1']
     method_labels = {
-        'r_scheme': 'R-scheme (Random Pairing)',
-        'f_scheme': 'F-scheme (Fixed Hovering)',
-        'p0': 'P0 Optimization',
-        'p1': 'P1 Optimization'
+        'r_scheme': 'Rand-NOMA',
+        'f_scheme': 'Max-Hover',
+        'p0': 'Joint-Opt',
+        'p1': 'Adam-2opt'
     }
     colors = {
         'r_scheme': '#9b59b6',  # 紫色
@@ -283,65 +295,57 @@ def plot_comparison_results(batch_results: Dict, save_path: str = None):
         'p1': '*'  # 星形
     }
 
-    # 子图1: UAV总能耗（优化目标）
-    ax1 = fig.add_subplot(2, 3, 1)
+    # 子图1: UAV总能耗（优化目标）- 左上
+    ax1 = fig.add_subplot(2, 2, 1)
     for method in methods:
         ax1.plot(num_devices, batch_results[method]['uav_energy'],
-                marker=markers[method], linewidth=2.5, markersize=10,
-                label=method_labels[method], color=colors[method])
-    ax1.set_xlabel('Number of IoT Devices K', fontsize=12, fontweight='bold')
-    ax1.set_ylabel('UAV Energy (J)', fontsize=12, fontweight='bold')
-    ax1.set_title('Total UAV Energy Comparison', fontsize=14, fontweight='bold')
-    ax1.legend(fontsize=9, framealpha=0.9)
-    ax1.grid(True, alpha=0.3)
+                marker=markers[method], linewidth=2.5, markersize=11,
+                label=method_labels[method], color=colors[method], alpha=0.9)
+    ax1.set_xlabel('Number of IoT Devices $K$\n(a) Total UAV Energy', fontsize=13)
+    ax1.set_ylabel('UAV Energy (J)', fontsize=13)
+    ax1.legend(fontsize=10.5, framealpha=0.95, edgecolor='black',
+               fancybox=False, shadow=False, loc='best')
+    ax1.grid(True, alpha=0.3, linestyle='--', linewidth=0.8)
+    ax1.tick_params(direction='in', which='both')
 
-    # 子图2: 飞行能耗
-    ax2 = fig.add_subplot(2, 3, 2)
+    # 子图2: 飞行能耗 - 右上
+    ax2 = fig.add_subplot(2, 2, 2)
     for method in methods:
         ax2.plot(num_devices, batch_results[method]['flight_energy'],
-                marker=markers[method], linewidth=2.5, markersize=10,
-                label=method_labels[method], color=colors[method])
-    ax2.set_xlabel('Number of IoT Devices K', fontsize=12, fontweight='bold')
-    ax2.set_ylabel('Flight Energy (J)', fontsize=12, fontweight='bold')
-    ax2.set_title('UAV Flight Energy', fontsize=14, fontweight='bold')
-    ax2.legend(fontsize=9, framealpha=0.9)
-    ax2.grid(True, alpha=0.3)
+                marker=markers[method], linewidth=2.5, markersize=11,
+                label=method_labels[method], color=colors[method], alpha=0.9)
+    ax2.set_xlabel('Number of IoT Devices $K$\n(b) Flight Energy', fontsize=13)
+    ax2.set_ylabel('Flight Energy (J)', fontsize=13)
+    ax2.legend(fontsize=10.5, framealpha=0.95, edgecolor='black',
+               fancybox=False, shadow=False, loc='best')
+    ax2.grid(True, alpha=0.3, linestyle='--', linewidth=0.8)
+    ax2.tick_params(direction='in', which='both')
 
-    # 子图3: 飞行距离
-    ax3 = fig.add_subplot(2, 3, 3)
+    # 子图3: 飞行距离 - 左下
+    ax3 = fig.add_subplot(2, 2, 3)
     for method in methods:
         ax3.plot(num_devices, batch_results[method]['flight_distance'],
-                marker=markers[method], linewidth=2.5, markersize=10,
-                label=method_labels[method], color=colors[method])
-    ax3.set_xlabel('Number of IoT Devices K', fontsize=12, fontweight='bold')
-    ax3.set_ylabel('Flight Distance (m)', fontsize=12, fontweight='bold')
-    ax3.set_title('UAV Flight Distance', fontsize=14, fontweight='bold')
-    ax3.legend(fontsize=9, framealpha=0.9)
-    ax3.grid(True, alpha=0.3)
+                marker=markers[method], linewidth=2.5, markersize=11,
+                label=method_labels[method], color=colors[method], alpha=0.9)
+    ax3.set_xlabel('Number of IoT Devices $K$\n(c) Flight Distance', fontsize=13)
+    ax3.set_ylabel('Flight Distance (m)', fontsize=13)
+    ax3.legend(fontsize=10.5, framealpha=0.95, edgecolor='black',
+               fancybox=False, shadow=False, loc='best')
+    ax3.grid(True, alpha=0.3, linestyle='--', linewidth=0.8)
+    ax3.tick_params(direction='in', which='both')
 
-    # 子图4: 悬停时间
-    ax4 = fig.add_subplot(2, 3, 4)
+    # 子图4: 悬停能耗 - 右下
+    ax4 = fig.add_subplot(2, 2, 4)
     for method in methods:
-        ax4.plot(num_devices, batch_results[method]['hover_time'],
-                marker=markers[method], linewidth=2.5, markersize=10,
-                label=method_labels[method], color=colors[method])
-    ax4.set_xlabel('Number of IoT Devices K', fontsize=12, fontweight='bold')
-    ax4.set_ylabel('Hovering Time (s)', fontsize=12, fontweight='bold')
-    ax4.set_title('UAV Hovering Time', fontsize=14, fontweight='bold')
-    ax4.legend(fontsize=9, framealpha=0.9)
-    ax4.grid(True, alpha=0.3)
-
-    # 子图5: 悬停能耗
-    ax5 = fig.add_subplot(2, 3, 5)
-    for method in methods:
-        ax5.plot(num_devices, batch_results[method]['hover_energy'],
-                marker=markers[method], linewidth=2.5, markersize=10,
-                label=method_labels[method], color=colors[method])
-    ax5.set_xlabel('Number of IoT Devices K', fontsize=12, fontweight='bold')
-    ax5.set_ylabel('Hovering Energy (J)', fontsize=12, fontweight='bold')
-    ax5.set_title('UAV Hovering Energy', fontsize=14, fontweight='bold')
-    ax5.legend(fontsize=9, framealpha=0.9)
-    ax5.grid(True, alpha=0.3)
+        ax4.plot(num_devices, batch_results[method]['hover_energy'],
+                marker=markers[method], linewidth=2.5, markersize=11,
+                label=method_labels[method], color=colors[method], alpha=0.9)
+    ax4.set_xlabel('Number of IoT Devices $K$\n(d) Hovering Energy', fontsize=13)
+    ax4.set_ylabel('Hovering Energy (J)', fontsize=13)
+    ax4.legend(fontsize=10.5, framealpha=0.95, edgecolor='black',
+               fancybox=False, shadow=False, loc='best')
+    ax4.grid(True, alpha=0.3, linestyle='--', linewidth=0.8)
+    ax4.tick_params(direction='in', which='both')
 
     plt.tight_layout()
 

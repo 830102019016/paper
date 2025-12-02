@@ -367,7 +367,7 @@ After each recombination or exchange operation, the UAV trajectory and total ene
 \node (pairing) [process, below=of init] {NOMA\\Pairing};
 
 % 第二列（从下到上）
-\node (optimization) [process, right=of pairing] {Power \&\\Position Opt.};
+\node (optimization) [process, right=of pairing] {Power \&\\Position Opt};
 \node (trajectory) [process, above=of optimization] {Trajectory\\Planning};
 
 % 第三列（从上到下）
@@ -431,56 +431,82 @@ After each recombination or exchange operation, the UAV trajectory and total ene
 
 \subsection{LEO Satellite Selection Optimization}
 
-After the UAVs finish collecting data from IoT devices, they will offload the data to LEO satellites. In the UAV-LEO phase, we mainly focus on minimizing the energy consumption $E_{\text{total}}^{\text{itu}}$ .According to Eqs. (16) and (20), since the better throughput enables the less transmission delay, the UAV selects the LEO satellite with the best link throughput to reduce energy consumption. The detailed mechanism for LEO satellite selection based on the throughput in real time is designed in Algorithm 2. Through the joint simulation with STK, the accessibility from UAVs to LEO satellites can be obtained, and the position information of LEO satellites are known to the UAVs. Hence, the elevation angle $\theta_{s,u,t}$ between UAVs and LEO satellites can be calculated based on Eq. (12). If $\theta_{s,u,t}$ < $\theta_{min}$, the satellite is discarded due to the disgusting interference. After obtaining all the acceptable LEO satellites which satisfy the requirements, the UAV selects the LEO satellite with maximum link throughput.
+After the UAV completes data collection from all IoT devices, it must offload the aggregated data to LEO satellites for further processing. Unlike static ground stations, LEO satellites exhibit high mobility with time-varying channel conditions and limited visibility windows. Consequently, the satellite association decision directly impacts both transmission efficiency and handover frequency.Frequent satellite handovers introduce signaling overhead, packet loss, and interruption delays, degrading quality of service. Conversely, maintaining connection with a suboptimal satellite prolongs transmission time and increases energy consumption. Therefore, the selection strategy must balance handover frequency against link quality to ensure timely and reliable data offloading.
+
+To address problem P2, a demand-aware satellite selection mechanism is proposed. Rather than myopically selecting the satellite with maximum instantaneous throughput at each time slot, the algorithm evaluates whether the current satellite can satisfy the remaining data transmission demand under predicted link evolution. Satellite handover is triggered only when the current satellite is predicted to be insufficient for completing the remaining task, thereby minimizing unnecessary switching while ensuring transmission deadlines.
+
+
+The algorithm operates as follows. At each decision epoch, all LEO satellites satisfying the elevation angle constraint $\theta_{s,u,t} \geq \theta_{\min}$ are identified as candidate satellites. For each candidate $s$, the instantaneous uplink data rate $d_{s,u,t}$ is calculated according to Eq. (15) based on the distance-dependent channel gain and transmit power. The algorithm then predicts the cumulative throughput achievable by the current satellite over the remaining visibility window. If the predicted throughput exceeds the remaining data size $D_u^{\text{rem}}(t)$, the current satellite association is maintained. Otherwise, the algorithm selects the satellite with maximum instantaneous throughput from the candidate set and performs handover.
+
 \begin{algorithm}[ht]
-\caption{LEO Satellite Selection Optimization}
+\caption{Demand-Aware LEO Satellite Selection}
 \label{alg:satellite_selection}
-
-\textbf{Input:} UAV positions $\mathbf{q}_u(t)$ and access time windows $T_{\text{access}}$
-
-\textbf{Output:} Optimal LEO satellite $s^*$
-
 \begin{algorithmic}[1]
-\State Initialize STK scenario with orbital parameters and simulation time
-\State Set elevation angle threshold $\theta_{\min}$ and communication parameters
-\State Compute real-time accessibility of LEO satellites to UAVs
-\State Retrieve position vectors $\mathbf{r}_s(t)$ for all visible LEO satellites
-\State For each satellite $s$, compute elevation angle:
-    \State \quad $\theta_{s,u,t} = \arctan\left( \dfrac{\cdots}{\cdots} \right)$ \Comment{Based on Eq.~(12)}
-\State Construct candidate set: $\mathcal{S}_{\text{candidate}} = \{s \mid \theta_{s,u,t} \geq \theta_{\min}\}$
-\State For each $s \in \mathcal{S}_{\text{candidate}}$, calculate throughput:
-    \State \quad $R_{s,u,t} = B \log_2\left(1 + \text{SINR}_{s,u,t}\right)$
-\State Select optimal satellite: $s^* = \arg\max_{s \in \mathcal{S}_{\text{candidate}}} R_{s,u,t}$
+\State \textbf{Input:} UAV position $\mathbf{q}_u(t)$, total data size $D_u$, transmitted data $D_u^{\text{tx}}$, current satellite $s_{\text{curr}}$, time $t$, prediction horizon $\Delta t$
+\State \textbf{Output:} Selected satellite $s^*$
+\State Compute remaining data: $D_u^{\text{rem}}(t) \gets D_u - D_u^{\text{tx}}$
+\State Initialize candidate set: $\mathcal{S}_{\text{candidate}} \gets \emptyset$
+\For{each satellite $s \in \mathcal{S}$}
+    \State Compute elevation angle $\theta_{s,u,t}$ using Eq.~(12)
+    \If{$\theta_{s,u,t} \geq \theta_{\min}$}
+        \State Add $s$ to $\mathcal{S}_{\text{candidate}}$
+    \EndIf
+\EndFor
+\If{$s_{\text{curr}} \in \mathcal{S}_{\text{candidate}}$}
+    \State Compute current throughput: $d_{s_{\text{curr}},u,t}$ using Eq.~(15)
+    \State Predict remaining visibility time: $T_{\text{vis}} \gets T_{\text{access}}(s_{\text{curr}}) - t$
+    \State Estimate achievable data: $\hat{D}_{\text{curr}} \gets d_{s_{\text{curr}},u,t} \cdot \min(T_{\text{vis}}, \Delta t)$
+    \If{$\hat{D}_{\text{curr}} \geq D_u^{\text{rem}}(t)$}
+        \State \Return $s_{\text{curr}}$ \Comment{Current satellite sufficient}
+    \EndIf
+\EndIf
+\State $s^* \gets \arg\max_{s \in \mathcal{S}_{\text{candidate}}} d_{s,u,t}$ \Comment{Select maximum throughput satellite}
 \State \Return $s^*$
-
 \end{algorithmic}
 \end{algorithm}
 
-\begin{table}[htbp]
+\begin{table}[!t]
 \centering
 \caption{SIMULATION PARAMETERS}
 \label{tab:simulation_parameters}
-\begin{tabularx}{\textwidth}{CCCC}
+\begin{tabular}{llll}
 \toprule
 \textbf{Parameter} & \textbf{Value} & \textbf{Parameter} & \textbf{Value} \\
 \midrule
-$P_{\text{max}}$ & 5 W & $P_{\text{min}}$ & 0.1 W \\
-$P_h$ & 80 W & $P_f$ & 240 W \\
-$P_s$ & 200 W & $P_{tr}$ & 10 W \\
-$B_{iu}$ & 1 MHz & $B_{su}$ & 10 MHz \\
-$f_s$ & 20 GHz & $\beta_0$ & $9.89 \times 10^{-5}$ \\
-$G_{tr}$ & 10 dBi & $G_{re}$ & 30 dBi \\
-$r_e$ & 6378 km & $h_u$ & 200 m \\
-$\theta_{\text{min}}$ & 15° & $\rho$ & 0.8 \\
-$\omega_E$ & 7.29 rad/s & $c^{sa}$ & 25 Mbit/s \\
-$\sigma_{iu}^2$ & $10^{-18}$ W & $\sigma_{su}^2$ & $4 \times 10^{-14}$ W \\
+$K$ (IoT devices) & 20 & $N$ (hover points) & 10 \\
+$D_k$ (data size) & 10 MB & $B_{iu}$ & 1 MHz \\
+$P_{\max}$ & 5 W & $P_{\min}$ & 0.1 W \\
+$P_h$ & 100 W & $P_f$ & 150 W \\
+$v_f$ & 10 m/s & $h_u$ & 100 m \\
+$\beta_0$ & $10^{-5}$ & $\sigma^2_{iu}$ & $10^{-9}$ W \\
+$\rho$ & 0.8 & $d_{\max}$ & 100 m \\
+Area size & $500 \times 500$ m$^2$ & $\alpha$ (Adam) & 0.01 \\
+$\beta_1$ (Adam) & 0.9 & $\beta_2$ (Adam) & 0.999 \\
+$J$ (max iterations) & 100 & $\epsilon$ & $10^{-6}$ \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\centering
+\caption{LEO SATELLITE PARAMETERS}
+\label{tab:leo_parameters}
+\begin{tabular}{llll}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Parameter} & \textbf{Value} \\
+\midrule
+$\theta_{\min}$ & 15$^\circ$ & $B_{su}$ & 10 MHz \\
+$P_{tr}$ & 10 W & $G_{tr}$ & 10 dBi \\
+$G_{re}$ & 30 dBi & $\sigma^2_{su}$ & $4 \times 10^{-14}$ W \\
+$f_s$ & 20 GHz & $r_e$ & 6378 km \\
+$h_s$ (LEO altitude) & 550 km & $\omega_E$ & 7.29 rad/s \\
+Constellation & Starlink & Num. satellites & 200 \\
+\bottomrule
+\end{tabular}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SIMULATION RESULTS}
 
-In this section, we conduct simulations to evaluate the performance of the proposed algorithms. IoT devices are randomly distributed within a square area with a side length of 500 meters. Three UAVs, located in $15^\circ\mathrm{N},\ 118^\circ\mathrm{E}$, start moving from the center of the area at a certain moment. 200 LEO satellites are randomly selected from Starlink. The main simulation parameters are listed in Table. I.
 
 \begin{figure}[H]
 %\isPreprints{\centering}{} % Only used for preprints
@@ -562,114 +588,6 @@ Authors should discuss the results and how they can be interpreted from the pers
 \section{Conclusions}
 
 In this paper, we address the data collection and offloading problem by integrating UAVs trajectories planning and LEO satellite selection in SAGIN. The problem is formulated to minimize the energy consumption with the constraints on multi-dimension variables. Specifically, in the data collection  phase from IoT to UAV, the algorithm is designed to optimize the IoT pairing, power optimization, UAV trajectory planning. In the data offloading phase from UAV to LEO, a real-time LEO satellite selection mechanism joint with STK is proposed. Finally, simulation results verified the effectiveness of the proposed approach, with about 10\% less energy consumption compared with the benchmark algorithm.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Patents}
-
-This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace{6pt} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% optional
-%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
-
-% Only for journal Methods and Protocols:
-% If you wish to submit a video article, please do so with any other supplementary material.
-% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
-
-% Only used for preprtints:
-% \supplementary{The following supporting information can be downloaded at the website of this paper posted on \href{https://www.preprints.org/}{Preprints.org}.}
-
-% Only for journal Hardware:
-% If you wish to submit a video article, please do so with any other supplementary material.
-% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.\vspace{6pt}\\
-%\begin{tabularx}{\textwidth}{lll}
-%\toprule
-%\textbf{Name} & \textbf{Type} & \textbf{Description} \\
-%\midrule
-%S1 & Python script (.py) & Script of python source code used in XX \\
-%S2 & Text (.txt) & Script of modelling code used to make Figure X \\
-%S3 & Text (.txt) & Raw data from experiment X \\
-%S4 & Video (.mp4) & Video demonstrating the hardware in use \\
-%... & ... & ... \\
-%\bottomrule
-%\end{tabularx}
-%}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work~reported.}
-
-\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
-
-\institutionalreview{In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.}
-
-\informedconsent{Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
-
-Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.}
-
-\dataavailability{We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.} 
-
-% Only for journal Drones
-%\durcstatement{Current research is limited to the [please insert a specific academic field, e.g., XXX], which is beneficial [share benefits and/or primary use] and does not pose a threat to public health or national security. Authors acknowledge the dual-use potential of the research involving xxx and confirm that all necessary precautions have been taken to prevent potential misuse. As an ethical responsibility, authors strictly adhere to relevant national and international laws about DURC. Authors advocate for responsible deployment, ethical considerations, regulatory compliance, and transparent reporting to mitigate misuse risks and foster beneficial outcomes.}
-
-% Only for journal Nursing Reports
-%\publicinvolvement{Please describe how the public (patients, consumers, carers) were involved in the research. Consider reporting against the GRIPP2 (Guidance for Reporting Involvement of Patients and the Public) checklist. If the public were not involved in any aspect of the research add: ``No public involvement in any aspect of this research''.}
-%
-%% Only for journal Nursing Reports
-%\guidelinesstandards{Please add a statement indicating which reporting guideline was used when drafting the report. For example, ``This manuscript was drafted against the XXX (the full name of reporting guidelines and citation) for XXX (type of research) research''. A complete list of reporting guidelines can be accessed via the equator network: \url{https://www.equator-network.org/}.}
-%
-%% Only for journal Nursing Reports
-%\useofartificialintelligence{Please describe in detail any and all uses of artificial intelligence (AI) or AI-assisted tools used in the preparation of the manuscript. This may include, but is not limited to, language translation, language editing and grammar, or generating text. Alternatively, please state that “AI or AI-assisted tools were not used in drafting any aspect of this manuscript”.}
-
-\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments). Where GenAI has been used for purposes such as generating text, data, or graphics, or for study design, data collection, analysis, or interpretation of data, please add “During the preparation of this manuscript/study, the author(s) used [tool name, version information] for the purposes of [description of use]. The authors have reviewed and edited the output and take full responsibility for the content of this publication.”}
-
-\conflictsofinterest{Declare conflicts of interest or state ``The authors declare no conflicts of interest.'' Authors must identify and declare any personal circumstances or interest that may be perceived as inappropriately influencing the representation or interpretation of reported research results. Any role of the funders in the design of the study; in the collection, analyses or interpretation of data; in the writing of the manuscript; or in the decision to publish the results must be declared in this section. If there is no role, please state ``The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results''.} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Optional
-
-%% Only for journal Encyclopedia
-%\entrylink{The Link to this entry published on the encyclopedia platform.}
-
-\abbreviations{Abbreviations}{
-The following abbreviations are used in this manuscript:
-\\
-
-\noindent 
-\begin{tabular}{@{}ll}
-MDPI & Multidisciplinary Digital Publishing Institute\\
-DOAJ & Directory of open access journals\\
-TLA & Three letter acronym\\
-LD & Linear dichroism
-\end{tabular}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Optional
-\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
-\appendixstart
-\appendix
-\section[\appendixname~\thesection]{}
-\subsection[\appendixname~\thesubsection]{}
-The appendix is an optional section that can contain details and data supplemental to the main text---for example, explanations of experimental details that would disrupt the flow of the main text but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data are shown in the main text can be added here if brief, or as Supplementary Data. Mathematical proofs of results not central to the paper can be added as an appendix.
-
-\begin{table}[H] 
-\caption{This is a table caption.\label{tab5}}
-%\newcolumntype{C}{>{\centering\arraybackslash}X}
-\begin{tabularx}{\textwidth}{CCC}
-\toprule
-\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
-\midrule
-Entry 1		& Data			& Data\\
-Entry 2		& Data			& Data\\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section[\appendixname~\thesection]{}
-All appendix sections must be cited in the main text. In the appendices, Figures, Tables, etc. should be labeled, starting with ``A''---e.g., Figure A1, Figure A2, etc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\isPreprints{}{% This command is only used for ``preprints''.
@@ -805,9 +723,13 @@ Learning 2-opt heuristics for the traveling salesman problem via deep reinforcem
 %Reviewer 3 comments and authors’ response
 %}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
 \PublishersNote{}
+\end{comment}
 %\isPreprints{}{% This command is only used for ``preprints''.
 \end{adjustwidth}
 %} % If the paper is ``preprints'', please uncomment this parenthesis.
+
 \end{document}
+
 
