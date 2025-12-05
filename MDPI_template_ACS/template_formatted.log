@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  5 DEC 2025 00:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  6 DEC 2025 00:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1515,13 +1515,13 @@ Package epstopdf Info: Source file: <Definitions/figure1.eps>
 (epstopdf)                    size: 326052 bytes
 (epstopdf)             Command: <repstopdf --outfile=Definitions/figure1-eps-co
 nverted-to.pdf Definitions/figure1.eps>
-(epstopdf)             \includegraphics on input line 222.
+(epstopdf)             \includegraphics on input line 227.
 Package epstopdf Info: Output file is already uptodate.
 <Definitions/figure1-eps-converted-to.pdf, id=106, 452.69125pt x 233.87375pt>
 File: Definitions/figure1-eps-converted-to.pdf Graphic file (type pdf)
 <use Definitions/figure1-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/figure1-eps-converted-to.pdf  used on inpu
-t line 222.
+t line 227.
 (pdftex.def)             Requested size: 374.63625pt x 193.54773pt.
 Package epstopdf Info: Source file: <Definitions/figure2.eps>
 (epstopdf)                    date: 2025-12-03 00:01:45
@@ -1531,13 +1531,13 @@ Package epstopdf Info: Source file: <Definitions/figure2.eps>
 (epstopdf)                    size: 100368 bytes
 (epstopdf)             Command: <repstopdf --outfile=Definitions/figure2-eps-co
 nverted-to.pdf Definitions/figure2.eps>
-(epstopdf)             \includegraphics on input line 232.
+(epstopdf)             \includegraphics on input line 239.
 Package epstopdf Info: Output file is already uptodate.
 <Definitions/figure2-eps-converted-to.pdf, id=107, 339.2675pt x 388.45125pt>
 File: Definitions/figure2-eps-converted-to.pdf Graphic file (type pdf)
 <use Definitions/figure2-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/figure2-eps-converted-to.pdf  used on inpu
-t line 232.
+t line 239.
 (pdftex.def)             Requested size: 374.63625pt x 428.96324pt.
 
 
@@ -1588,9 +1588,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [8]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 438.
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1599,6 +1596,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [9]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 533.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1607,137 +1607,144 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [10]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[11]
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.1}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.483 \State
+l.637 \State
              \textbf{Input:} UAV position $\mathbf{q}_u(t)$, total data size...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.2}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.484 \State
+l.638 \State
              \textbf{Output:} Selected satellite $s^*$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.3}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.485 \State
-             Compute remaining data: $D_u^{\text{rem}}(t) \gets D_u - D_u^{\...
+l.640 \State
+             Compute remaining data $D_u^{\text{rem}}(t) \gets D_u - D_u^{\t...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.4}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.486 \State
-             Initialize candidate set: $\mathcal{S}_{\text{candidate}} \gets...
+l.642 \State
+             Initialize candidate set $\mathcal{S}_{\text{cand}} \gets \empt...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.5}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.487 \For
+l.644 \For
           {each satellite $s \in \mathcal{S}$}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.6}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.488     \State
-                 Compute elevation angle $\theta_{s,u,t}$ using Equation~(12)
+l.645     \State
+                 Compute elevation angle $\theta_{s,u,t}$ using \eqref{eq:el...
+
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.7}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.489     \If
-             {$\theta_{s,u,t} \geq \theta_{\min}$}
+l.646     \If
+             {$\theta_{s,u,t} \ge \theta_{\min}$}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.8}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.490         \State
-                     Add $s$ to $\mathcal{S}_{\text{candidate}}$
+l.647         \State
+                     $\mathcal{S}_{\text{cand}} \gets \mathcal{S}_{\text{can...
+
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.9}) 
 has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.491     \EndIf
+l.648     \EndIf
                 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.10})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.492 \EndFor
+l.649 \EndFor
              
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.11})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.493 \If
-         {$s_{\text{curr}} \in \mathcal{S}_{\text{candidate}}$}
+l.651 \If
+         {$s_{\text{curr}} \in \mathcal{S}_{\text{cand}}$}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.12})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.494     \State
-                 Compute current throughput: $d_{s_{\text{curr}},u,t}$ using...
+l.652     \State
+                 Predict visibility window end time $t_{\text{exit}}(s_{\tex...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.13})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.495     \State
-                 Predict remaining visibility time: $T_{\text{vis}} \gets T_...
-
+l.653     \State
+                 $T_{\text{vis}} \gets t_{\text{exit}}(s_{\text{curr}}) - t$
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.14})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.496     \State
-                 Estimate achievable data: $\hat{D}_{\text{curr}} \gets d_{s...
-
+l.654     \State
+                 Predict future achievable throughput:
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.15})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.497     \If
-             {$\hat{D}_{\text{curr}} \geq D_u^{\text{rem}}(t)$}
+l.658     \If
+             {$\hat{D}_{\text{curr}} \ge D_u^{\text{rem}}(t)$}
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.16})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.498         \State
-                     \Return $s_{\text{curr}}$ \Comment{Current satellite su...
+l.659         \State
+                     \Return $s_{\text{curr}}$ \Comment{Current link suffici...
 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.17})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.499     \EndIf
+l.660     \EndIf
                 
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.18})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.500 \EndIf
+l.661 \EndIf
             
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.19})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.501 \State
-             $s^* \gets \arg\max_{s \in \mathcal{S}_{\text{candidate}}} d_{s...
-
+l.663 \State
+             Choose the best candidate:
 pdfTeX warning (ext4): destination with the same identifier (name{ALG@line.20})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.502 \State
+l.667 \State
              \Return $s^*$
 
-LaTeX Warning: Reference `tab:sim_parameters' on page 11 undefined on input lin
-e 548.
+LaTeX Warning: Reference `tab:sim_parameters' on page 12 undefined on input lin
+e 676.
 
 Package epstopdf Info: Source file: <Definitions/comparison_4algorithms.eps>
 (epstopdf)                    date: 2025-12-02 23:01:17
@@ -1748,15 +1755,15 @@ verted-to.pdf>
 (epstopdf)                    size: 31917 bytes
 (epstopdf)             Command: <repstopdf --outfile=Definitions/comparison_4al
 gorithms-eps-converted-to.pdf Definitions/comparison_4algorithms.eps>
-(epstopdf)             \includegraphics on input line 552.
+(epstopdf)             \includegraphics on input line 719.
 Package epstopdf Info: Output file is already uptodate.
-<Definitions/comparison_4algorithms-eps-converted-to.pdf, id=413, 1003.75pt x 8
+<Definitions/comparison_4algorithms-eps-converted-to.pdf, id=444, 1003.75pt x 8
 58.20625pt>
 File: Definitions/comparison_4algorithms-eps-converted-to.pdf Graphic file (typ
 e pdf)
 <use Definitions/comparison_4algorithms-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/comparison_4algorithms-eps-converted-to.pd
-f  used on input line 552.
+f  used on input line 719.
 (pdftex.def)             Requested size: 374.63625pt x 320.32062pt.
 Package epstopdf Info: Source file: <Definitions/trajectory_comparison_4algorit
 hms.eps>
@@ -1769,15 +1776,15 @@ hms-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=Definitions/trajectory_com
 parison_4algorithms-eps-converted-to.pdf Definitions/trajectory_comparison_4alg
 orithms.eps>
-(epstopdf)             \includegraphics on input line 560.
+(epstopdf)             \includegraphics on input line 727.
 Package epstopdf Info: Output file is already uptodate.
-<Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf, id=414, 97
+<Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf, id=445, 97
 9.66pt x 1027.84pt>
 File: Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf Graphi
 c file (type pdf)
 <use Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/trajectory_comparison_4algorithms-eps-conv
-erted-to.pdf  used on input line 560.
+erted-to.pdf  used on input line 727.
 (pdftex.def)             Requested size: 374.63625pt x 393.06126pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1786,7 +1793,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[11]
+[12]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1794,15 +1801,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[12 <./Definitions/comparison_4algorithms-eps-converted-to.pdf>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 18.18796pt, for example:
-(fancyhdr)                \setlength{\headheight}{18.18796pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
-
-[13 <./Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf>]
+[13 <./Definitions/comparison_4algorithms-eps-converted-to.pdf>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1811,6 +1810,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
 [14]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[15 <./Definitions/trajectory_comparison_4algorithms-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <Definitions/demand_aware_number_of_satelli
 tes.eps>
 (epstopdf)                    date: 2025-12-02 23:07:44
@@ -1822,15 +1829,15 @@ tes-eps-converted-to.pdf>
 (epstopdf)             Command: <repstopdf --outfile=Definitions/demand_aware_n
 umber_of_satellites-eps-converted-to.pdf Definitions/demand_aware_number_of_sat
 ellites.eps>
-(epstopdf)             \includegraphics on input line 593.
+(epstopdf)             \includegraphics on input line 760.
 Package epstopdf Info: Output file is already uptodate.
-<Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf, id=559, 10
+<Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf, id=590, 10
 02.74625pt x 353.32pt>
 File: Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf Graphi
 c file (type pdf)
 <use Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/demand_aware_number_of_satellites-eps-conv
-erted-to.pdf  used on input line 593.
+erted-to.pdf  used on input line 760.
 (pdftex.def)             Requested size: 374.63625pt x 132.00407pt.
 Package epstopdf Info: Source file: <Definitions/packet_loss_analysis.eps>
 (epstopdf)                    date: 2025-12-02 23:07:49
@@ -1841,29 +1848,16 @@ rted-to.pdf>
 (epstopdf)                    size: 23477 bytes
 (epstopdf)             Command: <repstopdf --outfile=Definitions/packet_loss_an
 alysis-eps-converted-to.pdf Definitions/packet_loss_analysis.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 770.
 Package epstopdf Info: Output file is already uptodate.
-<Definitions/packet_loss_analysis-eps-converted-to.pdf, id=561, 1002.74625pt x 
+<Definitions/packet_loss_analysis-eps-converted-to.pdf, id=592, 1002.74625pt x 
 353.32pt>
 File: Definitions/packet_loss_analysis-eps-converted-to.pdf Graphic file (type 
 pdf)
 <use Definitions/packet_loss_analysis-eps-converted-to.pdf>
 Package pdftex.def Info: Definitions/packet_loss_analysis-eps-converted-to.pdf 
- used on input line 603.
+ used on input line 770.
 (pdftex.def)             Requested size: 374.63625pt x 132.00407pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 18.18796pt, for example:
-(fancyhdr)                \setlength{\headheight}{18.18796pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
-
-[15 <./Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf> <./D
-efinitions/packet_loss_analysis-eps-converted-to.pdf>]
-
-LaTeX Warning: Reference `tab:end_to_end_comparison' on page 16 undefined on in
-put line 624.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1880,7 +1874,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[17]
+[17 <./Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf> <./D
+efinitions/packet_loss_analysis-eps-converted-to.pdf>]
+
+LaTeX Warning: Reference `tab:end_to_end_comparison' on page 18 undefined on in
+put line 791.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1896,7 +1895,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[19] Excluding 'comment' comment.
+[19]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1904,7 +1903,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[20] 
+[20]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[21] Excluding 'comment' comment.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
+
+[22] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./template_formatted.aux)
  ***********
@@ -1915,31 +1930,38 @@ L3 programming layer <2025-11-14>
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `template_formatted.out' has not changed.
 (rerunfilecheck)             Checksum: 409C08F8BE0E62F15663D4E07B8CB1A7;2621.
  ) 
 Here is how much of TeX's memory you used:
- 36520 strings out of 467538
- 685023 string characters out of 5423725
- 1194260 words of memory out of 5000000
- 64223 multiletter control sequences out of 15000+600000
- 706151 words of font info for 421 fonts, out of 8000000 for 9000
+ 36653 strings out of 467538
+ 687178 string characters out of 5423725
+ 1193259 words of memory out of 5000000
+ 64335 multiletter control sequences out of 15000+600000
+ 710086 words of font info for 429 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 123i,13n,121p,5051b,820s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
-live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/t
-ype1/public/mathpazo/fplmbi.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/
-mathpazo/fplmr.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/mathpazo/fplm
-ri.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb><c:
-/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/t
-exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts
-/type1/urw/palatino/uplri8a.pfb>
-Output written on template_formatted.pdf (20 pages, 792708 bytes).
+ 123i,13n,121p,5051b,906s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{figure.caption.6} has been referenced but does not 
+exist, replaced by a fixed one
+
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texli
+ve/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/typ
+e1/public/mathpazo/fplmbi.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/ma
+thpazo/fplmr.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/mathpazo/fplmri
+.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb><c:/t
+exlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/tex
+mf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts/t
+ype1/urw/palatino/uplri8a.pfb>
+Output written on template_formatted.pdf (22 pages, 799255 bytes).
 PDF statistics:
- 771 PDF objects out of 1000 (max. 8388607)
- 361 compressed objects within 4 object streams
- 125 named destinations out of 1000 (max. 500000)
- 109741 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 809 PDF objects out of 1000 (max. 8388607)
+ 397 compressed objects within 4 object streams
+ 142 named destinations out of 1000 (max. 500000)
+ 112813 words of extra memory for PDF output out of 128383 (max. 10000000)
 

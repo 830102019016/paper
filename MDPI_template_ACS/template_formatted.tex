@@ -180,33 +180,32 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 
 \section{Introduction}
 
-Although Internet of Things (IoT) devices have been widely deployed in applications such as environmental monitoring, intelligent transportation, and industrial sensing, terrestrial networks often fail to provide reliable coverage for large-scale and spatially distributed IoT deployments, particularly when devices are located beyond the effective range of existing infrastructure or in environments with highly variable link conditions.
-In this context, space–air–ground integrated networks (SAGINs) have emerged as a promising architecture: unmanned aerial vehicles (UAVs) act as flexible aerial aggregators for ground IoT data, while low Earth orbit (LEO) satellites provide wide-area connectivity for offloading the aggregated data to the space segment.
+Although Internet of Things (IoT) devices have been widely deployed in applications such as environmental monitoring, intelligent transportation and industrial sensing. Terrestrial networks often fail to provide reliable coverage for large scale and spatially distributed IoT deployments, particularly when devices are located beyond the effective range of existing infrastructure or in environments with highly variable link conditions.
+In this context, space–air–ground integrated networks (SAGINs) have emerged as a promising architecture: unmanned aerial vehicles (UAVs) act as flexible aerial aggregators for ground IoT data, while low Earth orbit (LEO) satellites provide wide area connectivity for offloading the aggregated data to the space segment.
 
 However, the efficiency of IoT devices data acquisition is strongly influenced by the UAV platform’s mobility strategy.
 Optimizing the flight path and determining appropriate hovering points enable UAVs to better align with the spatial distribution of ground devices.
 Another fundamental challenge arises from the limited spectrum resources on UAVs, which restrict the number of IoT devices that can be served simultaneously and lead to low spectral efficiency under conventional orthogonal access schemes.
 
 Motivated by these challenges, numerous studies have investigated UAVs for IoT data collection.
-The work in \cite{xiao2022energy} uses fractional programming and block coordinate descent to jointly optimize UAV trajectory and continuous communication resources. It relies on TDMA with unit bandwidth and does not consider spectrum-domain multiple-access or allocation strategies.
-In \cite{wang2025joint}, a hierarchical framework is introduced to coordinate the movement of the UAVs with the choice of LEO satellites. The work focuses primarily on the structural design of the framework, and the optimization aimed at improving performance is not further developed.
+The work in \cite{xiao2022energy} uses fractional programming and block coordinate descent to jointly optimize UAV trajectory and continuous communication resources. It relies on multiple access with unit bandwidth and does not consider spectrum domain allocation strategies.
+In \cite{wang2025joint}, a hierarchical framework is introduced to uniformly optimize the total energy consumption across UAV collection of IoTs Data and satellite selection for offloading to LEO satellites. The work focuses primarily on the structural design of the framework, and the optimization aimed at improving performance is not further developed.
 
 Beyond data acquisition on the ground side, another line of work focuses on how UAVs deliver the collected information to satellites. 
-In addition to the challenges in data collection, the delivery of the collected information to LEO satellites introduces another layer of complexity, as the UAV must decide how to offload data under temporally dynamic link quality, limited communication resources, and dynamic satellite visibility.
-The study in \cite{wang2025coordinated} employs proximal policy optimization to determine the deployment of the UAV and the allocation of tasks to LEO satellites, focusing on reinforcement learning decisions for communication and computing resources.
-The authors in \cite{zhang2023resource} consider the offloading of computational tasks from ground devices to LEO satellites with the aid of an UAV, and employ reinforcement learning for resource allocation.
+The delivery of the collected information to LEO satellites introduces another layer of complexity, as the UAV must decide how to offload data under temporally dynamic link quality, limited communication resources, and dynamic satellite visibility.
+The authors in \cite{zhang2023resource} investigates the computational tasks and resource allocation in a UAV assisted LEO satellite network,taking into account satellite computing resources and device task volumes.
+The study in \cite{wang2025coordinated} employs  a Proximal Policy Optimization (PPO) driven reinforcement learning framework that intelligently adapts UAV placement and computation offloading strategies.
 
-While recent studies have examined data collection through unmanned aerial vehicles and task offloading toward low Earth orbit satellites, these efforts are often developed independently and primarily at a conceptual level. Although a hierarchical framework have been proposed, the underlying optimization problems have not been explored in depth. In particular, existing approaches rarely provide designs guided by system performance for collecting data with improved energy efficiency or for maintaining stable satellite association under dynamic visibility. These limitations motivate the development of a structured framework that improves both stages of the uplink process.
+While recent studies have examined data collection through UAVs and task offloading toward LEO satellites, these efforts are often these efforts have often been pursued as independent performance metrics. Although a hierarchical framework have been proposed, its underlying optimization issues have yet to be thoroughly explored. In particular, existing approaches rarely provide designs guided by system performance for collecting data with improved energy efficiency or for maintaining stable satellite association under dynamic visibility. These constraints have prompted us to propose a structured framework that simultaneously optimizes both phases of the uplink process and thoroughly enhances the framework's performance.
 
 The main contributions of this work are summarized as follows:
 \begin{itemize}
 
-    \item A structured uplink framework is developed for data delivery in integrated space, air, and ground environments. The framework separates the process of collecting data from IoT devices and the process of delivering the collected information to LEO satellites, and it formalizes the optimization objectives of both stages in a consistent manner.
+    \item A structured uplink framework is developed for data delivery in SAGIN environments. The framework separates the process of collecting data from IoT devices and the process of delivering the collected information to LEO satellites, and it formalizes the optimization objectives of both stages in a consistent manner.
 
     \item An algorithm is developed for the data collection phase to improve energy efficiency by jointly optimizing multiple access device pairing, transmission power, hovering positions, and the movement of UAVs. The continuous variables, such as hovering locations, are refined using gradient information through the Adam optimizer, while the visiting sequence of hovering points is improved by a 2-opt procedure that removes redundant detours in the trajectory. This combined approach reduces both flight distance and total energy consumption.
 
-    \item A selection strategy driven by transmission demand is designed for the offloading phase to enhance the quality of uplink transmission under dynamic satellite visibility. The strategy maintains stable connectivity by triggering satellite switching only when required to satisfy the remaining transmission demand, thereby reducing interruptions and packet loss.
-
+    \item A selection strategy driven by transmission demand is designed for the offloading phase to enhance the quality of uplink transmission under dynamic satellite visibility. The strategy maintains stable connectivity by triggering satellite switching only when residual transmission requirements are not met, thereby minimizing interruptions and packet loss.
     \item Extensive simulations are conducted to evaluate the proposed framework. The results show consistent gains in energy consumption, trajectory performance, and offloading stability over baseline methods, indicating that the two phase design provides effective improvements when integrated into a complete uplink procedure.
 \end{itemize}
 
@@ -215,294 +214,466 @@ The remainder of this paper is organized as follows. Section 2 introduces the sy
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Materials and Methods}
 
-As shown in Figure~\ref{fig:system_model}, we consider an SAGIN which consists of $\mathbf{U}$ UAVs denoted by $\mathcal{U} = \{1, 2, \dots, U\}$, and $\mathbf{S}$ LEO satellites indicated by  $\mathcal{S} = \{1, 2, \dots, S\}$. In addition, $\mathbf{K}$ IoT devices scattered randomly on the ground are represented as $\mathcal{K} = \{1, 2, \dots, K\}$.Due to the limited computational capabilities of IoT terminals, the data they collect must be uploaded to low-Earth orbit satellites for further processing. However, constrained by their own energy and transmission power limitations, IoT devices struggle to communicate directly with these satellites. To address this, we introduce drones as aerial base stations to assist in data aggregation and forwarding within target areas. Based on this architecture, the data upload process can be divided into two stages. In the first stage, the UAV follows a pre-planned flight path to sequentially reach multiple hovering positions, collecting data generated by IoT devices within the area before returning to the starting point upon completion. In the second stage, after returning to the starting point, the UAV hovers at the origin and selects an appropriate LEO satellite to perform computational offloading tasks.
+As shown in Figure~\ref{fig:system_model}, the considered SAGIN consists of $\mathbf{U}$ UAVs denoted by $\mathcal{U} = {1, 2, \dots, U}$ and $\mathbf{S}$ LEO satellites indicated by $\mathcal{S} = {1, 2, \dots, S}$. In addition, $\mathbf{K}$ IoT devices randomly scattered on the ground are represented as $\mathcal{K} = {1, 2, \dots, K}$.
+Due to the limited computational capabilities of IoT terminals, the data they collect must be uploaded to LEO satellites for further processing.
+However, constrained by their own energy and transmission power limitations, IoT devices struggle to communicate directly with these satellites. 
+To address this issue, UAVs are employed as aerial base stations to support data aggregation and forwarding within the designated area.
+Under this architecture, the data uploading procedure is organized into two phases.
+In the first phase, the UAV follows a predetermined trajectory and visits a sequence of hovering locations to collect data generated by ground IoT devices, after which it returns to its initial position.
+In the second phase, once back at the initial position, the UAV remains stationary and selects an appropriate LEO satellite to execute computational offloading tasks.
 % Figure 1
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Definitions/figure1}
-\caption{System model of the Space-Air-Ground Integrated Network (SAGIN) showing IoT devices, UAVs, and LEO satellites.}
+\caption{Illustration of the uplink communication procedure in SAGIN, where UAVs act as aerial aggregators to collect data from spatially distributed IoT devices and subsequently offload the aggregated data to LEO satellites.}
 \label{fig:system_model}
 \end{figure}
 \subsection{Data Collection from IoT to UAV}
 
-During the data upload phase for IoT devices and drones, we introduce Non-Orthogonal Multiple Access (NOMA) technology to enhance the system's spectrum efficiency and transmission effectiveness. Specifically, we assume that within a defined spatial range, any two IoT devices can form a cooperative pair, transmitting their uplink data simultaneously to the UAV via the NOMA mechanism. For devices that cannot meet pairing conditions or fail to pair successfully, Orthogonal Frequency Division Multiple Access (OFDMA) is employed for independent data transmission.
+During the data uploading phase between IoT devices and UAVs, Non-Orthogonal Multiple Access (NOMA) is employed to enhance spectrum efficiency and transmission performance.
+Specifically, it is assumed that within a defined spatial range, any two IoT devices may form a cooperative pair and transmit their uplink data simultaneously to the UAV using the NOMA mechanism.
+For devices that do not satisfy the pairing conditions or fail to form a valid pair, Orthogonal Frequency Division Multiple Access (OFDMA) is used to support independent data transmission.
 % Figure  2
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Definitions/figure2}
-\caption{Geometrical representation of UAV-LEO communication link parameters.}
+\caption{Geometric illustration of the UAV–LEO satellite link, including the satellite orbit, UAV position, Earth curvature, slant-range distance, and elevation angle, which together characterize the air-to-space propagation model employed in this study.}
 \label{fig:uav_leo_geometry}
 \end{figure}
 
-A three-dimensional Cartesian coordinate system is employed to characterize the spatial locations of UAVs and IoT devices. The IoT devices are assumed to be randomly distributed on the ground plane, and the horizontal coordinate of the $k$-th device denoted as $\mathbf{q}_k = (x_k, y_k, 0)$. Each UAV operates at a fixed altitude $h_u$. Accordingly, the position of the $u$-th UAV at the $n$-th hover point is expressed as $\mathbf{q}_u(n) = (x_u(n), y_u(n), h_u)$. Due to the elevated UAV altitude and the unobstructed propagation environment, the wireless links between IoT devices and UAVs are dominated by line-of-sight (LoS) propagation. Under this condition, the channel gain between IoT device $k$ and its associated UAV is modeled as
-\begin{quote}
+A three-dimensional Cartesian coordinate system is adopted to describe the spatial distribution of UAVs and IoT devices. The IoT devices are randomly deployed on the ground plane, and the location of the $k$-th device is represented by $\mathbf{q}_k = (x_k, y_k, 0)$.
+Each UAV maintains a constant altitude $h_u$; hence, its position at the $n$-th hovering point is given by $\mathbf{q}_u(n) = \big(x_u(n), y_u(n), h_u\big)$. 
+Owing to the elevated UAV altitude and the predominantly unobstructed propagation conditions, the wireless links between IoT devices and UAVs are primarily characterized by line-of-sight (LoS) propagation. 
+Accordingly, the channel gain between IoT device $k$ and its associated UAV is modeled as
 \begin{equation}
-G_k = \frac{\beta_0}{h_u^2 + (x_u(n) - x_k)^2 + (y_u(n) - y_k)^2},
+d_k(n) = \sqrt{h_u^2 + (x_u(n) - x_k)^2 + (y_u(n) - y_k)^2},
+\qquad
+G_k = \frac{\beta_0}{d_k(n)^2}.
 \end{equation}
-\end{quote}
-where $\beta_0$ represents the channel gain at the reference distance $r_0$ = 1m.
+where $\beta_0$ is the channel gain measured at the reference distance $r_0 = 1\,\text{m}$.
 
-Let $\mathcal{P}$ denote the set of all feasible transmission pairs, where each pair $p \in \mathcal{P}$ consists of either (i) two IoT devices forming a NOMA cluster or (ii) a single device operating in OFDMA mode. A binary decision variable $\delta_{p} \in \{0,1\}$ is introduced to indicate whether pair $p$ is activated. To ensure that each IoT device is assigned to at most one pair, the following constraint is imposed
-\begin{quote}
+Let $\mathcal{P}$ denote the set of all feasible transmission pairs, where each pair $p \in \mathcal{P}$ consists of either (i) two IoT devices forming a NOMA cluster or (ii) a single device operating in OFDMA mode. 
+A binary decision variable $\delta_{p} \in \{0,1\}$ is introduced to indicate whether pair $p$ is activated. 
+To ensure that each IoT device participates in at most one transmission pair, the following constraint is imposed
 \begin{equation}
-\sum_{p \in P: k \in p} \delta_p \leq 1, \quad \forall k \in \mathcal{K}.
+    \sum_{p \in \mathcal{P}: k \in p} \delta_{p} \le 1, 
+    \qquad \forall\, k \in \mathcal{K}.
 \end{equation}
-\end{quote}
-
-For an activated NOMA pair containing two devices $p = \{k, m\}$, the device with the stronger channel gain performs successive interference cancellation (SIC) and decodes the weaker device’s signal prior to decoding its own signal. The corresponding interference structure is determined by the activated pair $p$.
 
 Given the pairing configuration, the received signal-to-interference-plus-noise ratio (SINR) of IoT device $k$ can be expressed as
-\begin{quote}
 \begin{equation}
-\mathrm{SINR}_k = \frac{p_k G_k}{\sum_{\substack{p \in P \\ k,m \in p \\ m \neq k}} \delta_p p_m G_m + \sigma_{iu}^2},
+\mathrm{SINR}_k 
+= \frac{p_k G_k}{
+    \displaystyle 
+    \sum_{\substack{p \in \mathcal{P}: \, k\in p}} 
+        \delta_p 
+        \sum_{\substack{j \in p \\ j \neq k}} 
+            p_j G_j 
+    + \sigma_{iu}^2 },
 \end{equation}
-\end{quote}
-where $p_k$ s the transmit power of device $k$, and $\sigma^2 _{iu}$ denotes the receiver noise power. Based on the obtained SINR, the achievable uplink data rate of device $k$ is
-\begin{quote}
-\begin{equation}
-d_k = B_{iu} \log_2 \left(1 + \mathrm{SINR}_k\right),
-\end{equation}
-\end{quote}
-where $B_{iu}$ represents the bandwidth allocated to UAV–IoT communications. Given the task data size $D_k$, the corresponding uplink transmission delay is
-\begin{quote}
-\begin{equation}
-T_k^{{tr}} = \frac{D_k}{d_k},
-\end{equation}
-\end{quote}
+where $p_k$ is the transmit power of device $k$, and $\sigma_{iu}^2$ denotes the receiver noise power. 
+The intra-pair interference term $\sum_{j \in p,\, j\neq k} p_j G_j$ appears only when the activated pair $p$ contains two devices. 
+For NOMA pairs, the decoding order is determined by the channel gains, followingthe conventional successive interference cancellation (SIC) procedure.
 
-A predetermined visiting order is assumed for each UAV to sequentially approach all NOMA groups and independent IoT devices after its trajectory has been determined. The trajectory of UAV $u$ is represented by the ordered set $\{\mathbf{q}_u(0), \mathbf{q}_u(1), \dots, \mathbf{q}_u(N_u)\}$, where $N_u$ denotes the number of hovering waypoints assigned to UAV $u$. Accordingly, the total flight path length of UAV $u$ over the entire mission is defined as
+Given the SINR expression, the achievable uplink data rate of device $k$ is 
 \begin{equation}
-L_u = \sum_{n=0}^{N_u-1} \lVert \mathbf{q}_u(n+1) - \mathbf{q}_u(n) \rVert.
+d_k = B_{iu} \log_2\!\left(1 + \mathrm{SINR}_k\right),
 \end{equation}
-
-Given a constant flight speed $v_f$, the required flight time for UAV $u$ is expressed as
+where $B_{iu}$ denotes the bandwidth allocated to UAV communications. 
+For a task of size $D_k$, the corresponding uplink transmission delay is
 \begin{equation}
-T^{fly}_u = \frac{L_u}{v_f}.
+T_k^{\mathrm{tr}} = \frac{D_k}{d_k}.
 \end{equation}
 
-During the data collection phase, each UAV hovers at designated waypoints to receive data from IoT devices. The hovering duration of UAV $u$ is determined by the transmission times of all devices within the active pairs. Based on the pair-based NOMA definition, the hovering time is expressed as
+After determining the trajectory of each UAV, a fixed visiting sequence is imposed to ensure that all NOMA clusters and singleton IoT devices are sequentially served. The trajectory of UAV~$u$ is denoted by the ordered set
 \begin{equation}
-T_u^{hov} = \sum_{p \in P} \delta_p \max_{k \in p} \frac{D_k}{d_k}.
+\{\mathbf{q}_u(0), \mathbf{q}_u(1), \ldots, \mathbf{q}_u(N_u)\},
 \end{equation}
-
-For NOMA pairs containing two devices, the maximum operator ensures that UAV $u$ hovers sufficiently long to receive the data from both devices in parallel, whereas for single-device OFDMA pairs, the expression reduces to the corresponding device’s transmission time.
-
-The energy consumption of UAV $u$ in this phase comprises both hovering energy and flight-related energy. Accordingly, the total energy consumption of the UAV–IoT subsystem is
+where $N_u$ represents the number of hovering waypoints assigned to UAV~$u$. Accordingly, the total flight path length of UAV~$u$ throughout the mission is expressed as
 \begin{equation}
-E_{total} = \sum_{u=1}^{U} (P_h T_u^{hov} + P_f T_u^{fly}),
+L_u = \sum_{n=0}^{N_u-1} \left\| \mathbf{q}_u(n+1) - \mathbf{q}_u(n) \right\|_2,
 \end{equation}
-where $P_h$ and $P_f$ represent the hovering power and flight power of the UAVs, respectively, and $T^{fly}_u$ is the flight time of UAV $u$ as defined previously.
+which captures the cumulative Euclidean distance traveled between consecutive hovering waypoints.
+
+Given a constant flight speed $v_f$, the total flight time required by UAV~$u$ is calculated as
+\begin{equation}
+T_u^{\mathrm{fly}} = \frac{L_u}{v_f},
+\end{equation}
+where $L_u$ denotes the total flight path length of UAV~$u$. This expression follows directly from the definition of time as distance divided by speed under constant-velocity motion.
+
+During the data collection phase, each UAV hovers at designated waypoints to receive data from the associated IoT devices. The hovering duration of UAV~$u$ depends on the transmission times of all active NOMA pairs and is given by
+\begin{equation}
+T_u^{\mathrm{hov}} = \sum_{p \in P} \delta_p \, \max_{k \in p} \frac{D_k}{d_k},
+\end{equation}
+where $\delta_p$ indicates whether pair $p$ is assigned to UAV~$u$, and the term $\max_{k \in p} \frac{D_k}{d_k}$ denotes the transmission time of pair~$p$, dominated by the device with the longest individual transmission time.
+
+During this phase, the energy consumption of UAV~$u$ consists of both hovering energy and flight related energy. Accordingly, the total energy consumption is given by
+\begin{equation}
+E_{\text{total}} = \sum_{u=1}^{U} \left( P_h T_u^{\mathrm{hov}} + P_f T_u^{\mathrm{fly}} \right),
+\end{equation}
+where $P_h$ and $P_f$ denote the hovering power and flight power of the UAVs, respectively, and $T_u^{\mathrm{fly}}$ is the flight time of UAV~$u$ as defined earlier.
 
 \subsection{Data Offloading from UAV to LEO}
 
-After the UAV completes data collection from all IoT devices, it acquires the position information of all visible LEO satellites and selects the satellite that can satisfy the transmission demand. To represent the computation offloading decision, a binary association variable $\beta_{s,u,t} \in \{0, 1\}$ is introduced, where $\beta_{s,u,t} = 1$ indicates that UAV $u$ offloads its computation to satellite $s$ at time $t$. The channel gain between UAV $u$ and LEO satellite $s$ is modeled based on the free-space path loss as
+After completing data collection from all IoT devices, each UAV obtains the position information of all visible LEO satellites and selects the satellite that can satisfy its offloading requirements.To represent the computation offloading decision, a binary association variable $\beta_{s,u,t} \in \{0,1\}$ is introduced, where $\beta_{s,u,t} = 1$ indicates that UAV~$u$ offloads its computation to satellite~$s$ at time slot~$t$. 
+
+The large scale channel between UAV~$u$ and LEO satellite~$s$ is modeled using the free space path loss model, given in dB by
 \begin{equation}
-G_{s,u,t}[dB] = 92.44 + 20\log_{10}(r_{s,u,t}) +20\log_{10}(f_s),
+L^{\mathrm{fs}}_{s,u,t}(\mathrm{dB}) = 92.45 + 20\log_{10}(r_{s,u,t}) + 20\log_{10}(f_s),
+\label{eq:fspl}
 \end{equation}
-where $f_s$ denotes the operating frequency of satellite $s$ in GHz, and $r_{s,u,t}$ is the straight-line distance between UAV $u$ and satellite $s$ at $t$. The distance $r_{s,u,t}$ is calculated according to the geometry of the Earth–UAV–satellite system
+where $f_s$ denotes the carrier frequency of satellite~$s$ in GHz. The line-of-sight distance $r_{s,u,t}$ is obtained from the geometric relationship illustrated in Fig.~\ref{fig:uav_leo_geometry}, given by
 \begin{equation}
 r_{s,u,t} = \sqrt{(r_e + h_s)^2 + (r_e + h_u)^2 - 2(r_e + h_s)(r_e + h_u) \cos \theta_{s,u,t}},
 \end{equation}
-where $r_e$ is the Earth radius, and $h_u$ and $h_s$ are the altitudes of the UAV and LEO satellite, respectively. The satellite elevation angle $\theta_{s,u,t}$ with respect to UAV $u$ according to \cite{seyedi2012trace} is computed as
+where $r_e$ denotes the Earth radius, and $h_u$ and $h_s$ are the altitudes of the UAV and the LEO satellite, respectively.
+ 
+The elevation angle $\theta_{s,u,t}$ between UAV~$u$ and satellite~$s$ is obtained from the satellite–UAV geometry shown in Fig.~\ref{fig:uav_leo_geometry} and is expressed as
 \begin{equation}
-\theta_{s,u,t} = \arctan \left( \frac{h_s - h_u}{d_{\mathrm{ground},s,u,t}} \right), \quad d_{\mathrm{ground},s,u,t} = r_e \phi_{s,u,t},
+\theta_{s,u,t} = \arctan \left( \frac{h_s - h_u}{d_{\mathrm{ground},s,u,t}} \right),
+\label{eq:elevation} 
+\qquad 
+d_{\mathrm{ground},s,u,t} = r_e \phi_{s,u,t},
 \end{equation}
-where $d_{\mathrm{ground},s,u,t}$ is the horizontal distance on the Earth surface between UAV $u$ and the sub-satellite point of satellite $s$, and $\phi_{s,u,t}$ denotes the corresponding central angle on the Earth’s surface. The central angle $\phi_{s,u,t}$ varies over time according to the satellite and Earth motion
+where $d_{\mathrm{ground},s,u,t}$ denotes the ground-projected distance between UAV~$u$ and the sub-satellite point, and $\phi_{s,u,t}$ is the corresponding central angle on the Earth's surface. Following \cite{seyedi2012trace}, the central angle evolves over time as
 \begin{equation}
 \phi_{s,u,t} = (\omega_E \cos i - \omega_S)(t - t_0) + \phi_{s,u,t_0},
 \end{equation}
-where $\omega_E$,  $\omega_S$ are the angular velocities of the Earth rotation and satellite orbit, $i$ is the orbital inclination of the satellite, $t_0$ is the time when the satellite becomes visible to the UAV, and $\phi_{s,u,t_0}$ is the initial central angle at $t_0$.
+where $\omega_E$ and $\omega_S$ denote the angular velocities of the Earth and satellite orbit, respectively, $i$ is the orbital inclination, $t_0$ is the time instant when the satellite becomes visible to the UAV, and $\phi_{s,u,t_0}$ is the initial central angle.
 
-The received power at LEO satellite $s$ from UAV $u$ at time $t$ is expressed as
+The received power at LEO satellite $s$ from UAV $u$ at time $t$ is given by
 \begin{equation}
-P_{s,u,t}^{re} = P_{tr} G_{tr} G_{re} G_{s,u,t}^{lin},
+P_{s,u,t}^{\mathrm{re}} = P_{tr} G_{tr} G_{re} G_{s,u,t}^{\mathrm{lin}},
 \end{equation}
-where $P_{tr}$ denotes the transmit power of the UAV, $G_{tr}$ and $G_{re}$ are the transmit and receive antenna gains of the UAV and LEO satellite, respectively, and $G_{s,u,t}^{lin}$ is the linear-scale channel gain between UAV $u$ and satellite $s$, derived from the distance-dependent free-space path loss as described in subsection 2.1.
+where $P_{tr}$ denotes the UAV transmit power, $G_{tr}$ and $G_{re}$ are the transmit and receive antenna gains, and $G_{s,u,t}^{\mathrm{lin}}$ is the large-scale channel gain derived from the free-space path-loss model described in equation \eqref{eq:fspl}.
 
-Based on the received power, the achievable uplink data rate from UAV $u$ to LEO satellite $s$ at time $t$ is calculated according to the Shannon capacity formula
+Based on the received power, the achievable uplink data rate from UAV $u$ to satellite~$s$ at time~$t$ follows the Shannon capacity expression
 \begin{equation}
-d_{s,u,t} = B_{su} \log_2 \left(1 + \frac{P_{s,u,t}^{re}}{\sigma_{su}^2}\right),
+d_{s,u,t} = B_{su} \log_2\!\left(1 + \frac{P_{s,u,t}^{\mathrm{re}}}{\sigma_{su}^2} \right),
+\label{eq:rate_equation}
 \end{equation}
-where $B_{su}$ denotes the available bandwidth of the UAV–LEO link, and $\sigma_{su}^2$ is the noise power at the satellite receiver. Let $x_{s,u,t} \in \{0,1\}$ represent the satellite association decision, where $x_{s,u,t} = 1$ indicates that UAV $u$ connects to satellite $s$ at time $t$.To characterize unnecessary switching, the handover indicator is defined as
+where $B_{su}$ is the allocated bandwidth of the UAV–LEO link and $\sigma_{su}^2 = N_0 B_{su}$ denotes the receiver noise power. Let $x_{s,u,t} \in \{0,1\}$ denote the satellite association decision, where $x_{s,u,t}=1$ indicates that UAV $u$ is connected to satellite $s$ at time $t$.
+
+To account for unnecessary satellite switching, the handover indicator is defined as
 \begin{equation}
- h_{u,t} = \frac{1}{2} \sum_{s=1}^{S} |x_{s,u,t} - x_{s,u,t-1}|.
+h_{u,t} = \frac{1}{2} \sum_{s=1}^{S} \left| x_{s,u,t} - x_{s,u,t-1} \right|.
 \end{equation}
+
 
 \subsection{Problem Formulation}
 
-To minimize the total energy consumption of the first-stage IoT–UAV data collection process, the optimization is performed over the pair-based association variables $\boldsymbol{\delta} = \{\delta_p \mid p \in P\}$, the transmit power allocation of IoT devices $\mathbf{p} = \{p_k \mid k \in K\}$, and the UAV hovering positions and visiting order $\mathbf{q} = \{\mathbf{q}_u(n) \mid u \in U\}$. By jointly optimizing $\boldsymbol{\delta}$, $\mathbf{p}$, and $\mathbf{q}$, , the total UAV energy consumption consisting of hovering and flight energy is minimized. The optimization problem is detailed as
+To minimize the total energy consumption in the first-stage IoT--UAV data collection process, we jointly optimize the pair-selection variables $\boldsymbol{\delta}=\{\delta_p \mid p\in P\}$, the transmit-power allocation of IoT devices $\mathbf{p}=\{p_k \mid k\in K\}$, and the UAV hovering positions and visiting order $\mathbf{q}=\{\mathbf{q}_u(n) \mid u\in U\}$. The optimization problem is formulated as
 \begin{subequations}
 \begin{align}
-\mathcal{P}_1: \min_{\delta, \mathbf{p}, \mathbf{q}} \quad & 
-\sum_{u=1}^{U} \left( P_h \sum_{p \in P_u} \delta_p \max_{k \in p} \frac{D_k}{d_k} + P_f \frac{L_u}{v_f} \right) \\
-\text{s.t.} \quad & p_{\min} \leq p_k \leq p_{\max}, \quad \forall k, \label{eq:p1_power} \\
-& \sum_{p: k \in p} \delta_p \leq 1, \quad \forall k, \label{eq:p1_assignment} \\
-& \rho p_{i(p)} G_{i(p)} \leq p_{j(p)} G_{j(p)}, \quad \forall p \in P_{\text{NOMA}}, \label{eq:p1_noma} \\
-& \mathbf{q}_u(N_u) = \mathbf{q}_u(0), \quad \forall u, \label{eq:p1_trajectory} \\
-& \delta_p \in \{0, 1\}, \quad \forall p \in P. \label{eq:p1_binary}
+\mathcal{P}_1: \
+\min_{\boldsymbol{\delta},\mathbf{p},\mathbf{q}}
+&\quad 
+\sum_{u=1}^{U} \left( 
+P_h \sum_{p \in P_u} \delta_p \max_{k\in p} \frac{D_k}{d_k}
++ P_f \frac{L_u}{v_f}
+\right)
+\label{eq:p1_obj} \\[4pt]
+\text{s.t.}\quad
+& p_{\min} \le p_k \le p_{\max}, && \forall k, 
+\label{eq:p1_power} \\[2pt]
+& \sum_{p: k\in p} \delta_p \le 1, && \forall k, 
+\label{eq:p1_assignment} \\[2pt]
+& \rho\, p_{i(p)} G_{i(p)} \le p_{j(p)} G_{j(p)}, && \forall p\in P_{\mathrm{NOMA}},
+\label{eq:p1_noma} \\[2pt]
+& \frac{p_k G_{k,u(p)}}{\sigma_u^2} \ge \gamma_{\min}, && \forall k \in p, \ \forall p \ \text{with } \delta_p=1,
+\label{eq:p1_snr} \\[2pt]
+& \|\mathbf{q}_u(n+1) - \mathbf{q}_u(n)\| \le v_{\max}\Delta t, && \forall u, \ \forall n,
+\label{eq:p1_velocity} \\[2pt]
+& \mathbf{q}_u(N_u) = \mathbf{q}_u(0), && \forall u,
+\label{eq:p1_trajectory} \\[2pt]
+& \delta_p \in \{0,1\}, && \forall p\in P.
+\label{eq:p1_binary}
 \end{align}
 \end{subequations}
 
-Constraint \ref{eq:p1_power} restricts the transmit power of each IoT device within its allowable operating range. Constraint  \ref{eq:p1_assignment} ensures that each device can participate in at most one transmission group, thereby preventing conflicting pair assignments. Constraint \ref{eq:p1_noma} enforces the power-domain separation required for successful NOMA decoding in every selected NOMA pair, where $\rho \in (0,1)$ denotes the minimum ratio ensuring the correct decoding order. Constraint \ref{eq:p1_trajectory} guarantees that each UAV completes a closed trajectory, returning to its initial hovering point after visiting all designated positions. Constraint \ref{eq:p1_binary} defines the binary nature of the group-selection variables.
+Constraint~\eqref{eq:p1_power} limits the transmit power of each IoT device to its feasible operating range.   
+Constraint~\eqref{eq:p1_assignment} ensures that each device can participate in at most one NOMA pair.  
+Constraint~\eqref{eq:p1_noma} guarantees the power-domain separation required for successful SIC decoding, where $i(p)$ and $j(p)$ denote the strong and weak users in pair $p$, respectively.  
+Constraint~\eqref{eq:p1_snr} enforces the minimum SNR requirement needed for reliable uplink decoding at the UAV.  
+Constraint~\eqref{eq:p1_velocity} ensures physically feasible UAV motion by restricting the maximum displacement between successive hovering points according to the UAV speed limit $v_{\max}$.  
+Constraint~\eqref{eq:p1_trajectory} requires each UAV to complete a closed trajectory.  
+Constraint~\eqref{eq:p1_binary} specifies the binary nature of the pairing decision variables.
 
-Due to the coupling among the discrete pairing decisions $\delta_p$, the continuous transmit-power variables $\{p_k\}$, and the UAV trajectory variables $\mathbf{q}_u(n)$, the overall optimization problem P1 forms a mixed-integer nonlinear programming model, which is NP-hard and computationally intractable to solve optimally.
+Due to the intrinsic coupling among the discrete pairing variables, the continuous transmit-power variables, and the UAV trajectory variables, problem $\mathcal{P}_1$ is a mixed-integer nonlinear program (MINLP), which is generally NP-hard and computationally intractable to solve optimally.
 
-After completing the IoT data-collection stage, the UAV proceeds to offload its aggregated task data to LEO satellites. The primary objective of the second-stage satellite association problem is to minimize unnecessary handover frequency while meeting operational offloading requirements, thereby enhancing QoS assurance and indirectly reducing both transmission energy consumption and handover energy consumption for unmanned aerial vehicles.
+After completing the IoT data-collection stage, each UAV proceeds to offload its aggregated task data to LEO satellites. The objective of the second-stage decision process is to minimize unnecessary handover events while guaranteeing the required offloading throughput. This improves QoS continuity and implicitly reduces both transmission and handover-related energy consumption.
 
-Demand-Aware  Handover does not seek to solve an optimal global objective function, but rather proposes a strategy algorithm that satisfies the following constraints
+The handover-aware satellite association problem is formulated as
 \begin{subequations}
 \begin{align}
-\mathcal{P}_2: \min \quad & 
-\sum_{u=1}^{U} \sum_{t=1}^{T} h_{u,t} \\
-\text{s.t.} \quad & \sum_{s=1}^{S} \sum_{t=1}^{T} x_{s,u,t} d_{s,u,t} \Delta t \geq D_u, \quad \label{eq:p2_total}\\
-&\sum_{s=1}^{S} x_{s,u,t} \leq 1, \quad \forall t \in \mathcal{T}, \label{eq:p2_visible} \\
-& \theta_{s,u,t} \geq \theta_{\min}, \quad \label{eq:p2_elevation} \\
-& \sum_{s=1}^{S} \sum_{t'=t}^{T} x_{s,u,t'} d_{s,u,t'} \Delta t \geq D_u^{rem}(t). \label{eq:p2_remaining} 
+\mathcal{P}_2: \ 
+\min_{\mathbf{x}} \quad &
+\sum_{u=1}^{U} \sum_{t=1}^{T} h_{u,t} \label{eq:p2_obj} \\[4pt]
+\text{s.t.}\quad 
+& \sum_{s=1}^{S} \sum_{t=1}^{T} x_{s,u,t} d_{s,u,t}\Delta t \ge D_u, 
+&& \forall u,
+\label{eq:p2_total}\\[2pt]
+& \sum_{s=1}^{S} x_{s,u,t} \le 1, 
+&& \forall u,\ \forall t,
+\label{eq:p2_single}\\[2pt]
+& x_{s,u,t} \le a_{s,u,t}, 
+&& \forall s,u,t,
+\label{eq:p2_elevation}\\[2pt]
+& \sum_{s=1}^{S} \sum_{t'=t}^{T} x_{s,u,t'} d_{s,u,t'}\Delta t 
+\ge D_u^{\mathrm{rem}}(t), 
+&& \forall u,\ \forall t,
+\label{eq:p2_remaining}\\[2pt]
+& x_{s,u,t} \in \{0,1\}, 
+&& \forall s,u,t. 
+\label{eq:p2_binary}
 \end{align}
 \end{subequations}
 
-Constraint \ref{eq:p2_total} represents the total amount of data successfully offloaded during the mission must satisfy $D_u$ is the task data size to be transmitted. Constraint \ref{eq:p2_visible} represents communication continuity requires that the UAV is associated with at most one visible satellite at any time. Constraint \ref{eq:p2_elevation} represents only satellites satisfying the minimum elevation constraint are eligible for association. Constraint \ref{eq:p2_remaining} ensures that switching is triggered only when the current satellite can no longer satisfy the remaining demand under predicted link evolution where $D_u^{rem}(t)$ denotes the remaining data to be uploaded at time $t$.
+
+Constraint~\eqref{eq:p2_total} ensures that the total successfully offloaded data meets the UAV's task requirement.  
+Constraint~\eqref{eq:p2_single} restricts each UAV to associate with at most one satellite at each time slot.  
+Constraint~\eqref{eq:p2_elevation} guarantees that association is allowed only when the satellite satisfies the minimum elevation angle,where $a_{s,u,t} \in \{0,1\}$ denotes the satellite visibility indicator,with $a_{s,u,t} = 1$ if $\theta_{s,u,t} \ge \theta_{\min}$ and $a_{s,u,t} = 0$ otherwise.  
+Constraint~\eqref{eq:p2_remaining} avoids unnecessary switching by ensuring that the currently selected satellite can meet the remaining offloading demand under the predicted link evolution, where $D_u^{\mathrm{rem}}(t)$ denotes the remaining data to be uploaded at time~$t$.  
+Constraint~\eqref{eq:p2_binary} specifies the binary nature of the association decisions.
+
+Due to the temporal coupling of the binary association variables and the predicted throughput evolution, problem $\mathcal{P}_2$ is combinatorial and generally NP-hard. Thus, instead of computing the exact optimal solution, a demand-aware handover strategy is developed to obtain a practically efficient association policy.
+
 
 \section{ALGORITHM DESIGN}
 
-The model is divided into two stages to achieve an effective solution. Specifically: during the data transmission phase from IoT devices to drones, Algorithm 1 completes IoT pairing, power allocation, and drone flight path planning; during the data transmission phase from drones to low-orbit satellites, Algorithm 2 selects link-demand-aware low-orbit satellites to ensure QoS.
+To efficiently solve the joint IoT–UAV data collection and UAV–LEO offloading problem, the proposed framework adopts a two-stage hierarchical design. In the first stage, corresponding to the IoT-to-UAV data transmission process, Algorithm~\ref{alg:p1_optimization} performs pair-based user grouping, transmit-power allocation, and UAV trajectory planning to minimize the UAV energy consumption. In the second stage, associated with the UAV-to-LEO offloading process, Algorithm~\ref{alg:satellite_selection} executes a demand-aware satellite selection strategy that mitigates unnecessary handovers while ensuring the required offloading throughput and QoS continuity.
 
 \subsection{UAV Data Collection and Energy Optimization}
 
-To effectively solve problem $\mathcal{P}_1$, the total energy consumption in the IoT-UAV phase is considered. Since the IoT transmission energy is negligible compared to UAV hovering and flight energy, the optimization focuses on minimizing the UAV energy consumption, which consists of hovering energy and flight energy. The problem involves coupled discrete pairing decisions $\delta = \{\delta_p | p \in \mathcal{P}\}$, continuous transmit power variables $\mathbf{p} = \{p_k | k \in \mathcal{K}\}$, and UAV hovering positions $\mathbf{q} = \{\mathbf{q}_u(n) | u \in \mathcal{U}\}$. This mixed-integer nonlinear programming problem is challenging to solve directly. Therefore, an algorithm framework based on alternating optimization and local search is proposed, as illustrated in Figure~\ref{fig:algorithm_flowchart} and detailed in Algorithm~1.
+To effectively solve problem $\mathcal{P}_1$, we focus on minimizing the total UAV energy consumption incurred during the IoT–UAV data collection stage. Since the communication energy of IoT devices is negligible compared to the hovering and flight energy of UAVs, the optimization primarily targets the UAV energy components. The decision variables include the discrete pair-selection indicators $\boldsymbol{\delta}=\{\delta_p \mid p\in P\}$, the continuous transmit-power allocation $\mathbf{p}=\{p_k \mid k\in K\}$, and the UAV hovering positions $\mathbf{q}=\{\mathbf{q}_u(n)\mid u\in U\}$. 
 
-The initial NOMA pairs are constructed based on distance constraints. Specifically, the distance matrix among all IoT devices is computed, and NOMA pairs are formed by grouping the two nearest devices that satisfy the pairing constraint into the pair set $\mathcal{P}$. This process repeats until no new valid pairs can be formed, and the remaining devices operate as independent OFDMA nodes.
+The resulting problem is a MINLP characterized by tight coupling among discrete pairing decisions, continuous power variables, and geometric trajectory variables, making it computationally intractable to solve optimally. To address this challenge, we develop an alternating-optimization framework enhanced with a local-search refinement procedure. The overall algorithmic workflow is illustrated in Fig.~\ref{fig:algorithm_flowchart} and summarized in Algorithm~\ref{alg:p1_optimization}.
 
-For each activated pair $p \in \mathcal{P}$ with $\delta_p = 1$, an alternating optimization strategy is adopted to jointly optimize power allocation and hovering positions. Given fixed UAV hovering position $(x_u, y_u, h_u)$, the transmit powers of paired devices are iteratively updated using Newton's method. For a NOMA pair $p = \{k, m\}$, $p_m$ is alternately updated while fixing $p_k$ and vice versa until convergence. For independent OFDMA nodes, $p_k = p_{\max}$ is directly set to maximize throughput.
+The initial NOMA pairs are formed using a distance-based greedy strategy. The pairwise distance matrix of all IoT devices is first computed, and the two closest devices that satisfy the NOMA feasibility constraints are grouped into a pair and added to the pair set $P$. This procedure is repeated until no additional valid pairs can be formed, and any remaining devices are treated as independent OFDMA users.
 
-Given fixed power allocation, the UAV hovering position $(x_u, y_u)$ (with altitude $h_u$ kept fixed) is optimized using the Adam optimizer. Unlike gradient-free methods, Adam leverages adaptive learning rates and momentum to achieve faster convergence and finer position adjustments. The position update rule is given by:
+For each activated NOMA pair $p \in P$ with $\delta_p = 1$, an alternating-optimization procedure is executed to jointly refine the power allocation and UAV hovering position. Given a fixed UAV position $(x_u, y_u, h_u)$, the transmit powers of the paired devices are updated using a block coordinate descent (BCD) approach. Specifically, for each NOMA pair $p$, the transmit power of one user in $p$ is updated via a Newton-type step while the power of the other user is kept fixed, followed by a projection onto the feasible power domain to satisfy the NOMA decoding constraints. This process repeats until convergence. For OFDMA users, the transmit power is directly set to $p_{\max}$ to maximize the throughput and reduce hovering time.
+
+With the power allocation fixed, the UAV hovering point $(x_u,y_u)$ ,where altitude $h_u$ kept constant, is refined using the Adam optimizer, which leverages momentum and adaptive learning rates to accelerate convergence compared with gradient-free heuristics. The update rule is
 \begin{align}
 \mathbf{m}_t &= \beta_1 \mathbf{m}_{t-1} + (1-\beta_1)\nabla_{\mathbf{q}} E_{\text{total}}, \\
 \mathbf{v}_t &= \beta_2 \mathbf{v}_{t-1} + (1-\beta_2)(\nabla_{\mathbf{q}} E_{\text{total}})^2, \\
 \mathbf{q}_u^{(t+1)} &= \mathbf{q}_u^{(t)} - \alpha \frac{\hat{\mathbf{m}}_t}{\sqrt{\hat{\mathbf{v}}_t} + \epsilon},
 \end{align}
-where $\mathbf{m}_t$ and $\mathbf{v}_t$ are the first and second moment estimates, $\alpha$ is the learning rate, and $\beta_1, \beta_2$ are decay rates. The alternating optimization process iterates until reaching the maximum iteration count $J$ or until the objective function change falls below a threshold.
+where $\mathbf{m}_t$ and $\mathbf{v}_t$ denote the first- and second-order moment estimates, and $\alpha$, $\beta_1$, and $\beta_2$ are the learning-rate and decay parameters, respectively. The alternating procedure iterates until reaching the maximum iteration count $J$ or until the reduction in objective value falls below a predefined threshold.
 
-After obtaining all hovering positions, the UAV visiting order must be planned to minimize flight distance. This problem is essentially a variant of the multiple traveling salesman problem (mTSP). The 2-opt local search algorithm is employed for trajectory optimization. The 2-opt algorithm iteratively removes two edges from the trajectory and reconnects them to eliminate path crossings, thereby progressively improving solution quality until reaching a local optimum. Compared to metaheuristic methods, 2-opt provides faster convergence and more stable performance for trajectory optimization.
+After determining all UAV hovering positions, the visiting order must be optimized to minimize the total flight distance. This routing subproblem is a variant of the multiple traveling salesman problem (mTSP). To refine the trajectory, the 2-opt local search algorithm is employed. In each iteration, two edges in the current tour are removed and reconnected in an alternative configuration. If the resulting trajectory shortens the total travel distance and eliminates path crossings, the update is accepted. The procedure is repeated until no further improvement is possible. Compared with metaheuristic approaches, 2-opt offers faster convergence and more stable performance for trajectory refinement in mTSP settings.
 
-To further reduce energy consumption, a pair recombination mechanism is introduced. All unpaired nodes are traversed to check if there exist opportunities to recombine with existing paired nodes. If an unpaired node is closer to one member of an existing pair, the original pair is broken and a new NOMA pair is formed. For two spatially close NOMA pairs, their members are exchanged to reduce UAV flight distance or hovering time.
+To further reduce energy consumption, a pair-recombination mechanism is introduced to enhance the NOMA pairing structure. Each unpaired device is examined to identify opportunities for forming a new NOMA pair with a member of an existing pair, provided that the resulting pair satisfies the NOMA decoding feasibility conditions. Similarly, for two spatially adjacent NOMA pairs, their members are evaluated for potential exchange if such a swap can reduce either UAV flight distance or hovering time while preserving NOMA constraints.
 
-After each recombination or exchange operation, the UAV trajectory and total energy consumption are recalculated. The new configuration is accepted if it yields lower energy consumption; otherwise, the original configuration is retained. Through multiple rounds of exchange operations, the algorithm can escape local optima and obtain better NOMA pairing schemes. The complete algorithm flow is presented in Algorithm~1 with the corresponding flowchart shown in Figure~\ref{fig:algorithm_flowchart}.
+After each recombination or exchange operation, the UAV trajectory and the corresponding total energy consumption are recalculated. A new configuration is accepted only if it yields a strictly lower energy value; otherwise, the previous configuration is retained. By iteratively applying trajectory refinement and pairing-structure updates, the algorithm explores a broader solution space and achieves improved NOMA pairing and flight-path configurations. The full procedure is summarized in Algorithm~1, with the corresponding flowchart shown in Fig.~\ref{fig:algorithm_flowchart}.
 
 \begin{figure*}[!t]
 \centering
+\resizebox{0.92\textwidth}{!}{%
 \begin{tikzpicture}[
-    node distance=1.2cm and 2.5cm,
-    startstop/.style={ellipse, draw, fill=red!20, text centered, minimum height=0.7cm, minimum width=2cm, font=\footnotesize},
-    process/.style={rectangle, draw, fill=blue!15, text centered, text width=2.5cm, minimum height=0.8cm, font=\footnotesize},
-    decision/.style={diamond, draw, fill=green!15, text centered, minimum height=1cm, minimum width=1cm, aspect=1.5, font=\footnotesize, inner sep=2pt},
+    node distance=1.3cm and 2.4cm,
+    startstop/.style={ellipse, draw, fill=red!20, text centered, minimum height=0.7cm, minimum width=2.2cm, font=\footnotesize},
+    process/.style={rectangle, draw, fill=blue!15, text centered, text width=3cm, minimum height=0.9cm, font=\footnotesize},
+    decision/.style={diamond, draw, fill=green!15, text centered, minimum height=1.2cm, minimum width=1.2cm, aspect=1.5, font=\footnotesize},
+    dashedbox/.style={rectangle, draw, dashed, rounded corners, inner sep=4pt},
     arrow/.style={thick,->,>=stealth}
 ]
 
-% 第一列（从上到下）
+% ---------- 节点 ----------
+% 第一列
 \node (start) [startstop] {Start};
-\node (init) [process, below=of start] {Initialize\\Parameters};
-\node (pairing) [process, below=of init] {NOMA\\Pairing};
+\node (init) [process, below=of start] {Initialize Parameters};
+\node (pairing) [process, below=of init] {NOMA Pairing};
 
-% 第二列（从下到上）
-\node (optimization) [process, right=of pairing] {Power \&\\Position Opt};
-\node (trajectory) [process, above=of optimization] {Trajectory\\Planning};
+% 第二列：交替优化
+\node (power) [process, right=3.0cm of pairing] {Power Optimization};
+\node (position) [process, below=of power] {Position Optimization (Adam)};
 
-% 第三列（从上到下）
-\node (exchange) [process, right=of trajectory] {Pair\\Recombination};
-\node (check) [decision, below=of exchange] {Improved?};
+% 第三列：全局局部搜索
+\node (trajectory) [process, right=3.0cm of position] {Trajectory Planning (2-opt)};
+\node (recombine) [process, below=of trajectory] {Pair Recombination};
+\node (check) [decision, below=of recombine] {Better Solution?};
 \node (stop) [startstop, below=of check] {Output};
 
-% 主流程箭头
+% ---------- 主流程箭头 ----------
 \draw [arrow] (start) -- (init);
 \draw [arrow] (init) -- (pairing);
-\draw [arrow] (pairing) -- node[midway, below, font=\tiny] {} (optimization);
-\draw [arrow] (optimization) -- (trajectory);
-\draw [arrow] (trajectory) -- node[midway, below, font=\tiny] {} (exchange);
-\draw [arrow] (exchange) -- (check);
-\draw [arrow] (check) -- node[near start, right, font=\tiny] {No} (stop);
+\draw [arrow] (pairing) -- (power);
+\draw [arrow] (power) -- (position);
 
-% 反馈循环：从check向左转弯再向上到exchange
-\draw [arrow] (check) -- ++(-1.5,0) |- node[near start, left, font=\tiny] {Yes} (exchange);
+% 交替优化回环（完全在虚线框内）
+\draw [arrow] (position.north) -- node[midway,right,font=\scriptsize] {Repeat} (power.south);
 
-% 可选：添加小注释框（使用虚线边框，放在节点下方）
-\node[below=0.1cm of optimization, font=\scriptsize, text=gray] {Equation (19)-(21)};
-\node[below=0.1cm of trajectory, font=\scriptsize, text=gray] {2-opt};
+% 交替优化收敛后，进入轨迹规划
+\draw [arrow] (position) -- (trajectory);
+
+% 全局局部搜索部分
+\draw [arrow] (trajectory) -- (recombine);
+\draw [arrow] (recombine) -- (check);
+
+% 决策结果箭头
+\draw [arrow] (check) -- node[near start,right,font=\scriptsize] {No} (stop);
+\draw [arrow] (check.west) -- ++(-1.6,0) |- 
+      node[pos=0.25,left,font=\scriptsize] {Yes} (power.south);
+
+% ---------- 虚线框 ----------
+% 交替优化虚线框
+\node[dashedbox, fit=(power) (position), label=above:{\footnotesize Alternating Optimization Loop}] (AObox) {};
+
+% 全局局部搜索虚线框
+\node[dashedbox, fit=(trajectory) (recombine) (check), label=above:{\footnotesize Global Local Search Loop}] (GSbox) {};
 
 \end{tikzpicture}
-\caption{Flowchart of the proposed algorithm for UAV data collection and energy optimization.}
+}
+\caption{Flowchart of the proposed UAV data collection algorithm with NOMA pairing, power control, and trajectory optimization.}
 \label{fig:algorithm_flowchart}
 \end{figure*}
 
-\begin{algorithm}[!htbp]
+\begin{algorithm}[!t]
 \caption{UAV Data Collection and Energy Optimization}
 \label{alg:p1_optimization}
 \begin{algorithmic}[1]
-\State \textbf{Input:} All IoT devices' positions $\mathbf{q}_k$ and corresponding packets $D_k$, UAV initial position $\mathbf{q}_u(0)$
-\State \textbf{Output:} Energy consumption $E_{\text{total}}$
-\State Initialize distance matrix and maximum iterations $J$
-\State Form NOMA pairs from two nearest devices under distance constraints
-\State Obtain lists of paired and unpaired nodes
-\For{each paired nodes $(k, m)$}
-    \State Initialize transmission powers $p_k, p_m$
-    \State Initialize hover position $(x_u, y_u, h_u)$
-    \State Set iteration counter $j \leftarrow 0$
-    \While{$j \leq J$}
-        \State Update $p_k^{(j)}, p_m^{(j)}$ using Newton's method
-        \State Update $(x_u^{(j)}, y_u^{(j)}, h_u)$ using Adam optimizer
-        \State $j \leftarrow j + 1$
-    \EndWhile
-\EndFor
-\State Optimize UAV trajectories using 2-opt local search
-\State Compute energy consumption $E_{\text{total}}$ using Equation~(9)
-\For{each node combination (unpaired and paired)}
-    \State Exchange nodes between paired and unpaired groups
-    \State Update UAV trajectories and device transmission powers
-    \State Calculate new energy consumption $E_{\text{new}}$ using Equation~(9)
-    \If{$E_{\text{new}} < E_{\text{total}}$}
-        \State $E_{\text{total}} \leftarrow E_{\text{new}}$
-    \EndIf
-\EndFor
-\State \Return $E_{\text{total}}$
+    \State \textbf{Input:} IoT device locations $\{\mathbf{q}_k\}$, data sizes $\{D_k\}$, UAV initial position $\mathbf{q}_u(0)$
+    \State \textbf{Output:} Total energy consumption $E_{\text{total}}$
+
+    \Statex \Comment{Stage 1: Initial NOMA Pairing}
+    \State Construct the distance matrix of all IoT devices
+    \State Form the initial NOMA pair set $P$ using distance-based greedy pairing
+    \State Let $U_{\text{solo}}$ be the set of unpaired devices
+
+    \Statex \Comment{Stage 2: Alternating Optimization (Power $\leftrightarrow$ Position)}
+    \State Initialize UAV hovering position $\mathbf{q}_u$
+    \State Initialize transmit-power vector $\mathbf{p}$
+    \For{$j = 1$ to $J$}
+        \State Update $\mathbf{p}$ via Newton-type block coordinate descent with projection onto feasible power and NOMA constraints
+        \State Update UAV hovering position $\mathbf{q}_u$ using the Adam optimizer
+    \EndFor
+
+    \Statex \Comment{Stage 3: Trajectory Optimization}
+    \State Generate an initial visiting order for all UAV hovering waypoints
+    \State Refine the trajectory using the 2-opt local search algorithm
+    \State Compute the initial total energy $E_{\text{total}}$ using \eqref{eq:p1_obj}
+
+    \Statex \Comment{Stage 4: Global Local Search with Pair Recombination}
+    \Repeat
+        \State $improved \gets \textbf{false}$
+        \For{each NOMA pair $p \in P$}
+            \For{each unpaired device $k \in U_{\text{solo}}$}
+                \State Propose a recombination or user exchange between $k$ and pair $p$
+                \If{the new pairing satisfies NOMA decoding constraints}
+                    \State Re-run Stage~2 (power and position optimization)
+                    \State Re-run Stage~3 (trajectory refinement)
+                    \State Compute updated energy $E_{\text{new}}$
+                    \If{$E_{\text{new}} < E_{\text{total}}$}
+                        \State Accept the new configuration
+                        \State $E_{\text{total}} \gets E_{\text{new}}$
+                        \State $improved \gets \textbf{true}$
+                    \Else
+                        \State Reject the new configuration and revert to the previous one
+                    \EndIf
+                \EndIf
+            \EndFor
+        \EndFor
+    \Until{$improved = \textbf{false}$}
+
+    \State \Return $E_{\text{total}}$
 \end{algorithmic}
 \end{algorithm}
+
 
 \subsection{LEO Satellite Selection Optimization}
 
-After the UAV completes data collection from all IoT devices, it must offload the aggregated data to LEO satellites for further processing. Unlike static ground stations, LEO satellites exhibit high mobility with time-varying channel conditions and limited visibility windows. Consequently, the satellite association decision directly impacts both transmission efficiency and handover frequency.Frequent satellite handovers introduce signaling overhead, packet loss, and interruption delays, degrading quality of service. Conversely, maintaining connection with a suboptimal satellite prolongs transmission time and increases energy consumption. Therefore, the selection strategy must balance handover frequency against link quality to ensure timely and reliable data offloading.
+After completing the data collection phase, the UAV must offload its aggregated information to LEO satellites for further processing. In contrast to stationary terrestrial ground stations, LEO satellites move rapidly along predetermined orbital trajectories, resulting in highly time-varying channel conditions and limited visibility windows. As a result, the satellite association decision plays a critical role in determining both the achievable uplink throughput and the stability of the communication link.
+\begin{figure}[!t]
+\centering
+\resizebox{0.92\textwidth}{!}{%
+\begin{tikzpicture}[
+    node distance=1.2cm and 2.2cm,
+    startstop/.style={ellipse, draw, fill=red!20, text centered, minimum height=0.6cm, minimum width=1.8cm, font=\footnotesize},
+    process/.style={rectangle, draw, fill=blue!15, text centered, text width=3cm, minimum height=0.8cm, font=\footnotesize},
+    decision/.style={diamond, draw, fill=green!15, text centered, aspect=1.7, inner sep=1pt, font=\footnotesize},
+    arrow/.style={thick,->,>=stealth}
+]
 
-To address problem P2, a demand-aware satellite selection mechanism is proposed. Rather than myopically selecting the satellite with maximum instantaneous throughput at each time slot, the algorithm evaluates whether the current satellite can satisfy the remaining data transmission demand under predicted link evolution. Satellite handover is triggered only when the current satellite is predicted to be insufficient for completing the remaining task, thereby minimizing unnecessary switching while ensuring transmission deadlines.
+% Nodes
+\node (start) [startstop] {Start};
+\node (cand) [process, below=of start] {Identify candidate satellites\\ $\theta_{s,u,t} \ge \theta_{\min}$};
+\node (rate) [process, below=of cand] {Compute instantaneous rate\\ $d_{s,u,t}$ for all candidates};
+\node (predict) [process, below=of rate] {Predict throughput of\\ current satellite};
+\node (check) [decision, below=of predict, yshift=-0.3cm] {Sufficient?};
+\node (keep) [process, left=2.3cm of check] {Maintain current\\ satellite};
+\node (switch) [process, right=2.3cm of check] {Select satellite with\\ max instantaneous rate};
+\node (stop) [startstop, below=1.2cm of check] {Output $s^*$};
 
+% Arrows
+\draw [arrow] (start) -- (cand);
+\draw [arrow] (cand) -- (rate);
+\draw [arrow] (rate) -- (predict);
+\draw [arrow] (predict) -- (check);
 
-The algorithm operates as follows. At each decision epoch, all LEO satellites satisfying the elevation angle constraint $\theta_{s,u,t} \geq \theta_{\min}$ are identified as candidate satellites. For each candidate $s$, the instantaneous uplink data rate $d_{s,u,t}$ is calculated according to Equation (15) based on the distance-dependent channel gain and transmit power. The algorithm then predicts the cumulative throughput achievable by the current satellite over the remaining visibility window. If the predicted throughput exceeds the remaining data size $D_u^{\text{rem}}(t)$, the current satellite association is maintained. Otherwise, the algorithm selects the satellite with maximum instantaneous throughput from the candidate set and performs handover.
+\draw [arrow] (check) -- node[above, font=\scriptsize]{Yes} (keep);
+\draw [arrow] (check) -- node[above, font=\scriptsize]{No} (switch);
 
-\begin{algorithm}[!htbp]
+\draw [arrow] (keep) |- (stop);
+\draw [arrow] (switch) |- (stop);
+
+\end{tikzpicture}
+}
+\caption{Flowchart of the demand-aware LEO satellite selection algorithm.}
+\label{fig:leo_selection_flowchart}
+\end{figure}
+
+Frequent satellite handovers lead to increased signaling overhead, potential packet loss, and service interruptions, thereby degrading the overall quality of service. On the other hand, maintaining a connection to a satellite with deteriorating link quality prolongs transmission time and increases energy consumption. Hence, an effective association strategy must carefully balance the tradeoff between reducing unnecessary handovers and preserving sufficient link quality to ensure timely and reliable data offloading.
+
+To address problem $\mathcal{P}_2$, a demand-aware satellite selection mechanism is proposed. Instead of adopting a greedy policy that always associates with the satellite providing the highest instantaneous throughput, the proposed algorithm assesses whether the currently connected satellite can still satisfy the remaining offloading demand based on the predicted link evolution. A handover is triggered only when the projected achievable throughput of the current link becomes insufficient to complete the remaining task, thereby avoiding unnecessary switching while ensuring timely and reliable data delivery.
+
+At each decision epoch, all LEO satellites satisfying the elevation constraint $\theta_{s,u,t} \ge \theta_{\min}$ are identified as candidate satellites. For each candidate $s$, the instantaneous uplink rate $d_{s,u,t}$ is computed using \eqref{eq:rate_equation} based on the distance-dependent channel gain. The algorithm then predicts the cumulative throughput that the currently associated satellite can provide over its remaining visibility window. If this predicted throughput exceeds the remaining data requirement $D_u^{\mathrm{rem}}(t)$, the current association is maintained. Otherwise, a handover is initiated to the candidate satellite offering the maximum instantaneous throughput.
+
+\begin{algorithm}[!t]
 \caption{Demand-Aware LEO Satellite Selection}
 \label{alg:satellite_selection}
 \begin{algorithmic}[1]
-\State \textbf{Input:} UAV position $\mathbf{q}_u(t)$, total data size $D_u$, transmitted data $D_u^{\text{tx}}$, current satellite $s_{\text{curr}}$, time $t$, prediction horizon $\Delta t$
+
+\State \textbf{Input:} UAV position $\mathbf{q}_u(t)$, total data size $D_u$, transmitted data $D_u^{\text{tx}}$, current satellite $s_{\text{curr}}$, current time $t$
 \State \textbf{Output:} Selected satellite $s^*$
-\State Compute remaining data: $D_u^{\text{rem}}(t) \gets D_u - D_u^{\text{tx}}$
-\State Initialize candidate set: $\mathcal{S}_{\text{candidate}} \gets \emptyset$
+
+\State Compute remaining data $D_u^{\text{rem}}(t) \gets D_u - D_u^{\text{tx}}$
+
+\State Initialize candidate set $\mathcal{S}_{\text{cand}} \gets \emptyset$
+
 \For{each satellite $s \in \mathcal{S}$}
-    \State Compute elevation angle $\theta_{s,u,t}$ using Equation~(12)
-    \If{$\theta_{s,u,t} \geq \theta_{\min}$}
-        \State Add $s$ to $\mathcal{S}_{\text{candidate}}$
+    \State Compute elevation angle $\theta_{s,u,t}$ using \eqref{eq:elevation}
+    \If{$\theta_{s,u,t} \ge \theta_{\min}$}
+        \State $\mathcal{S}_{\text{cand}} \gets \mathcal{S}_{\text{cand}} \cup \{s\}$
     \EndIf
 \EndFor
-\If{$s_{\text{curr}} \in \mathcal{S}_{\text{candidate}}$}
-    \State Compute current throughput: $d_{s_{\text{curr}},u,t}$ using Equation~(15)
-    \State Predict remaining visibility time: $T_{\text{vis}} \gets T_{\text{access}}(s_{\text{curr}}) - t$
-    \State Estimate achievable data: $\hat{D}_{\text{curr}} \gets d_{s_{\text{curr}},u,t} \cdot \min(T_{\text{vis}}, \Delta t)$
-    \If{$\hat{D}_{\text{curr}} \geq D_u^{\text{rem}}(t)$}
-        \State \Return $s_{\text{curr}}$ \Comment{Current satellite sufficient}
+
+\If{$s_{\text{curr}} \in \mathcal{S}_{\text{cand}}$}
+    \State Predict visibility window end time $t_{\text{exit}}(s_{\text{curr}})$
+    \State $T_{\text{vis}} \gets t_{\text{exit}}(s_{\text{curr}}) - t$
+    \State Predict future achievable throughput:
+    \[
+        \hat{D}_{\text{curr}} \gets \sum_{t'=t}^{t_{\text{exit}}} d_{s_{\text{curr}},u,t'} \Delta t
+    \]
+    \If{$\hat{D}_{\text{curr}} \ge D_u^{\text{rem}}(t)$}
+        \State \Return $s_{\text{curr}}$ \Comment{Current link sufficient, no handover}
     \EndIf
 \EndIf
-\State $s^* \gets \arg\max_{s \in \mathcal{S}_{\text{candidate}}} d_{s,u,t}$ \Comment{Select maximum throughput satellite}
+
+\State Choose the best candidate:
+\[
+    s^* \gets \arg\max_{s \in \mathcal{S}_{\text{cand}}} d_{s,u,t}
+\]
 \State \Return $s^*$
+
 \end{algorithmic}
 \end{algorithm}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SIMULATION RESULTS}
+
+The performance of the proposed two-stage optimization framework is evaluated through extensive simulations. The evaluation covers both individual stages—UAV-assisted IoT data collection and LEO satellite offloading—as well as their end-to-end integration. All numerical parameters are summarized in Table~\ref{tab:sim_parameters}, and the experiments are implemented in Python~3.10 on a workstation equipped with an Intel Core i7-12700K CPU and 32~GB RAM.
 \begin{table}[!htbp]
 \centering
 \caption{Simulation Parameters}
@@ -542,10 +713,6 @@ Constellation & Starlink & Num. satellites & 200 \\
 \bottomrule
 \end{tabular}
 \end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{SIMULATION RESULTS}
-
-The performance of the proposed two-stage optimization framework is evaluated through extensive simulations. The evaluation covers both individual stages—UAV-assisted IoT data collection and LEO satellite offloading—as well as their end-to-end integration. All numerical parameters are summarized in Table~\ref{tab:sim_parameters}, and the experiments are implemented in Python~3.10 on a workstation equipped with an Intel Core i7-12700K CPU and 32~GB RAM.
 % Figure 4
 \begin{figure}[!htbp]
 \centering
