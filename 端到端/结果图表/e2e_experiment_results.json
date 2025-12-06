@@ -1,0 +1,331 @@
+{
+  "metadata": {
+    "experiment_date": "2025-12-06 15:21:26",
+    "k_values": [
+      40
+    ],
+    "random_seeds": [
+      27,
+      37,
+      41
+    ],
+    "num_satellites": 1500,
+    "demand_rate_mbps": 8.0
+  },
+  "statistics": {
+    "G1": {
+      "group_id": "G1",
+      "n_experiments": 3,
+      "e2e_latency_mean": 821.0316640822248,
+      "e2e_latency_std": 6.853353454189236,
+      "system_energy_mean": 44199.15557741848,
+      "system_energy_std": 1913.7366328236726,
+      "delivery_rate_mean": 0.9986666666666667,
+      "delivery_rate_std": 0.0
+    },
+    "G2": {
+      "group_id": "G2",
+      "n_experiments": 3,
+      "e2e_latency_mean": 821.0316640822248,
+      "e2e_latency_std": 6.853353454189236,
+      "system_energy_mean": 44199.15557741848,
+      "system_energy_std": 1913.7366328236726,
+      "delivery_rate_mean": 0.9946666666666667,
+      "delivery_rate_std": 0.0
+    },
+    "G3": {
+      "group_id": "G3",
+      "n_experiments": 3,
+      "e2e_latency_mean": 796.0748640338915,
+      "e2e_latency_std": 16.320588884645886,
+      "system_energy_mean": 46245.12969177697,
+      "system_energy_std": 3852.0004028069643,
+      "delivery_rate_mean": 0.9986666666666667,
+      "delivery_rate_std": 0.0
+    },
+    "G4": {
+      "group_id": "G4",
+      "n_experiments": 3,
+      "e2e_latency_mean": 796.0748640338915,
+      "e2e_latency_std": 16.320588884645886,
+      "system_energy_mean": 46245.12969177697,
+      "system_energy_std": 3852.0004028069643,
+      "delivery_rate_mean": 0.9946666666666667,
+      "delivery_rate_std": 0.0
+    }
+  },
+  "raw_results": {
+    "G1": [
+      {
+        "group_id": "G1",
+        "K": 40,
+        "seed": 27,
+        "e2e_metrics": {
+          "e2e_latency": 829.308210881864,
+          "system_energy": 42962.11291674951,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 229.30821088186408,
+          "uav_energy": 42954.56356056824,
+          "data_collected": 23.162187757784544
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      },
+      {
+        "group_id": "G1",
+        "K": 40,
+        "seed": 37,
+        "e2e_metrics": {
+          "e2e_latency": 821.2610857446901,
+          "system_energy": 46902.353367417796,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 221.26108574469015,
+          "uav_energy": 46898.47594590092,
+          "data_collected": 19.0845644607506
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      },
+      {
+        "group_id": "G1",
+        "K": 40,
+        "seed": 41,
+        "e2e_metrics": {
+          "e2e_latency": 812.5256956201204,
+          "system_energy": 42733.000448088125,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 212.5256956201203,
+          "uav_energy": 42727.82674923207,
+          "data_collected": 18.701149774140013
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      }
+    ],
+    "G2": [
+      {
+        "group_id": "G2",
+        "K": 40,
+        "seed": 27,
+        "e2e_metrics": {
+          "e2e_latency": 829.308210881864,
+          "system_energy": 42962.11291674951,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 229.30821088186408,
+          "uav_energy": 42954.56356056824,
+          "data_collected": 23.162187757784544
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      },
+      {
+        "group_id": "G2",
+        "K": 40,
+        "seed": 37,
+        "e2e_metrics": {
+          "e2e_latency": 821.2610857446901,
+          "system_energy": 46902.353367417796,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 221.26108574469015,
+          "uav_energy": 46898.47594590092,
+          "data_collected": 19.0845644607506
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      },
+      {
+        "group_id": "G2",
+        "K": 40,
+        "seed": 41,
+        "e2e_metrics": {
+          "e2e_latency": 812.5256956201204,
+          "system_energy": 42733.000448088125,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "P1",
+          "collection_time": 212.5256956201203,
+          "uav_energy": 42727.82674923207,
+          "data_collected": 18.701149774140013
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      }
+    ],
+    "G3": [
+      {
+        "group_id": "G3",
+        "K": 40,
+        "seed": 27,
+        "e2e_metrics": {
+          "e2e_latency": 813.606040257505,
+          "system_energy": 50338.735291289624,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 213.60604025750504,
+          "uav_energy": 50338.155732583866,
+          "data_collected": 23.162187757784544
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      },
+      {
+        "group_id": "G3",
+        "K": 40,
+        "seed": 37,
+        "e2e_metrics": {
+          "e2e_latency": 800.3106538288641,
+          "system_energy": 47310.98741825325,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 200.31065382886416,
+          "uav_energy": 47310.50988885946,
+          "data_collected": 19.0845644607506
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      },
+      {
+        "group_id": "G3",
+        "K": 40,
+        "seed": 41,
+        "e2e_metrics": {
+          "e2e_latency": 774.3078980153051,
+          "system_energy": 41085.66636578806,
+          "delivery_success_rate": 0.9986666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 174.3078980153051,
+          "uav_energy": 41085.19843010458,
+          "data_collected": 18.701149774140013
+        },
+        "phase2_summary": {
+          "method": "Demand-Aware",
+          "handover_count": 2,
+          "packet_loss_rate": 0.0013333333333333335,
+          "avg_data_rate": 23.767710318779802
+        }
+      }
+    ],
+    "G4": [
+      {
+        "group_id": "G4",
+        "K": 40,
+        "seed": 27,
+        "e2e_metrics": {
+          "e2e_latency": 813.606040257505,
+          "system_energy": 50338.735291289624,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 213.60604025750504,
+          "uav_energy": 50338.155732583866,
+          "data_collected": 23.162187757784544
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      },
+      {
+        "group_id": "G4",
+        "K": 40,
+        "seed": 37,
+        "e2e_metrics": {
+          "e2e_latency": 800.3106538288641,
+          "system_energy": 47310.98741825325,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 200.31065382886416,
+          "uav_energy": 47310.50988885946,
+          "data_collected": 19.0845644607506
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      },
+      {
+        "group_id": "G4",
+        "K": 40,
+        "seed": 41,
+        "e2e_metrics": {
+          "e2e_latency": 774.3078980153051,
+          "system_energy": 41085.66636578806,
+          "delivery_success_rate": 0.9946666666666667
+        },
+        "phase1_summary": {
+          "method": "F-scheme",
+          "collection_time": 174.3078980153051,
+          "uav_energy": 41085.19843010458,
+          "data_collected": 18.701149774140013
+        },
+        "phase2_summary": {
+          "method": "Greedy",
+          "handover_count": 8,
+          "packet_loss_rate": 0.005333333333333334,
+          "avg_data_rate": 36.20621123639401
+        }
+      }
+    ]
+  }
+}

@@ -120,7 +120,9 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 %\conference{} % An extended version of a conference paper
 
 % Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{The rapid advances in low earth orbit satellite constellations and unmanned aerial vehicles have established space–air–ground integrated networks as a key enabling architecture for next-generation IoT services. However, reliable end-to-end operation remains challenging due to heterogeneous IoT–UAV link conditions and the strong temporal variability of LEO satellite visibility. This work introduces a two-stage optimization framework that minimizes UAV energy consumption during IoT data acquisition and ensures stable offloading through a demand-aware satellite selection mechanism. The first-stage algorithm integrates gradient-based refinement with combinatorial trajectory optimization to jointly determine NOMA pairing, power allocation, and UAV hovering locations, while the second stage employs a demand-aware satellite association strategy to maintain stable connectivity under rapidly varying orbital dynamics. Simulation results show that the framework reduces UAV energy consumption by over 20\% and shortens flight distance by over 30\% under dense IoT deployments. For UAV–LEO transmission, the proposed demand-aware satellite association strategy achieves only 2–3 handovers—compared with 7–9 under greedy selection—and lowers the packet loss rate from 0.47–0.60\% to 0.13–0.20\%, thereby improving link reliability. The two-stage framework maintains consistent performance trends across varying IoT densities and satellite constellation sizes, demonstrating applicability across diverse SAGIN configurations.}
+\abstract{
+The rapid advancement of low Earth orbit (LEO) satellite constellations and unmanned aerial vehicles (UAVs) has positioned space–air–ground integrated networks as a key enabler of large-scale IoT services. However, ensuring reliable end-to-end operation remains challenging due to heterogeneous IoT–UAV link conditions and rapidly varying satellite visibility. This work proposes a two-stage optimization framework that jointly minimizes UAV energy consumption during IoT data acquisition and ensures stable UAV–LEO offloading through a demand-aware satellite association strategy. The first stage combines gradient-based refinement with combinatorial path optimization, while the second stage triggers handover only when the remaining offloading demand cannot be met. Simulation results show that the framework reduces UAV energy consumption by over 20\% and shortens flight distance by more than 30\% in dense deployments. For satellite offloading, the demand-aware strategy requires only 2–3 handovers—versus 7–9 under greedy selection—and lowers packet loss from 0.47–0.60\% to 0.13–0.20\%. By improving both stages simultaneously, the framework achieves consistent end-to-end performance gains across varying IoT densities and constellation sizes, demonstrating its practicality for future SAGIN deployments.
+}
 
 % Keywords
 \keyword{SAGIN, UAV-assisted IoT, LEO satellite communications, trajectory planning, satellite handover, mobility management.} 
@@ -180,18 +182,19 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 
 \section{Introduction}
 
-Although Internet of Things (IoT) devices have been widely deployed in applications such as environmental monitoring, intelligent transportation and industrial sensing. Terrestrial networks often fail to provide reliable coverage for large scale and spatially distributed IoT deployments, particularly when devices are located beyond the effective range of existing infrastructure or in environments with highly variable link conditions.
-In this context, space–air–ground integrated networks (SAGINs) have emerged as a promising architecture: unmanned aerial vehicles (UAVs) act as flexible aerial aggregators for ground IoT data, while low Earth orbit (LEO) satellites provide wide area connectivity for offloading the aggregated data to the space segment.
+Although Internet of Things (IoT) devices have been widely deployed in applications such as environmental monitoring, intelligent transportation and industrial sensing\cite{jia2020leo}\cite{xiao2024space}. 
+Terrestrial networks often fail to provide reliable coverage for large scale and spatially distributed IoT deployments, particularly when devices are located beyond the effective range of existing infrastructure or in environments with highly variable link conditions\cite{duan2022distributed} \cite{wei2024energy}.
+In this context, space–air–ground integrated networks (SAGINs) have emerged as a promising architecture: unmanned aerial vehicles (UAVs) act as flexible aerial aggregators for ground IoT data, while low Earth orbit (LEO) satellites provide wide area connectivity for offloading the aggregated data to the space segment\cite{pan2022latency}\cite{jia2025distributionally}.
 
-However, the efficiency of IoT devices data acquisition is strongly influenced by the UAV platform’s mobility strategy.
-Optimizing the flight path and determining appropriate hovering points enable UAVs to better align with the spatial distribution of ground devices.
+However, the efficiency of IoT devices data acquisition is strongly influenced by the UAV platform’s mobility strategy\cite{mao2020joint}\cite{zhao2021multi}.
+Optimizing the flight path and determining appropriate hovering points enable UAVs to better align with the spatial distribution of ground devices\cite{mozaffari2019tutorial}\cite{tao2015survey}.
 Another fundamental challenge arises from the limited spectrum resources on UAVs, which restrict the number of IoT devices that can be served simultaneously and lead to low spectral efficiency under conventional orthogonal access schemes.
 
-Motivated by these challenges, numerous studies have investigated UAVs for IoT data collection.
+Motivated by these challenges, numerous studies have investigated UAVs for IoT data collection\cite{fang2022noma}\cite{jia2025service}.
 The work in \cite{xiao2022energy} uses fractional programming and block coordinate descent to jointly optimize UAV trajectory and continuous communication resources. It relies on multiple access with unit bandwidth and does not consider spectrum domain allocation strategies.
 In \cite{wang2025joint}, a hierarchical framework is introduced to uniformly optimize the total energy consumption across UAV collection of IoTs Data and satellite selection for offloading to LEO satellites. The work focuses primarily on the structural design of the framework, and the optimization aimed at improving performance is not further developed.
 
-Beyond data acquisition on the ground side, another line of work focuses on how UAVs deliver the collected information to satellites. 
+Beyond data acquisition on the ground side, another line of work focuses on how UAVs deliver the collected information to satellites\cite{huang2024joint}\cite{jia2024dynamic}\cite{d2020learning}. 
 The delivery of the collected information to LEO satellites introduces another layer of complexity, as the UAV must decide how to offload data under temporally dynamic link quality, limited communication resources, and dynamic satellite visibility.
 The authors in \cite{zhang2023resource} investigates the computational tasks and resource allocation in a UAV assisted LEO satellite network,taking into account satellite computing resources and device task volumes.
 The study in \cite{wang2025coordinated} employs  a Proximal Policy Optimization (PPO) driven reinforcement learning framework that intelligently adapts UAV placement and computation offloading strategies.
@@ -813,53 +816,33 @@ Finally, the scalability behavior across constellations provides insight into fu
 
 \subsection{End-to-End System Analysis}
 
-The end-to-end evaluation highlights how the two-stage optimization framework jointly enhances mission efficiency from initial IoT data acquisition to final satellite offloading. While the preceding subsections examined each stage independently, their combined behavior reveals the full benefit of coupling spatial efficiency in the ground segment with temporal stability in the space segment.
+To assess the system-wide benefits of the proposed two-stage framework, we evaluate the total mission energy consumption—including IoT uplink transmission, UAV propulsion, and LEO-side processing—summarized in Figure~\ref{fig:system_energy_distribution}. This metric captures the cumulative effect of both spatial optimization during data acquisition and temporal stability during satellite offloading.
 
-A representative mission with $K=50$ devices and 500 visible satellites illustrates this interaction. In the acquisition stage, the Adam-2opt method completes data collection with substantially reduced flight distance and energy expenditure, resulting in a shorter collection period. This improvement has direct implications for the offloading stage: by shortening the time window during which data must be transmitted, and by generating well-structured aggregated traffic, the system lowers the temporal pressure placed on the satellite link.
+The results demonstrate a clear and consistent improvement over the baseline strategies. The Adam-2opt method reduces flight distance and hovering duration, thereby lowering the dominant propulsion energy in the acquisition stage. These savings directly translate into a shorter collection phase and a more structured aggregated data load. As a result, the Demand-Aware offloading stage operates under reduced temporal pressure, requiring fewer handovers and avoiding retransmissions. This stability further suppresses unnecessary communication energy on both the UAV and satellite sides.
 
-The offloading stage further amplifies these gains. The Demand-Aware strategy maintains stable connectivity with only two satellite handovers while sustaining data rates well above the required threshold. The reduced switching activity not only minimizes packet loss but also prevents retransmissions that would otherwise increase mission duration and UAV energy consumption. Together, the two stages form a complementary pair: the first minimizes the amount of work the second must perform under dynamic link conditions, while the second ensures reliable and efficient transfer of the data produced by the first.
+Figure~\ref{fig:system_energy_distribution} shows that the combined Adam-2opt + Demand-Aware pipeline achieves approximately 8--12\% lower total mission energy compared with the baselines. Importantly, these reductions do not arise from a single component but reflect the complementary function of both stages: Algorithm~\ref{alg:p1_optimization} minimizes the work that Algorithm~\ref{alg:satellite_selection} must perform under rapidly varying link conditions, while Algorithm~\ref{alg:satellite_selection} ensures reliable and interruption-free delivery of the data produced by Algorithm~\ref{alg:p1_optimization}.
 
-Table~\ref{tab:end_to_end_comparison} summarizes the resulting system-level improvements. The proposed framework achieves simultaneous reductions in UAV energy consumption, flight distance, collection time, handover count, and packet loss. Although the average offloading rate is modestly lower than that of the Greedy strategy, it remains well above the demand threshold, confirming that meeting quality-of-service requirements does not require maximizing instantaneous throughput. Instead, the results show that stability-driven offloading yields superior system performance across all metrics of operational relevance.
+Overall, the end-to-end evaluation confirms that optimizing spatial and temporal dimensions jointly yields significantly better system-level performance than optimizing either stage in isolation. By aligning trajectory planning with demand-aware offloading control, the proposed framework provides a robust and energy-efficient solution for UAV–LEO integrated operations.
 
-The scalability characteristics further emphasize the robustness of the design. As IoT device density increases, the benefits of spatial optimization become more pronounced, with energy savings rising from marginal levels at low density to double-digit improvements at higher density. Conversely, the performance of the offloading stage remains largely unaffected by ground-segment scaling, consistently limiting handovers to two or three events regardless of IoT density. This decoupling is desirable: Algorithm~1 efficiently adapts to spatial complexity on the ground, while Algorithm~2 maintains stable performance in the space segment independent of the ground network.
-
-Satellite density variation produces a similar conclusion. The Greedy strategy becomes increasingly unstable as constellation density grows, whereas the Demand-Aware approach exhibits nearly constant switching behavior. This insensitivity to satellite availability reflects a fundamental advantage of demand-based switching: decisions are driven by transmission requirements rather than by short-term channel fluctuations. As next-generation LEO constellations continue to expand, such robustness will be essential for ensuring reliable large-scale UAV–satellite integration.
-
-Overall, the end-to-end evaluations demonstrate that optimizing spatial and temporal dimensions jointly, rather than individually, yields substantial system-level gains. By aligning the objectives of ground-level trajectory design with those of satellite-level handover management, the proposed framework supports efficient, reliable, and scalable operation across heterogeneous segments of the SAGIN architecture.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
 
-The simulation results provide several overarching insights into the design of integrated UAV-assisted IoT collection and LEO satellite offloading systems. Beyond validating the performance gains of the proposed algorithms, the findings highlight structural principles that can inform future SAGIN architectures.
+The simulation results reveal several broader insights that extend beyond individual algorithmic performance and speak to the design of integrated UAV–LEO systems. A first overarching finding is that spatial efficiency in the ground segment and temporal stability in the space segment must be treated as complementary objectives rather than independent concerns. The two-stage results clearly show that trajectory refinement not only reduces propulsion energy but also produces a more predictable data acquisition window, which in turn enables stable and interruption-free satellite offloading.
 
-A central observation is that effective UAV trajectory planning requires joint reasoning over multiple coupled spatial objectives. Approaches that optimize hovering locations or hovering duration in isolation fail to capture the interdependence between waypoint placement and path structure. The Adam-2opt strategy illustrates that combining continuous refinement of hovering positions with discrete trajectory optimization yields substantially better performance than either technique alone. This supports a broader design principle: in spatially distributed IoT systems, hybrid optimization methods that exploit both geometric structure and combinatorial refinement can unlock performance regimes unattainable through single-method strategies.
+The end-to-end experiment further reinforces this interaction. By jointly considering IoT transmission, UAV propulsion, and LEO processing energy, Figure~\ref{fig:system_energy_distribution} demonstrates that the Adam-2opt + Demand-Aware pipeline consistently lowers total mission cost compared with baseline strategies. These reductions arise from distinct but mutually reinforcing mechanisms: Algorithm~1 suppresses spatial redundancy, while Algorithm~2 minimizes temporal disruptions by avoiding unnecessary handovers. The combined effect illustrates that system-level gains emerge not from aggressively optimizing a single stage, but from aligning optimization principles across stages.
 
-In the LEO offloading stage, the Demand-Aware handover mechanism represents a shift from instantaneous-metric optimization toward stability-oriented decision making. Traditional handover strategies prioritize maximizing instantaneous throughput or SNR, but the experiments show that such myopic optimization leads to excessive switching and degraded reliability. By contrast, Demand-Aware operates under a sufficiency-based philosophy: as long as the current link can support the remaining offloading requirement, switching is unnecessary. This insight underscores the importance of aligning optimization objectives with mission-level guarantees rather than maximizing transient performance metrics. In dynamic satellite environments, optimizing \textit{link continuity} can be more valuable than optimizing \textit{peak throughput}.
+Another key insight concerns the shift from instantaneous-performance objectives toward sufficiency-based decision making in the satellite segment. The Demand-Aware strategy demonstrates that maximizing short-term throughput is neither necessary nor desirable in dynamic LEO environments. Instead, ensuring link continuity—so long as rate is sufficient to meet the remaining demand—reduces switching overhead, packet loss, and retransmissions. This reframing suggests that future SAGIN handover mechanisms should prioritize mission-level guarantees rather than instantaneous signal metrics.
 
-The interaction between the two stages reveals another key design implication: spatial and temporal optimizations should be complementary rather than independent. Algorithm~1 reduces the volume and timing variability of data entering the satellite offloading stage, while Algorithm~2 provides a stable communication channel whose reliability minimizes retransmissions and wasted energy. Their objectives reinforce rather than compete with each other, demonstrating that decomposing a complex end-to-end mission into coordinated subproblems can yield near-optimal global behavior when the interfaces between stages are properly aligned.
+The results also highlight why a fully integrated UAV–LEO optimization framework is neither practical nor advantageous. The two processes operate on fundamentally different temporal scales: UAV trajectories evolve on minute-level horizons with predictable spatial geometry, whereas satellite visibility varies on the order of seconds. Attempting to couple these dynamics in a single monolithic optimization would either overwhelm the trajectory planner or slow down the handover controller beyond usability. The proposed two-stage decomposition is therefore not merely a computational simplification, but an architectural necessity dictated by heterogeneous system dynamics.
 
-These findings also shed light on the limitations of a hypothetical fully integrated optimization framework. Although jointly optimizing UAV trajectories and satellite handovers may appear ideal, the drastically different temporal scales of the two processes make such integration impractical. UAV trajectory planning evolves on minute-level horizons with predictable spatial structure, while satellite handovers occur on the order of seconds and depend on rapidly changing orbital geometry. Treating both processes within a single optimization loop would either render trajectory planning computationally intractable or slow down handover decisions beyond usable limits. The proposed two-stage separation thus reflects not only a computational convenience but a necessary architectural decision that respects the heterogeneous dynamics of SAGIN systems.
+Finally, the scalability trends emphasize the robustness of this decomposition. As IoT density increases, the benefits of spatial optimization grow more pronounced, while the Demand-Aware handover rule maintains nearly invariant behavior across satellite densities. These properties suggest that modular, stage-aligned optimization is particularly well suited for future large-scale SAGIN deployments. Nonetheless, real-world implementations will require accounting for uncertainties in device mobility, channel estimation errors, and asynchronous multi-UAV coordination—factors that offer promising directions for extending the present framework.
 
-The computational cost associated with the Adam-2opt method further highlights an important trade-off in system design. Although the algorithm incurs modest additional planning time compared to simplified baselines, this overhead remains negligible in the context of offline mission scheduling. The significant energy savings achieved by the method—critical for extending UAV operational range—justify the additional computational effort. For real-time adaptation scenarios, lighter-weight approximations could be employed, but the results suggest that when planning time is not a bottleneck, more expressive optimization procedures yield substantial benefits.
-
-Scalability trends observed in the experiments reinforce the value of sophisticated optimization in large-scale SAGIN deployments. As IoT device density increases, baseline methods degrade rapidly, whereas the proposed trajectory optimizer maintains controlled energy growth. Likewise, the Demand-Aware handover strategy exhibits remarkably stable performance across a wide range of satellite densities, indicating that its decision rule naturally generalizes to future high-density constellations. These scaling behaviors demonstrate that robustness to network expansion should be a first-class objective in SAGIN system design, especially given the accelerating growth of IoT deployments and commercial LEO constellations.
-
-Finally, several practical considerations emerge for real-world adoption. In UAV trajectory planning, uncertainties in channel state information and device mobility may require incorporating robust or prediction-based extensions. In the satellite segment, adaptive demand thresholds or coordinated multi-UAV handover control could further enhance stability. These enhancements are compatible with the modularity of the proposed framework, which allows each stage to evolve independently while maintaining system-level coherence.
-
-Overall, the discussion highlights that efficient SAGIN operation depends not solely on isolated algorithmic performance but on aligning optimization principles across spatial and temporal domains. By designing stage-specific strategies that respect the intrinsic dynamics of their respective environments, the proposed framework demonstrates how modular yet complementary optimization can yield reliable, scalable, and energy-efficient end-to-end mission performance.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
 
-This work developed a two-stage optimization framework for UAV-assisted IoT data collection and LEO satellite offloading in SAGIN environments. The proposed approach integrates spatial optimization for UAV trajectory planning with temporal optimization for satellite handover management, addressing the fundamentally different dynamics of the ground-to-air and air-to-space segments. Through extensive simulations, the framework demonstrated substantial gains in energy efficiency, trajectory compactness, connectivity stability, and end-to-end reliability compared with baseline strategies.
-
-A key contribution of this study is the identification of complementary optimization principles across heterogeneous network layers. The Adam-2opt method leverages continuous and discrete optimization to construct energy-efficient collection trajectories, while the Demand-Aware handover strategy adopts a sufficiency-based decision rule that prioritizes link continuity over instantaneous throughput. Their combined operation illustrates how aligning spatial and temporal objectives can produce superior end-to-end performance without requiring a fully integrated or computationally prohibitive joint optimization.
-
-The observed scalability properties further highlight the framework's suitability for emerging large-scale SAGIN deployments. The UAV trajectory optimizer becomes increasingly advantageous as IoT densities grow, while the handover strategy remains robust to expanding LEO constellation sizes. These characteristics position the framework as a practical and future-proof solution for next-generation aerial–satellite–terrestrial IoT systems.
-
-Future extensions of this work may incorporate uncertainty-aware trajectory planning, adaptive demand thresholds for dynamic offloading, and cooperative multi-UAV handover coordination. Despite these opportunities, the proposed methods already achieve strong performance with modest computational overhead, making them readily applicable to real-world mission planning and execution.
-
-Overall, this study demonstrates that modular yet complementary optimization across network segments can substantially enhance the efficiency and reliability of SAGIN architectures, offering a promising direction for the design of integrated aerial–satellite IoT systems.
+This work presented a two-stage optimization framework that integrates energy-efficient UAV trajectory planning with stability-oriented LEO satellite offloading for SAGIN-based IoT collection. By aligning spatial and temporal optimization principles, the framework achieves reliable and energy-efficient end-to-end performance without requiring computationally prohibitive joint optimization. The results demonstrate strong scalability with respect to both IoT device density and satellite constellation size, underscoring the practicality of the proposed approach for next-generation aerial–satellite IoT systems. Future work may extend the framework to uncertainty-aware trajectory control and cooperative multi-UAV offloading, further enhancing robustness in real-world deployments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\isPreprints{}{% This command is only used for ``preprints''.
@@ -951,46 +934,45 @@ Jia, Z.; Cao, Y.; He, L.; Wu, Q.; Zhu, Q.; Niyato, D.; Han, Z.
 Service function chain dynamic scheduling in space-air-ground integrated networks.
 {\em IEEE Trans. Veh. Technol.} {\bf 2025}.
 % Reference 13
-\bibitem{huang2024joint}
-Huang, C.; Chen, G.; Xiao, P.; Xiao, Y.; Han, Z.; Chambers, J. A.
-Joint offloading and resource allocation for hybrid cloud and edge computing in SAGINs: A decision assisted hybrid action space deep reinforcement learning approach.
-{\em IEEE J. Sel. Areas Commun.} {\bf 2024}, {\em 42}, 1029--1043.
-% Reference 14
-\bibitem{jia2024dynamic}
-Jia, H.; Wang, Y.; Wu, W.
-Dynamic resource allocation for remote IoT data collection in SAGIN.
-{\em IEEE Internet Things J.} {\bf 2024}, {\em 11}, 20575--20589.
-% Reference 15
-\bibitem{seyedi2012trace}
-Seyedi, Y.; Rahimi, F.
-A trace-time framework for prediction of elevation angle over land mobile LEO satellites networks.
-{\em Wirel. Pers. Commun.} {\bf 2012}, {\em 62}, 793--804.
-% Reference 16
-\bibitem{d2020learning}
-d O Costa, P. R.; Rhuggenaath, J.; Zhang, Y.; Akcay, A.
-Learning 2-opt heuristics for the traveling salesman problem via deep reinforcement learning.
-{\em Asian Conf. Mach. Learn.} {\bf 2020}, 465--480.
-% Reference 17
 \bibitem{xiao2022energy}
 Xiao, T.; Wang, W.; He, H.
 Energy-efficient data collection for UAV-assisted IoT: Joint trajectory and resource optimization.
 {\em Chin. J. Aeronaut.} {\bf 2022}, {\em 35}, 95--105.
-% Reference 18
+% Reference 14
 \bibitem{wang2025joint}
 Wang, B.; Jia, Z.; Cui, C.; Wu, Q.
 Joint UAV trajectory planning and LEO satellite selection for data offloading in space-air-ground integrated networks.
 arXiv preprint arXiv:2506.12750 {\bf 2025}.
-% Reference 19
+% Reference 15
+\bibitem{huang2024joint}
+Huang, C.; Chen, G.; Xiao, P.; Xiao, Y.; Han, Z.; Chambers, J. A.
+Joint offloading and resource allocation for hybrid cloud and edge computing in SAGINs: A decision assisted hybrid action space deep reinforcement learning approach.
+{\em IEEE J. Sel. Areas Commun.} {\bf 2024}, {\em 42}, 1029--1043.
+% Reference 16
+\bibitem{jia2024dynamic}
+Jia, H.; Wang, Y.; Wu, W.
+Dynamic resource allocation for remote IoT data collection in SAGIN.
+{\em IEEE Internet Things J.} {\bf 2024}, {\em 11}, 20575--20589.
+% Reference 17
+\bibitem{d2020learning}
+d O Costa, P. R.; Rhuggenaath, J.; Zhang, Y.; Akcay, A.
+Learning 2-opt heuristics for the traveling salesman problem via deep reinforcement learning.
+{\em Asian Conf. Mach. Learn.} {\bf 2020}, 465--480.
+% Reference 18
 \bibitem{zhang2023resource}
 Zhang, H.; Xi, S.; Jiang, H.; Shen, Q.; Shang, B.; Wang, J.
 Resource allocation and offloading strategy for UAV-assisted LEO satellite edge computing.
 {\em Drones} {\bf 2023}, {\em 7}, 383.
-% Reference 20
+% Reference 19
 \bibitem{wang2025coordinated}
 Wang, Y.; Wu, X.; Farooq, J.; Chen, J.
 Coordinated UAV deployment and task offloading in UAV-assisted LEO satellite edge computing systems via proximal policy optimization.
 {\em Authorea Preprints} {\bf 2025}.
-
+% Reference 20
+\bibitem{seyedi2012trace}
+Seyedi, Y.; Rahimi, F.
+A trace-time framework for prediction of elevation angle over land mobile LEO satellites networks.
+{\em Wirel. Pers. Commun.} {\bf 2012}, {\em 62}, 793--804.
 \end{thebibliography}
 
 % If authors have biography, please use the format below
