@@ -80,10 +80,10 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{Joint UAV Trajectory Planning and LEO Satellite  Selection for Data Offloading in Space-Air-Ground  Integrated Networks}
+\Title{Energy-Efficient End-to-End Optimization for UAV-Assisted IoT Data Collection and LEO Satellite Offloading in SAGIN}
 
 % MDPI internal command: Title for citation in the left column
-\TitleCitation{Joint UAV Trajectory Planning and LEO Satellite  Selection for Data Offloading in Space-Air-Ground  Integrated Networks}
+\TitleCitation{Energy-Efficient End-to-End Optimization for UAV-Assisted IoT Data Collection and LEO Satellite Offloading in SAGIN}
 
 % Author Orchid ID: enter ID or remove command
 \newcommand{\orcidauthorA}{0000-0003-3080-1514} % Add \orcidA{} behind the author's name
@@ -817,10 +817,17 @@ Finally, the scalability behavior across constellations provides insight into fu
 \subsection{End-to-End System Analysis}
 
 To assess the system-wide benefits of the proposed two-stage framework, we evaluate the total mission energy consumption—including IoT uplink transmission, UAV propulsion, and LEO-side processing—summarized in Figure~\ref{fig:system_energy_distribution}. This metric captures the cumulative effect of both spatial optimization during data acquisition and temporal stability during satellite offloading.
+% Figure 9
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\columnwidth]{Definitions/energy_distribution_boxplot}
+\caption{End-to-end system energy consumption under the proposed Adam-2opt~+~Demand-Aware framework and the baseline Basic-UAV~+~Greedy-LEO configuration. Each box summarizes the distribution over multiple randomized deployments, with diamond markers indicating the mean values. The proposed method achieves a 9.2\% reduction in total mission energy compared with the baseline.}
+\label{fig:system_energy_distribution}
+\end{figure}
 
 The results demonstrate a clear and consistent improvement over the baseline strategies. The Adam-2opt method reduces flight distance and hovering duration, thereby lowering the dominant propulsion energy in the acquisition stage. These savings directly translate into a shorter collection phase and a more structured aggregated data load. As a result, the Demand-Aware offloading stage operates under reduced temporal pressure, requiring fewer handovers and avoiding retransmissions. This stability further suppresses unnecessary communication energy on both the UAV and satellite sides.
 
-Figure~\ref{fig:system_energy_distribution} shows that the combined Adam-2opt + Demand-Aware pipeline achieves approximately 8--12\% lower total mission energy compared with the baselines. Importantly, these reductions do not arise from a single component but reflect the complementary function of both stages: Algorithm~\ref{alg:p1_optimization} minimizes the work that Algorithm~\ref{alg:satellite_selection} must perform under rapidly varying link conditions, while Algorithm~\ref{alg:satellite_selection} ensures reliable and interruption-free delivery of the data produced by Algorithm~\ref{alg:p1_optimization}.
+Figure~\ref{fig:system_energy_distribution} shows that the combined Adam-2opt + Demand-Aware pipeline achieves approximately 9.2\% lower total mission energy compared with the baselines. Importantly, these reductions do not arise from a single component but reflect the complementary function of both stages: Algorithm~\ref{alg:p1_optimization} minimizes the work that Algorithm~\ref{alg:satellite_selection} must perform under rapidly varying link conditions, while Algorithm~\ref{alg:satellite_selection} ensures reliable and interruption-free delivery of the data produced by Algorithm~\ref{alg:p1_optimization}.
 
 Overall, the end-to-end evaluation confirms that optimizing spatial and temporal dimensions jointly yields significantly better system-level performance than optimizing either stage in isolation. By aligning trajectory planning with demand-aware offloading control, the proposed framework provides a robust and energy-efficient solution for UAV–LEO integrated operations.
 

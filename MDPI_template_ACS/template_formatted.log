@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  6 DEC 2025 17:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.1)  7 DEC 2025 02:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1874,13 +1874,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [17 <./Definitions/demand_aware_number_of_satellites-eps-converted-to.pdf> <./D
 efinitions/packet_loss_analysis-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Definitions/energy_distribution_boxplot.ep
+s>
+(epstopdf)                    date: 2025-12-07 02:01:33
+(epstopdf)                    size: 46955 bytes
+(epstopdf)             Output file: <Definitions/energy_distribution_boxplot-ep
+s-converted-to.pdf>
+(epstopdf)                    date: 2025-12-07 02:04:35
+(epstopdf)                    size: 24722 bytes
+(epstopdf)             Command: <repstopdf --outfile=Definitions/energy_distrib
+ution_boxplot-eps-converted-to.pdf Definitions/energy_distribution_boxplot.eps>
 
-LaTeX Warning: Reference `fig:system_energy_distribution' on page 18 undefined 
-on input line 819.
-
-
-LaTeX Warning: Reference `fig:system_energy_distribution' on page 18 undefined 
-on input line 823.
+(epstopdf)             \includegraphics on input line 823.
+Package epstopdf Info: Output file is already uptodate.
+<Definitions/energy_distribution_boxplot-eps-converted-to.pdf, id=724, 568.1225
+pt x 422.57875pt>
+File: Definitions/energy_distribution_boxplot-eps-converted-to.pdf Graphic file
+ (type pdf)
+<use Definitions/energy_distribution_boxplot-eps-converted-to.pdf>
+Package pdftex.def Info: Definitions/energy_distribution_boxplot-eps-converted-
+to.pdf  used on input line 823.
+(pdftex.def)             Requested size: 374.63625pt x 278.6707pt.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1891,9 +1905,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [18]
 
-LaTeX Warning: Reference `fig:system_energy_distribution' on page 19 undefined 
-on input line 833.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 18.18796pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.18796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
+[19 <./Definitions/energy_distribution_boxplot-eps-converted-to.pdf>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1901,7 +1919,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[19] Excluding 'comment' comment.
+[20] Excluding 'comment' comment.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 18.18796pt, for example:
@@ -1909,26 +1927,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-6.18796pt}.
 
-[20] 
+[21] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./template_formatted.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-14>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `template_formatted.out' has not changed.
 (rerunfilecheck)             Checksum: 409C08F8BE0E62F15663D4E07B8CB1A7;2621.
  ) 
 Here is how much of TeX's memory you used:
- 36653 strings out of 467538
- 687164 string characters out of 5423725
- 1193051 words of memory out of 5000000
- 64334 multiletter control sequences out of 15000+600000
- 710146 words of font info for 431 fonts, out of 8000000 for 9000
+ 36706 strings out of 467538
+ 689173 string characters out of 5423725
+ 1193046 words of memory out of 5000000
+ 64370 multiletter control sequences out of 15000+600000
+ 710678 words of font info for 440 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,13n,121p,5051b,906s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
@@ -1941,10 +1955,10 @@ ri.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/t
 exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts
 /type1/urw/palatino/uplri8a.pfb>
-Output written on template_formatted.pdf (20 pages, 793702 bytes).
+Output written on template_formatted.pdf (21 pages, 817184 bytes).
 PDF statistics:
- 822 PDF objects out of 1000 (max. 8388607)
- 411 compressed objects within 5 object streams
- 139 named destinations out of 1000 (max. 500000)
- 112813 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 882 PDF objects out of 1000 (max. 8388607)
+ 422 compressed objects within 5 object streams
+ 141 named destinations out of 1000 (max. 500000)
+ 112818 words of extra memory for PDF output out of 128383 (max. 10000000)
 

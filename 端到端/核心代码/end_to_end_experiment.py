@@ -65,6 +65,7 @@ class E2EConfig:
 
     # 能耗参数
     IOT_TRANSMISSION_POWER_W = 0.1  # IoT设备传输功率(W) - 简化为定值
+    SATELLITE_COMPUTING_POWER_W = 50.0  # 卫星计算功率(W) - 典型LEO卫星计算功耗
 
     # 切换开销
     HANDOVER_DELAY_SEC = 0.4  # 切换时延(秒)
@@ -189,6 +190,7 @@ def run_algorithm2_phase(data_to_transmit_mb: float,
             'packet_loss_rate': 丢包率,
             'avg_data_rate': 平均数据速率(Mbps),
             'data_transmitted': 实际传输的数据量(MB),
+            'satellite_energy': 卫星计算能耗(焦耳),
             'records': 传输记录列表
         }
     """
@@ -288,6 +290,11 @@ def run_algorithm2_phase(data_to_transmit_mb: float,
     # 实际传输的数据量 (考虑丢包)
     data_transmitted = cumulative_data_mb * (1 - packet_loss_rate)
 
+    # 卫星计算能耗
+    # E_satellite = P_computing × T_transmission
+    # 卫星在整个传输期间需要持续计算处理数据
+    satellite_energy = E2EConfig.SATELLITE_COMPUTING_POWER_W * duration_sec  # 焦耳
+
     result = {
         'method': method,
         'transmission_time': transmission_time,
@@ -296,11 +303,13 @@ def run_algorithm2_phase(data_to_transmit_mb: float,
         'packet_loss_rate': packet_loss_rate,
         'avg_data_rate': avg_data_rate,
         'data_transmitted': data_transmitted,
+        'satellite_energy': satellite_energy,
         'records': records
     }
 
     print(f"    切换次数: {handover_count}, 丢包率: {packet_loss_rate*100:.3f}%, "
-          f"平均速率: {avg_data_rate:.2f}Mbps, 传输量: {data_transmitted:.2f}MB")
+          f"平均速率: {avg_data_rate:.2f}Mbps, 传输量: {data_transmitted:.2f}MB, "
+          f"卫星能耗: {satellite_energy:.2f}J")
 
     return result
 
@@ -331,8 +340,10 @@ def calculate_e2e_metrics(phase1_result: Dict, phase2_result: Dict) -> Dict:
                    phase2_result['handover_overhead'])
 
     # 2. 系统总能耗
-    # E_system = E_UAV + E_IoT
-    system_energy = phase1_result['uav_energy'] + phase1_result['iot_energy']
+    # E_system = E_UAV + E_IoT + E_satellite
+    system_energy = (phase1_result['uav_energy'] +
+                    phase1_result['iot_energy'] +
+                    phase2_result['satellite_energy'])
 
     # 3. 数据传输成功率
     # η_delivery = (D_collected × (1 - PLR)) / D_collected = (1 - PLR)
@@ -640,7 +651,8 @@ def save_results(all_results: Dict, statistics: Dict, output_dir: str = None):
                     'method': r['phase2']['method'],
                     'handover_count': r['phase2']['handover_count'],
                     'packet_loss_rate': r['phase2']['packet_loss_rate'],
-                    'avg_data_rate': r['phase2']['avg_data_rate']
+                    'avg_data_rate': r['phase2']['avg_data_rate'],
+                    'satellite_energy': r['phase2']['satellite_energy']
                 }
             }
             save_data['raw_results'][gid].append(simplified)
