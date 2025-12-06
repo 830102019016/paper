@@ -673,10 +673,10 @@ At each decision epoch, all LEO satellites satisfying the elevation constraint $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SIMULATION RESULTS}
 
-The performance of the proposed two-stage optimization framework is evaluated through extensive simulations. The evaluation covers both individual stages—UAV-assisted IoT data collection and LEO satellite offloading—as well as their end-to-end integration. All numerical parameters are summarized in Table~\ref{tab:sim_parameters}, and the experiments are implemented in Python~3.10 on a workstation equipped with an Intel Core i7-12700K CPU and 32~GB RAM.
+The performance of the proposed two-stage optimization framework is evaluated through extensive simulations. The first stage focuses on UAV-assisted IoT data collection, whereas the second stage considers LEO satellite offloading. All simulation parameters used in these two stages are summarized in Tables~\ref{tab:simulation_parameters} and~\ref{tab:leo_parameters}, respectively. The experiments are implemented in Python~3.10 on a workstation equipped with an Intel Core i7-12700K CPU and 32~GB RAM.
 \begin{table}[!htbp]
 \centering
-\caption{Simulation Parameters}
+\caption{Simulation parameters for the UAV-assisted IoT data collection stage.}
 \label{tab:simulation_parameters}
 \begin{tabular}{llll}
 \toprule
@@ -698,7 +698,7 @@ $J$ (max iterations) & 100 & $\epsilon$ & $10^{-6}$ \\
 
 \begin{table}[!htbp]
 \centering
-\caption{LEO Satellite Parameters}
+\caption{Communication and orbital parameters for the LEO satellite offloading stage.}
 \label{tab:leo_parameters}
 \begin{tabular}{llll}
 \toprule
@@ -711,16 +711,24 @@ $f_s$ & 20 GHz & $r_e$ & 6378 km \\
 $h_s$ (LEO altitude) & 550 km & $\omega_E$ & 7.29 rad/s \\
 Constellation & Starlink & Num. satellites & 200 \\
 \bottomrule
-\end{tabular}
+\end{tabular}                                     
 \end{table}
-% Figure 4
+% Figure 5
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Definitions/comparison_4algorithms}
-\caption{Performance comparison of different algorithms in the IoT-UAV phase.}
+\caption{Performance comparison of four algorithms—Random Pairing, Fixed Hovering, Basic Optimization, and Adam-2opt—in the IoT–UAV data collection stage across energy and trajectory metrics.}
 \label{fig:comparison_4algorithms}
 \end{figure}
-The first part of the evaluation focuses on the ground-to-air segment. UAVs operate within a $500\times 500~\text{m}^2$ area containing spatially distributed IoT devices, and a fixed-altitude multi-UAV configuration is adopted to reflect typical low-altitude urban deployments. Each scenario is executed under three independent random seeds, and results are averaged. To assess the effectiveness of the proposed Adam-2opt algorithm, three baseline strategies are considered: (i) \textit{Random Pairing}, which forms NOMA pairs without channel awareness; (ii) \textit{Fixed Hovering}, which prioritizes hovering duration without optimizing flight paths; and (iii) \textit{Basic Optimization}, which incorporates pairing, power allocation, and position optimization but lacks trajectory refinement.
+The first part of the evaluation focuses on the ground-to-air segment. 
+A fixed-altitude UAV operates within a $500\times 500~\text{m}^2$ area containing spatially distributed IoT devices, reflecting typical low-altitude urban deployments. 
+Each scenario is executed under three independent random seeds, and results are averaged. 
+To evaluate the effectiveness of the proposed Adam-2opt algorithm, three baseline strategies are considered 
+\begin{itemize}
+    \item \textit{Random Pairing}: forms NOMA pairs without channel awareness.
+    \item \textit{Fixed Hovering}: minimizes hovering duration but does not optimize flight paths.
+    \item \textit{Basic Optimization}: performs pairing, power allocation, and position refinement but lacks trajectory planning.
+\end{itemize}
 % Figure 5
 \begin{figure}[!htbp]
 \centering
@@ -728,12 +736,23 @@ The first part of the evaluation focuses on the ground-to-air segment. UAVs oper
 \caption{UAV trajectory comparison between different optimization algorithms.}
 \label{fig:trajectory_comparison}
 \end{figure}
-The second part of the evaluation examines the air-to-space offloading process. The Starlink constellation at 550~km altitude is simulated, and the number of visible satellites varies with time as the orbital geometry evolves. The UAV employs a 20~GHz carrier frequency and adheres to a minimum elevation angle constraint. A fixed interruption duration is applied to each handover event. A 10-minute evaluation window with 20-second intervals is considered, during which multiple handover opportunities arise. Two handover strategies are compared: a \textit{Greedy} scheme that always selects the satellite offering the highest instantaneous rate, and the proposed \textit{Demand-Aware} method, which performs handover only when necessary to meet the remaining offloading demand.
 
+The second part of the evaluation focuses on the air-to-space offloading stage. 
+A Starlink constellation at 550~km altitude is simulated, where the number of visible satellites varies over time due to orbital dynamics. 
+The UAV employs a 20~GHz carrier frequency and is subject to a minimum elevation-angle constraint when establishing a satellite link. 
+Each handover event incurs a fixed 400~ms interruption. 
+A 10-minute evaluation window with 20-second time resolution is considered, during which multiple handover opportunities arise.
+
+Two satellite-selection strategies are compared
+\begin{itemize}
+    \item \textit{Greedy}: always associates with the satellite providing the highest instantaneous rate.
+    \item \textit{Demand-Aware}: triggers handover only when the predicted throughput of the current link becomes insufficient to meet the remaining offloading demand.
+\end{itemize}
 
 \subsection{Ground-to-Air Data Acquisition Performance}
 
-The ground-to-air data acquisition stage poses a tightly coupled optimization problem involving NOMA pairing, power allocation, and UAV trajectory design. Figure~\ref{fig:comparison_4algorithms} summarizes the performance of all evaluated algorithms across four key metrics. The results consistently show that the proposed Adam-2opt method delivers the most energy-efficient operation, particularly in dense IoT deployments.
+The ground-to-air data acquisition stage poses a tightly coupled optimization problem involving NOMA pairing, power allocation, and UAV trajectory design. 
+Figure~\ref{fig:comparison_4algorithms} summarizes the performance of all evaluated algorithms across four key metrics. The results consistently show that the proposed Adam-2opt method delivers the most energy-efficient operation, particularly in dense IoT deployments.We now analyze the performance differences across the four metrics and relate them to the algorithmic properties of each method.
 
 Figure~\ref{fig:comparison_4algorithms}a indicates that total UAV energy consumption increases with the number of IoT devices, yet the proposed method exhibits the slowest growth trend. While all algorithms perform similarly under low-density conditions ($K=20$), the performance gap widens significantly as the network scales. At $K=50$, Adam-2opt achieves more than 16\% energy reduction compared with Random Pairing, and over 22\% compared with Basic Optimization. This demonstrates that advanced trajectory refinement becomes increasingly valuable when device clustering and route complexity intensify. 
 
@@ -741,34 +760,46 @@ The primary advantage of Adam-2opt arises from its ability to simultaneously opt
 
 Hovering energy behavior, depicted in Figure~\ref{fig:comparison_4algorithms}d, provides additional insight into algorithmic trade-offs. Fixed Hovering minimizes hovering time by construction but suffers from excessive flight distance, leading to the highest overall energy consumption. Random Pairing exhibits the opposite issue: arbitrary device grouping produces spatially dispersed clusters, substantially increasing hovering duration. By contrast, Adam-2opt maintains balanced performance—hovering time is reduced by nearly 50\% compared with Random Pairing—while preserving the shortest flight trajectory. This balanced design is essential for missions where both hovering and flight energy dominate total consumption.
 
-To further illustrate spatial efficiency, Figure~\ref{fig:trajectory_comparison} visualizes representative flight paths for $K=50$. The Random Pairing trajectory (Figure~\ref{fig:trajectory_comparison}a) displays numerous crossings and backtracking segments, consistent with the disordered pairing structure. Fixed Hovering (Figure~\ref{fig:trajectory_comparison}b) generates well-spread hovering points but forces UAVs to traverse a large number of redundant waypoints. Basic Optimization (Figure~\ref{fig:trajectory_comparison}c) improves spatial locality but still retains avoidable turns and suboptimal visiting sequences. The proposed Adam-2opt trajectory (Figure~\ref{fig:trajectory_comparison}d) is notably more compact and structured, with no crossings and a clear directional flow. This confirms the complementary roles of Adam-based hovering refinement and 2-opt sequencing in producing globally efficient flight paths.
+To further illustrate spatial efficiency, Figure~\ref{fig:trajectory_comparison} visualizes representative flight paths for $K=50$. 
+The Random Pairing trajectory in Figure~\ref{fig:trajectory_comparison}a exhibits numerous path crossings and backtracking segments, reflecting the inherently unstructured nature of its device grouping. 
+Fixed Hovering in Figure~\ref{fig:trajectory_comparison}b generates uniformly distributed hovering points; however, the resulting path forces UAVs to traverse many redundant transitions, leading to substantially increased flight distance. 
+Basic Optimization in Figure~\ref{fig:trajectory_comparison}c improves spatial locality but still retains avoidable turns and several suboptimal visiting sequences. 
+In contrast, the proposed Adam-2opt trajectory in Figure~\ref{fig:trajectory_comparison}d is markedly more compact and well organized, exhibiting no path intersections and maintaining a coherent directional pattern. 
+These observations confirm the complementary roles of Adam-based hovering refinement and 2-opt sequencing in producing globally efficient UAV flight paths.
 
-Computational cost results show that Adam-2opt requires greater planning time due to its iterative nature. However, the runtime remains on the order of one second, which is negligible for offline mission planning. The energy savings achieved—exceeding 16\% in dense deployments—far outweigh this cost, reinforcing the practicality of the approach for pre-scheduled UAV operations.
+Computational cost results indicate that Adam-2opt incurs higher planning time due to its iterative refinement steps. 
+Nevertheless, the total runtime remains on the order of one second—negligible for offline mission planning. 
+Given that the resulting energy savings exceed 16\% in dense deployments, the computational overhead is well justified and supports the practicality of the proposed approach for pre-scheduled UAV operations.
 
-Finally, the scalability trends observed in Figure~\ref{fig:comparison_4algorithms} underline an important system-level implication. While simple heuristics suffice in small networks, their performance deteriorates rapidly with increasing density. In contrast, Adam-2opt exhibits sublinear growth in energy consumption and maintains robust performance as $K$ increases. This indicates that the proposed framework is particularly well-suited for large-scale IoT scenarios where spatial clustering and route complexity demand more sophisticated optimization.
+Finally, the scalability trends observed in Figure~\ref{fig:comparison_4algorithms} highlight an important system-level implication. 
+Whereas simple heuristics maintain acceptable performance in small networks, their efficiency degrades rapidly as the device density increases. 
+In contrast, Adam-2opt demonstrates sublinear growth in energy consumption and maintains robust performance as $K$ scales upward. 
+These results suggest that the proposed framework is particularly well suited for large-scale IoT deployments, where spatial clustering and route complexity necessitate more sophisticated optimization mechanisms.
+
 
 
 % ==============================================================================
-% 4.3 Performance of UAV-LEO Offloading Stage
+% 4.2 Performance of UAV-LEO Offloading Stage
 % ==============================================================================
 \subsection{UAV–LEO Offloading Performance}
 
-The second stage evaluates the offloading of aggregated data from UAVs to LEO satellites, where the dominant challenge shifts from spatial optimization to managing strongly time-varying satellite visibility. Unlike the ground-to-air segment, satellite links exhibit rapid fluctuations due to orbital motion, making connection stability as critical as instantaneous link quality.
-% Figure 6
+The second stage evaluates the offloading of aggregated data from UAVs to LEO satellites, where the dominant challenge shifts from spatial optimization to coping with highly time-varying satellite visibility. Unlike the ground-to-air segment, the air-to-space link is governed by rapid orbital motion, causing frequent changes in elevation angle, link quality, and service continuity. As a result, maintaining a stable connection becomes as critical as achieving high instantaneous throughput, motivating the need for intelligent and demand-aware handover strategies.
+
+% Figure 7
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Definitions/demand_aware_number_of_satellites}
-\caption{Comparison of satellite selection strategies: handover frequency versus constellation size.}
+\caption{Data rate trajectories of Greedy and Demand-Aware satellite selection strategies for different LEO constellation sizes.}
 \label{fig:demand_aware_satellites}
 \end{figure}
 A key observation from Figure~\ref{fig:demand_aware_satellites} is the fundamental difference in handover behavior between the two evaluated strategies. The Greedy scheme continually switches to the satellite offering the highest instantaneous rate, resulting in pronounced rate volatility and frequent handover events. This behavior becomes more severe as satellite density increases, reflecting its sensitivity to instantaneous channel variations rather than long-term transmission feasibility.
 
 In contrast, the Demand-Aware strategy produces consistently smoother rate trajectories and dramatically fewer handovers. By maintaining the current satellite connection as long as the remaining data demand can be satisfied within the predicted visibility window, the method avoids unnecessary switching and preserves link continuity. This design principle leads to a stable operating regime across all constellation densities, with only two to three handovers observed even in large constellations.
-% Figure 6
+% Figure 8
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\columnwidth]{Definitions/packet_loss_analysis}
-\caption{Impact of satellite selection strategy on packet loss performance.}
+\caption{Comparison of handover frequency and packet loss rate for Greedy and Demand-Aware satellite selection strategies under different constellation sizes.}
 \label{fig:packet_loss}
 \end{figure}
 Figure~\ref{fig:packet_loss}a quantitatively highlights this stability. Demand-Aware consistently reduces handover occurrences by 66--75\% relative to Greedy, and the reduction remains nearly invariant across the 500-, 1500-, and full-constellation scenarios. This invariance is particularly notable because it shows that the strategy scales gracefully with constellation size: the number of available satellites increases, but the handover count does not. Thus, Demand-Aware does not exploit satellite density to switch more frequently; instead, it leverages it to sustain longer, more reliable connections.
